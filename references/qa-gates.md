@@ -80,7 +80,8 @@
 | 5.2 | 交付包完整 | `SPEC.md`、`assets/tokens.css`、`index.html` 存在；页面数 = manifest 数 |
 | 5.3 | 资源本地化 | 外部 `http(s)` 引用 = 0；本地引用资源文件存在 |
 | 5.4 | 单页体积 | 每个 .html ≤ 500KB |
-| 5.5 | 一票否决 | 任一项 FAIL 即总 FAIL，禁止降级交付 |
+| 5.5 | 待确认零残留 | SPEC.md / index.html / pages 检索「待确认、待定、待拍板、TODO」= 0 处；有未决事项必须在会话问掉或登记待办，禁止默认处理不留痕 |
+| 5.6 | 一票否决 | 任一项 FAIL 即总 FAIL，禁止降级交付 |
 
 输出 `qa/reports/final-gate.json` + 人读验收单（PASS 项 + 证据路径 + 计数原文）。
 

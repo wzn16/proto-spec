@@ -115,7 +115,20 @@ def main() -> int:
         codes["g2"], reports["g2"] = run_gate("check_screens.py", project)
         g2_state = "pass" if codes["g2"] == 0 else "fail"
 
+    # 5.5 待确认零残留：SPEC/页面正文不得残留未决标记
+    import re as _re
+    leftovers = []
+    scan_targets = [p for p in [project / "SPEC.md", project / "index.html"] if p.is_file()]
+    scan_targets += sorted((project / "pages").glob("**/*.html")) if (project / "pages").is_dir() else []
+    for f in scan_targets:
+        text = f.read_text(encoding="utf-8", errors="replace")
+        for kw in ("待确认", "待定", "待拍板", "TODO"):
+            if kw in text:
+                leftovers.append({"file": f.relative_to(project).as_posix(), "kind": "待确认残留",
+                                  "value": kw, "hint": "未决事项须会话问掉或登记待办，正文零残留"})
+                break
     deliverables = deliverable_checks(project, mf)
+    deliverables += leftovers
     sub_ok = codes.get("g1") == 0 and codes.get("g3") == 0 and g2_state != "fail"
     ok = sub_ok and not deliverables
 
