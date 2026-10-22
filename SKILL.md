@@ -6,7 +6,7 @@ description: >-
 license: MIT
 metadata:
   author: wzn16
-  version: 0.1.2
+  version: 0.2.0
   tags: prototype html spec-driven axure frontend
 ---
 
@@ -76,6 +76,13 @@ metadata:
 - 规范级（所有页都该这样）：解冻 SPEC → 改 SPEC + tokens.css → 版本 +1 并记录原因与影响面 → 批量重生成受影响页 → 全量 G1/G3。
 - 新页面：先补 SPEC §8 manifest 与站点地图，再按步骤 4 生成。
 同类页面级例外 ≥3 处时，提示用户该走规范级通道（例外变多说明规范该改）。
+
+## 步骤 5.5 — 视觉精修（推荐）
+
+质量门通过后，从**组件库层**做一轮视觉精修：只加过渡、状态反馈（hover/active/focus-visible）、
+层次节奏（表头字距、卡片表头分隔、选中指示条、细滚动条），**不改规范值**——改的是组件实现质量，
+不是设计决策。精修可借助环境内界面设计类 skill；精修后必须重跑质量门。样式精细度类用户反馈，
+优先回写组件库而非逐页打补丁。
 
 ## 步骤 6 — 质量门
 

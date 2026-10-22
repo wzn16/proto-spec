@@ -440,3 +440,43 @@
 
 /* ---------- 15. 全局状态（app.js 依赖） ---------- */
 .is-locked { overflow: hidden; }
+
+/* ---------- 视觉精修层：过渡 / 状态反馈 / 层次节奏（默认内置） ---------- */
+.c-btn, .c-input, .c-select, .c-textarea, .c-nav__item, .c-tag,
+.c-table tbody tr, .c-pagination .c-btn {
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;
+}
+.c-btn { font-weight: var(--s-weight-medium); }
+.c-btn:not(.c-btn--text):hover { box-shadow: var(--s-shadow-card); }
+.c-btn:not(.c-btn--text):active { transform: translateY(1px); }
+.c-btn--secondary:hover { background: var(--s-bg-hover); }
+.c-btn--text:hover { background: var(--s-color-primary-soft); }
+
+.c-input:focus, .c-select:focus, .c-textarea:focus {
+  border-color: var(--s-color-primary);
+  box-shadow: 0 0 0 3px var(--s-color-primary-softer);
+  outline: none;
+}
+.c-filterbar .c-input:focus { box-shadow: none; border-bottom-color: var(--s-color-primary); }
+.c-field:focus-within .c-field__label { color: var(--s-color-primary); }
+
+.c-table tbody tr:hover { background: var(--s-bg-hover); }
+.c-table th { letter-spacing: .02em; }
+
+.c-card__header { border-bottom: 1px solid var(--s-border); padding-bottom: var(--s-space-3); }
+
+.l-sidebar .c-nav__item { position: relative; }
+.l-sidebar .c-nav__item--active::before {
+  content: ""; position: absolute; left: 0; top: 20%; bottom: 20%;
+  width: 3px; border-radius: var(--s-radius-full);
+  background: var(--s-color-primary-soft);
+}
+
+.l-header { box-shadow: var(--s-shadow-card); }
+
+:focus-visible { outline: 2px solid var(--s-color-primary); outline-offset: 2px; }
+::selection { background: var(--s-color-primary-softer); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--s-border-strong); border-radius: var(--s-radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--s-text-disabled); }
+::-webkit-scrollbar-track { background: transparent; }
