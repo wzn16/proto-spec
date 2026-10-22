@@ -480,3 +480,13 @@
 ::-webkit-scrollbar-thumb { background: var(--s-border-strong); border-radius: var(--s-radius-full); }
 ::-webkit-scrollbar-thumb:hover { background: var(--s-text-disabled); }
 ::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- 视觉精修层 II：动效与节奏（默认内置） ---------- */
+@keyframes overlay-in { from { opacity: 0; } }
+@keyframes drawer-in { from { opacity: 0; transform: translateX(24px); } }
+@keyframes modal-in { from { opacity: 0; transform: translateY(8px); } }
+.c-drawer { animation: drawer-in .2s ease; }
+.c-modal { animation: overlay-in .15s ease; }
+.c-modal__dialog { animation: modal-in .18s ease; }
+.c-drawer__body .c-card + .c-card { margin-top: var(--s-gap-card); }
+.c-pagination { padding-top: var(--s-space-3); }

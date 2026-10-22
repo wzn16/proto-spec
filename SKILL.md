@@ -6,7 +6,7 @@ description: >-
 license: MIT
 metadata:
   author: wzn16
-  version: 0.2.1
+  version: 0.2.2
   tags: prototype html spec-driven axure frontend
 ---
 
