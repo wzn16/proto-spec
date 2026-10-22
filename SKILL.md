@@ -6,7 +6,7 @@ description: >-
 license: MIT
 metadata:
   author: wzn16
-  version: 0.2.0
+  version: 0.2.1
   tags: prototype html spec-driven axure frontend
 ---
 
@@ -83,6 +83,7 @@ metadata:
 层次节奏（表头字距、卡片表头分隔、选中指示条、细滚动条），**不改规范值**——改的是组件实现质量，
 不是设计决策。精修可借助环境内界面设计类 skill；精修后必须重跑质量门。样式精细度类用户反馈，
 优先回写组件库而非逐页打补丁。
+精修方法与逐维评审清单见 `references/visual-refinement.md`。
 
 ## 步骤 6 — 质量门
 
@@ -119,3 +120,4 @@ python3 scripts/final_gate.py   --project <项目目录>            # G5 总验�
 | `references/templates-catalog.md` | 步骤 4 选模板时（模板清单、插槽、目录与链接约定） |
 | `references/taste-checklist.md` | 每页生成后自查与 G5 前（反模板感判据） |
 | `references/qa-gates.md` | 步骤 6（各门判据、执行时点、降级规则） |
+| `references/visual-refinement.md` | 步骤 5.5（精修原则、逐维清单、评审清单） |
