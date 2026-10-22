@@ -1,0 +1,10 @@
+{
+  "gate": "G1",
+  "pass": true,
+  "summary": {
+    "files": 17,
+    "declarations": 1960,
+    "violations": 0
+  },
+  "violations": []
+}

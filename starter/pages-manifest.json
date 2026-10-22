@@ -1,0 +1,29 @@
+{
+  "project": "<项目名>",
+  "specVersion": "0.1.0",
+  "specStatus": "draft",
+  "breakpoints": [1440, 768, 375],
+  "pages": [
+    {
+      "id": "order-list",
+      "path": "pages/order-list.html",
+      "title": "订单列表 - 订单管理 | <项目名>",
+      "type": "list",
+      "states": ["empty"]
+    },
+    {
+      "id": "order-detail",
+      "path": "pages/order-detail.html",
+      "title": "订单详情 - 订单管理 | <项目名>",
+      "type": "detail",
+      "states": []
+    },
+    {
+      "id": "order-form",
+      "path": "pages/order-form.html",
+      "title": "新建订单 - 订单管理 | <项目名>",
+      "type": "form",
+      "states": []
+    }
+  ]
+}

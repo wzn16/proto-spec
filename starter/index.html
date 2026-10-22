@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  站点地图：index.html（无壳首页）
+  ------------------------------------------------------------
+  项目实例化后位于项目根目录：四张页面卡指向 pages/ 下的正式页面
+  （把 templates/ 模板复制过去后即可点开）；本页不使用 l-app 壳
+  与 proto-bar，仅作原型导览与演示入口。
+  建议演示路径：订单列表 → 订单详情 → 新建订单，最后看空状态页。
+  ============================================================
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>订单管理系统 · 原型站点地图</title>
+  <link rel="stylesheet" href="./assets/tokens.css">
+  <link rel="stylesheet" href="./assets/base.css">
+  <link rel="stylesheet" href="./assets/shell.css">
+  <link rel="stylesheet" href="./assets/components.css">
+  <script defer src="./assets/app.js"></script>
+</head>
+<body>
+  <header>
+    <h1 class="u-text-headline">订单管理系统 · 原型站点地图</h1>
+    <p>版本 v0.1（SPEC 0.1.0）· 更新日期 2026-10-22 · 建议演示路径：订单列表 → 订单详情 → 新建订单</p>
+    <p>本页为原型导览：所有数据均为演示假数据；各页面右上角「管理员」仅为角色占位，无登录逻辑。</p>
+  </header>
+
+  <main>
+    <!-- 按任务流分组：订单管理 -->
+    <h2 class="u-text-title">订单管理</h2>
+
+    <section class="c-card">
+      <div class="c-card__header">
+        <h3>订单列表</h3>
+      </div>
+      <div class="c-card__body">
+        <p>按订单号与状态查询订单，演示筛选栏、数据表格与分页的完整列表能力。</p>
+        <p><a class="c-btn c-btn--sm" href="pages/order-list.html">打开页面</a></p>
+      </div>
+    </section>
+
+    <section class="c-card">
+      <div class="c-card__header">
+        <h3>订单列表 · 空状态</h3>
+      </div>
+      <div class="c-card__body">
+        <p>查询无结果时的空状态演示，展示引导文案与返回列表的动作入口。</p>
+        <p><a class="c-btn c-btn--sm c-btn--secondary" href="pages/order-list.empty.html">打开页面</a></p>
+      </div>
+    </section>
+
+    <section class="c-card">
+      <div class="c-card__header">
+        <h3>订单详情</h3>
+      </div>
+      <div class="c-card__body">
+        <p>查看单张订单的描述信息、交付信息与操作日志，含页签切换交互。</p>
+        <p><a class="c-btn c-btn--sm c-btn--secondary" href="pages/order-detail.html">打开页面</a></p>
+      </div>
+    </section>
+
+    <section class="c-card">
+      <div class="c-card__header">
+        <h3>新建订单</h3>
+      </div>
+      <div class="c-card__body">
+        <p>录入客户名称、订单状态与备注的表单页，演示字段规范与底部操作栏。</p>
+        <p><a class="c-btn c-btn--sm c-btn--secondary" href="pages/order-form.html">打开页面</a></p>
+      </div>
+    </section>
+
+    <!-- 变更记录 -->
+    <section class="c-card">
+      <div class="c-card__header">
+        <h3>变更记录</h3>
+      </div>
+      <div class="c-card__body">
+        <p>v0.1（2026-10-22）初版：站点地图上线，提供订单列表、空状态、订单详情与新建订单四个演示页。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>资源位于 assets/（tokens / base / components / app.js），新页面从 templates/ 复制模板生成。</p>
+  </footer>
+</body>
+</html>
