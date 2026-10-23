@@ -1,12 +1,12 @@
 ---
 name: proto-spec
 description: >-
-  规范驱动的多页 HTML 原型生成：先通过人机访谈确立设计规范并冻结为 SPEC 与 design tokens，再按规范批量生成风格一致、可点击跳转的静态 HTML 原型，脚本自动检查规范符合性与死链，替代 Axure 类原型工具。当用户要做网页原型、后台或移动端演示原型、从手绘草图转原型、多页面高保真 demo，或要求先定设计规范再生成页面时使用；不要用于真实业务系统开发、需要后端与真实数据的工程、单页官网视觉稿（无多页一致性诉求），也不替代已有设计系统的工程化还原。
+  规范驱动的多页 HTML 原型生成：先通过人机访谈确立设计规范并冻结为 SPEC 与 design tokens，再按规范批量生成风格一致、可点击跳转的静态 HTML 原型，脚本自动检查规范符合性与死链，替代 Axure 类原型工具；产出以「能直接交付甲方演示与评审」的商务交付水平为质量标准。当用户要做网页原型、后台或移动端演示原型、从手绘草图转原型、多页面高保真 demo，或要求先定设计规范再生成页面时使用；不要用于真实业务系统开发、需要后端与真实数据的工程、单页官网视觉稿（无多页一致性诉求），也不替代已有设计系统的工程化还原。
   Spec-driven multi-page HTML prototyping: freeze a design spec and tokens via interview, then batch-generate consistent clickable prototypes with quality gates — an Axure alternative.
 license: MIT
 metadata:
   author: wzn16
-  version: 0.2.3
+  version: 0.3.0
   tags: prototype html spec-driven axure frontend
 ---
 
@@ -42,8 +42,8 @@ metadata:
 ## 步骤 2 — 访谈定规范
 
 读 `references/interview-bank.md` 并严格按其执行：G0 语境 4 题必答（唯一不许全默认的组）→
-按 G0 套风格包整包推荐 → G1–G8 分组批量确认（一次一组，组内「当前值 + 备选 + 理由」表格呈现）→
-钉子题必须用户显式表态。用户说风格没想好时，先生成 2–3 套候选配色的迷你示例页供其挑选，再继续访谈。
+气质关键词映射候选美学家族（见 `references/family-library.md`），按所选家族整包推荐 → G1–G8 分组批量确认（一次一组，组内「当前值 + 备选 + 理由」表格呈现）→
+钉子题必须用户显式表态。用户说风格没想好时，先生成 2–3 个候选家族的迷你示例页供其挑选，再继续访谈。
 产出：填写完成的 `SPEC.md`（从 `starter/SPEC.md` 复制）。
 停止条件：钉子题（G0 全组、主色、页面底色、页面清单、保真度）未获用户表态，不得进入步骤 3。
 有参照截图时，还须产出**元素对账单**（按顶栏/侧栏/筛选区/表格/分页/表单区逐区域枚举参照物可见元素，
@@ -53,7 +53,7 @@ metadata:
 ## 步骤 3 — 冻结规范
 
 1. 把 `starter/` 整体复制到目标项目目录（保持内部结构不变）。
-2. 用访谈结果同步更新项目内 SPEC.md 与 tokens.css（含风格包整体替换时，两处一起换）。
+2. 用访谈结果同步更新项目内 SPEC.md 与 tokens.css；含家族整包替换时，tokens.css 与 family.css 一起换，并在 SPEC §2.0 冻结所选家族的 id + 版本（附录 B 记家族登记行）。
 3. 落定页面清单：SPEC §8（人读表格）+ 项目根 `pages-manifest.json`（机器可读，G3 对账基准），
    含每页 id、路径、标题、类型、状态页，两处同步。
 4. 状态机 `draft → confirmed → frozen`：分组确认完为 confirmed，用户明确同意后才标 frozen。
@@ -113,7 +113,8 @@ python3 scripts/final_gate.py   --project <项目目录>            # G5 总验�
 
 | 文件 | 何时读 |
 | --- | --- |
-| `references/interview-bank.md` | 步骤 2 开始前（题库、风格包、访谈协议） |
+| `references/interview-bank.md` | 步骤 2 开始前（题库、美学家族库、访谈协议） |
+| `references/family-library.md` | 步骤 2 定家族与步骤 3 冻结时（家族索引、G0-3 映射、治理规则） |
 | `references/spec-template.md` | 填写 SPEC.md 时（章节结构与填写说明） |
 | `references/tokens-reference.md` | 改 tokens 或生成页面前（三层变量、类名命名空间） |
 | `references/snippets-catalog.md` | 步骤 4 拼装页面前（组件片段白名单） |

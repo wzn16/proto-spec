@@ -37,7 +37,7 @@
 ```
 
 > 壳样式独立在 `assets/shell.css`（l-* 布局壳 + proto-bar）：小样式表对各类渲染环境更稳，
-> 页面引入顺序固定为 tokens.css → base.css → shell.css → components.css。
+> 页面引入顺序固定为 tokens.css → base.css → shell.css → components.css → family.css（家族实现参数面，基准家族为空文件）。
 
 ## 命名与链接约定
 

@@ -32,6 +32,17 @@
 6. `calc()` 默认禁止；页面内自定义 CSS 变量（`:root { --x: ... }`）禁止；引用未定义变量禁止。
 7. 页面局部 `<style>` 只写 `p-` 前缀类，且全部取值来自 tokens 变量。
 
+## family.css 检查口径（G1 复用）
+
+家族实现参数面 `assets/family.css`（加载顺序在 components.css 之后；F0 基准家族为空文件）与页面取值同口径受 G1 检查，四条纪律：
+
+1. 只准改「形态开关类」声明：border-width/style、背景引用切换、letter-spacing、`::before/::after` 指示条、nth-child 斑马纹、text-transform；
+2. 取值只准引用 tokens 变量与结构性例外（0 / 1px / 50% / 100% / none / transparent / currentColor）——**禁止新颜色字面量**；
+3. 禁改类名结构、禁 position/布局重排、禁新增选择器作用域超出既有 `c-*` / `l-*` 类；
+4. ≤80 行；超出说明该差异应下沉为 tokens 变量或上报家族库修订。
+
+家族索引与各家族定义见 `references/family-library.md` 与 `references/families/`。
+
 ## 片段复制纪律
 
 - 片段 = HTML 注释头（用途/变体/可改范围）+ 可直接展开的结构。生成页面时**复制展开为真实 HTML**（构建期复制，非运行时 include，file:// 下运行时抓取会被浏览器拦截）。
