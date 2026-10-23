@@ -454,7 +454,7 @@
 
 .c-input:focus, .c-select:focus, .c-textarea:focus {
   border-color: var(--s-color-primary);
-  box-shadow: 0 0 0 3px var(--s-color-primary-softer);
+  box-shadow: var(--s-ring);
   outline: none;
 }
 .c-filterbar .c-input:focus { box-shadow: none; border-bottom-color: var(--s-color-primary); }
@@ -499,3 +499,22 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* ---------- 视觉精修层 III · 第二批：阴影层级 / 表格状态与密度 / 表单细节 / 空状态变体 ---------- */
+.c-modal__dialog, .c-dropdown__menu { box-shadow: var(--s-shadow-elevated); }
+
+.c-table tbody tr.is-selected { background: var(--s-color-primary-soft); }
+.c-table tbody tr.is-selected td:first-child { box-shadow: inset 2px 0 0 var(--s-color-primary); }
+.c-table tbody tr.is-error td { color: var(--s-color-error-strong); }
+.c-table--dense th, .c-table--dense td { height: 36px; }
+.c-table--loose th, .c-table--loose td { height: 48px; }
+.c-table--sticky thead th { position: sticky; top: 0; z-index: var(--c-z-sticky); }
+
+.c-tag--dot::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: var(--s-radius-full); background: currentColor; margin-right: var(--s-space-1); vertical-align: middle; }
+
+.c-field--required .c-field__label::after { content: " *"; color: var(--s-color-error); }
+.c-field__count { align-self: flex-end; font-size: var(--s-fs-caption); color: var(--s-text-secondary); }
+
+.c-empty--compact { padding: var(--s-space-5) var(--s-space-4); }
+.c-empty--compact .c-empty__icon svg { width: 40px; height: 40px; }
+.c-empty--inline { padding: var(--s-space-4); }
+.c-empty--inline .c-empty__icon { display: none; }

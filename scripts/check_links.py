@@ -30,6 +30,7 @@ class Collector(HTMLParser):
         self.links: list[tuple[int, str, str]] = []
         self.resources: list[tuple[int, str, str]] = []
         self.ids: set[str] = set()
+        self.notes: list[dict] = []
         self.title = ""
         self._in_title = False
 
@@ -38,6 +39,9 @@ class Collector(HTMLParser):
         d = {k.lower(): (v or "") for k, v in attrs}
         if d.get("id"):
             self.ids.add(d["id"])
+        if d.get("data-note"):
+            self.notes.append({"tag": tag, "line": line, "note": d["data-note"],
+                               "text": (d.get("aria-label") or d.get("placeholder") or "")[:60]})
         attr = LINK_ATTRS.get(tag)
         if attr and d.get(attr):
             self.links.append((line, tag, d[attr].strip()))
@@ -192,10 +196,22 @@ def main() -> int:
         elif got != want.strip():
             add(rel, 0, "title 不一致", got, f"manifest 期望：{want}")
 
+    all_notes: list[dict] = []
+    for f in pages:
+        for n in scan(f).notes:
+            all_notes.append({"page": f.relative_to(project).as_posix(), **n})
+    if all_notes or (project / "qa").is_dir():
+        out_n = project / "qa" / "reports"
+        out_n.mkdir(parents=True, exist_ok=True)
+        (out_n / "notes.json").write_text(
+            json.dumps({"count": len(all_notes), "notes": all_notes},
+                       ensure_ascii=False, indent=2), encoding="utf-8")
+
     report = {
         "gate": "G3",
         "pass": not violations,
-        "summary": {"pages": len(pages), "violations": len(violations)},
+        "summary": {"pages": len(pages), "violations": len(violations),
+                    "notes": len(all_notes)},
         "violations": violations,
     }
     out_dir = project / "qa" / "reports"

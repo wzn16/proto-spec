@@ -10,6 +10,9 @@
 | tpl-list.html | 壳（侧栏+顶栏）+ 页头 + `c-filterbar` + 工具栏 + `c-table` + `c-pagination` | 业务对象列表 |
 | tpl-detail.html | 壳 + 页头（标题+动作区）+ `c-desc` 描述列表 + 关联 `c-card`/`c-tabs` | 对象详情 |
 | tpl-form.html | 壳 + 页头 + 分组表单（`c-field` × n）+ 底部操作栏 | 新建/编辑 |
+| tpl-single.html | 无壳单页：页头 + KPI 指标行 + 图表卡 + 列表卡 + 快捷入口 | 模式 E 单页轻量/路演 |
+
+**表单提交流转标准**：提交 → `show-toast` 反馈 → 回列表页（或关闭抽屉）；不留在空白表单页。
 
 路线图（后续版本）：tpl-modal-form（弹窗表单变体）、tpl-dashboard（指标卡行+图表卡）、tpl-login、tpl-steps（向导）、tpl-result、m-shell/m-list/m-detail/m-form（移动端）。
 

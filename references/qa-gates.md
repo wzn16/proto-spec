@@ -55,6 +55,7 @@
 | 3.3 | 外链 = 0 | 禁止 `http(s)://` 链接与外链资源（`img/script/link` 的 src/href） |
 | 3.4 | 三方对账差异 = 0 | `pages-manifest.json` ↔ `pages/*.html` 文件集 ↔ `index.html` 页面链接，三个集合完全一致（缺页/多页/孤儿页都算差异） |
 | 3.5 | title 一致 | 每页 `<title>` 非空且等于 manifest 的 title |
+| 3.7 | 交接注记 | 页面 `data-note` 数量统计进报告与 `qa/reports/notes.json`（供交接导出），计数非阻断 |
 | 3.6 | 菜单一致性 | 侧边栏链接只准指向 manifest `nav != false` 的页面；表单等隐藏页（nav=false）不得出现在任何侧边栏 |
 
 ## G2 截图验证（可选）

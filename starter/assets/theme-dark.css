@@ -1,0 +1,16 @@
+/* theme-dark.css — 可选轻量暗色切换（与美学家族机制二选一）
+   用法：<html data-theme="dark"> 时启用；不引用则完全无副作用。
+   取值沿用 F3 数据驾驶舱·暗 的已验证色对（WCAG 达标）。 */
+[data-theme="dark"] {
+  --s-bg-page:#0F1117; --s-bg-card:#161A23; --s-bg-hover:#1D2330;
+  --s-color-primary:#4C8DFF;
+  --s-color-primary-hover:#6BA3FF; --s-color-primary-active:#85B5FF;
+  --s-color-primary-soft:#16233B; --s-color-primary-softer:#1C2E4D;
+  --s-text-primary:#E6E9EF; --s-text-secondary:#99A2B5; --s-text-disabled:#565E6E;
+  --s-text-inverse:#0F1117;
+  --s-border:#252B38; --s-border-strong:#333B4D;
+  --s-shadow-card:none; --s-shadow-overlay:0 8px 32px rgba(0,0,0,0.55);
+  --s-color-success:#34D399; --s-color-success-strong:#6EE7B7;
+  --s-color-warning:#FBBF24; --s-color-warning-strong:#FDE68A;
+  --s-color-error:#F87171; --s-color-error-strong:#FCA5A5;
+}

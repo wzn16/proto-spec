@@ -24,6 +24,7 @@ metadata:
 | B 迭代 | 目录已有 `SPEC.md`（frozen）+ 质量门通过记录 | 步骤 5（意见三分法）→ 4（受影响页）→ 6 |
 | C 仅规范 | 用户只要规范文档与 tokens，不要页面 | 步骤 1→2→3 后停止 |
 | D 体检 | 用户只要求检查已有原型项目 | 步骤 6 后输出验收单 |
+| E 单页轻量 | ≤3 页或单屏演示/路演 | 步骤 1→2（风格包默认 + ≤3 问）→3→4（用 tpl-single 单页模板）→5.5→6 |
 
 ## 硬红线（任何模式都生效）
 
@@ -67,6 +68,9 @@ metadata:
 2. 逐页生成：复制对应模板 → 替换插槽内容（真实感中文假数据，禁 lorem）→ 挂跳转链接 → 加原型工具条。
 3. 每页完成立即跑 G1 单页检（见步骤 6），exit 0 才允许开始下一页。
 4. 全部页面完成后跑 G1 全量复检 + G3。
+5. **状态页由 manifest 驱动生成**：manifest 里 `states` 声明的每个状态（empty/loading/error/failed/denied），
+   复制主页面骨架 + 换成对应状态内容（空态用 `c-empty`、错误态用 `c-alert--error`），文件名 `<id>.<state>.html`，
+   并登记进站点地图；不得只声明不生成（G3 三方对账会拦）。
 
 ## 步骤 5 — 评审与迭代
 
@@ -96,6 +100,7 @@ python3 scripts/check_screens.py --project <项目目录>           # G2 截图�
 python3 scripts/check_contrast.py --project <项目目录>          # G4 可访问性对比度
 python3 scripts/check_tokens.py --project <项目目录> --family F3  # 家族保真（身份特征 diff=0）
 python3 scripts/final_gate.py   --project <项目目录>            # G5 总验收（重跑全部子门）
+python3 scripts/gen_delivery_readme.py --project <项目目录>      # 生成交付 README（页面地图/门摘要/已知占位）
 ```
 
 - G2 能力接口：当前环境具备截图/浏览器能力时，对每页 × 断点（1440/768/375）截图存入

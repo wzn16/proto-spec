@@ -118,5 +118,10 @@
   --motion-base:200ms;
   --motion-slow:280ms;
   --ease-out:cubic-bezier(.16, 1, .3, 1);
+  /* ---------- 精修层 III · 第二批：阴影层级 / 焦点环 ---------- */
+  --g-shadow-e0:0 0 0 1px rgba(17, 24, 39, 0.04);
+  --g-shadow-e3:0 12px 32px rgba(17, 24, 39, 0.14);
+  --s-shadow-hairline:var(--g-shadow-e0);
+  --s-shadow-elevated:var(--g-shadow-e3);
+  --s-ring:0 0 0 3px var(--s-color-primary-softer);
 }
-
