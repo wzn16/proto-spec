@@ -5,7 +5,7 @@
 
 ## 家族总览（F0–F4）
 
-定义文件：`references/families/F0-corporate-blue.md` · `references/families/F1-ink-editorial.md` · `references/families/F2-warm-terracotta.md` · `references/families/F3-data-console-dark.md` · `references/families/F4-terminal-phosphor.md`
+定义文件：`references/families/F0-corporate-blue.md` · `references/families/F1-ink-editorial.md` · `references/families/F2-warm-terracotta.md` · `references/families/F3-data-console-dark.md` · `references/families/F4-terminal-phosphor.md` · `references/families/F5-fresh-playful.md` · `references/families/F6-warm-sand-civic.md`
 
 | id | 名称 | 一句话性格 | G0-3 承接 | 参照品牌 |
 | --- | --- | --- | --- | --- |
@@ -80,4 +80,4 @@ family.css 的取值纪律（形态开关声明、只准 tokens 变量与结构�
 ## 已知限制
 
 1. **家族保真机检为规划中**：「项目 tokens.css 与所选家族登记值的 diff（自由变量允许 diff，身份特征槽位 diff 必须为 0）」的 G1 家族比对模式尚未实现（设计文档 §7.3，实现期为 `scripts/check_tokens.py` 家族比对模式），当前由人工按 SPEC §2.0 覆盖项清单对照家族定义核对。
-2. **迷你示例页样本为规划中**：治理规则第 1 条要求的 `references/families/samples/` 示例页尚未建档（设计文档 §7.4，初期由人工生成），当前家族选择依据为各家族定义文件的调性描述、组件风格规则与场景边界。
+2. **家族保真机检用法**：`python3 scripts/check_tokens.py --project <目录> --family F3`（身份特征 diff 必须为 0）。各家族列表页样本截图见 `references/families/samples/`（F0–F6）。
