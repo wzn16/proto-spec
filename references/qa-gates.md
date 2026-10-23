@@ -36,7 +36,7 @@
 | --- | --- |
 | 颜色 | `color` / `background(-color)` / `border-*-color` / `fill` / `stroke` / `outline-color` 只允许 tokens 变量；裸 hex/rgb 违规 |
 | 字号 | `font-size` 只允许 tokens 档位（12/13/14/16/20/24/30px） |
-| 圆角 | `border-radius` 只允许 6/8/12/9999px（含 `50%` 正圆例外） |
+| 圆角 | `border-radius` 档位以项目 tokens.css 登记值为准（基准家族 6/8/12/9999px；50% 正圆例外）——家族可收紧（如雷沃 4/8/12），以 tokens 变量引用为准 |
 | 间距 | `padding*` / `margin*` / `gap` 只允许 4/8/12/16/20/24/32/48px |
 | 变量卫生 | 页面内定义 `--*` 变量违规；引用未定义变量违规；`calc(` 违规 |
 
