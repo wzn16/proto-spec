@@ -1,8 +1,22 @@
 # F3 数据驾驶舱·暗
+```json family-manifest
+{
+  "id": "F3",
+  "version": "0.2",
+  "identity": {
+    "--s-bg-page": "#0F1117",
+    "--s-bg-card": "#161A23",
+    "--s-color-primary": "#4C8DFF",
+    "--s-text-inverse": "#0F1117",
+    "--c-table-row-h": "40px"
+  }
+}
+```
+
 
 > 家族 id：F3 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)
 
-> 实测记录（2026-10-23，样本页 tpl-list）：换装机制实证通过；候选修订（F3 v0.2）——非激活菜单项对比度可再提亮一档。
+> 实测记录（2026-10-23，样本页 tpl-list）：换装机制实证通过。v0.2 修订（同日）：非激活菜单/次级文字提亮 #8B93A5 → #99A2B5（G4 机检驱动）。
 
 ## ① 调性
 
@@ -23,7 +37,7 @@
 | `--s-color-error(-strong)` | 红 | **#F87171 / #FCA5A5** | 6.8:1 ✓ |
 | `--s-color-info(-strong)` | =主色 | 同主色系 | |
 | `--s-text-primary` | #111827 | **#E6E9EF** | 15.5:1 ✓ |
-| `--s-text-secondary` | #6B7280 | **#8B93A5** | 6.1:1 ✓ |
+| `--s-text-secondary` | #6B7280 | **#99A2B5**（v0.2 实测提亮：原 #8B93A5 偏暗） | 7.0:1 ✓ |
 | `--s-text-disabled` | #9CA3AF | **#565E6E** | |
 | `--s-text-inverse` | #FFF | **#0F1117** | |
 | `--s-border` / `strong` | #E5E7EB/#D1D5DB | **#252B38 / #333B4D** | |

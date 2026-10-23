@@ -1,7 +1,24 @@
 # F0 冷静企业·蓝（基准家族）
+```json family-manifest
+{
+  "id": "F0",
+  "version": "0.2",
+  "identity": {
+    "--s-bg-page": "#F5F7FA",
+    "--s-bg-card": "#FFFFFF",
+    "--s-color-primary": "#2563EB",
+    "--s-radius-6": "6px",
+    "--s-radius-8": "8px",
+    "--s-radius-12": "12px"
+  }
+}
+```
+
 
 > 家族 id：F0 · 版本：v0.1（正式建档） · 上级：[美学家族库](../family-library.md)
 > 建档备注：F0 即现行 `starter/assets/tokens.css` 全量值 + `components.css` 默认形态，**本次建档不改任何值**，补齐调性、场景边界、身份特征与禁忌声明——现有项目与质量门零破坏。
+
+> v0.2 修订（2026-10-23）：辅助文字 --s-text-secondary gray-500 → gray-600（G4 机检：原 4.35:1 不达 4.5:1 门槛）。
 
 ## ① 调性
 

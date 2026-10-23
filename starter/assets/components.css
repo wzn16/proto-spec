@@ -444,7 +444,7 @@
 /* ---------- 视觉精修层：过渡 / 状态反馈 / 层次节奏（默认内置） ---------- */
 .c-btn, .c-input, .c-select, .c-textarea, .c-nav__item, .c-tag,
 .c-table tbody tr, .c-pagination .c-btn {
-  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;
+  transition: background-color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
 }
 .c-btn { font-weight: var(--s-weight-medium); }
 .c-btn:not(.c-btn--text):hover { box-shadow: var(--s-shadow-card); }
@@ -485,8 +485,17 @@
 @keyframes overlay-in { from { opacity: 0; } }
 @keyframes drawer-in { from { opacity: 0; transform: translateX(24px); } }
 @keyframes modal-in { from { opacity: 0; transform: translateY(8px); } }
-.c-drawer { animation: drawer-in .2s ease; }
-.c-modal { animation: overlay-in .15s ease; }
-.c-modal__dialog { animation: modal-in .18s ease; }
+.c-drawer { animation: drawer-in var(--motion-base) var(--ease-out); }
+.c-modal { animation: overlay-in var(--motion-fast) var(--ease-out); }
+.c-modal__dialog { animation: modal-in var(--motion-base) var(--ease-out); }
 .c-drawer__body .c-card + .c-card { margin-top: var(--s-gap-card); }
 .c-pagination { padding-top: var(--s-space-3); }
+/* ---------- 视觉精修层 III · 第一批：字距分级 + 动效降级 ---------- */
+.u-text-display { letter-spacing: -0.01em; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

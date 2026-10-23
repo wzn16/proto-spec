@@ -70,9 +70,22 @@
 
 修复后全量重截，不允许只补失败页。
 
+## G4 可访问性门（v0.4 新增）
+
+脚本：`scripts/check_contrast.py`。读项目 `assets/tokens.css`，对**语义角色配对**计算 WCAG 2.x 对比度：
+
+| 配对 | 门槛 |
+| --- | --- |
+| `--s-text-primary` on `--s-bg-page` / `--s-bg-card` | ≥4.5:1（正文） |
+| `--s-text-secondary` on `--s-bg-page` / `--s-bg-card` | ≥4.5:1（辅助文字） |
+| `--s-text-inverse` on `--s-color-primary` | ≥4.5:1（主钮文字） |
+| `--s-text-on-dark-muted` on `--s-bg-sidebar`（仅当两者存在） | ≥3:1（深底弱文字） |
+
+PASS：全部配对达标或未定义（未定义记 FAIL 并在 hint 指出）。可用 `--pairs-json` 按家族扩展配对表。
+
 ## G5 总验收
 
-脚本：`scripts/final_gate.py`。**重跑** G1/G3 全部检查（不读旧报告），`qa/screenshots/` 存在时加跑 G2，否则标 `skipped`；再查交付物：
+脚本：`scripts/final_gate.py`。**重跑** G1/G3/G4 全部检查（不读旧报告），`qa/screenshots/` 存在时加跑 G2，否则标 `skipped`；再查交付物：
 
 | # | 判据 | 标准 |
 | --- | --- | --- |

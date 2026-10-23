@@ -273,10 +273,53 @@ def collect_files(project: Path, single: str | None):
     return uniq
 
 
+def family_fidelity(project: Path, family_id: str, defs: dict):
+    """家族保真检查：项目 tokens 的身份特征槽位 diff 必须为 0。
+
+    家族登记值存于 references/families/<id>-*.md 的 ```json family-manifest``` 块。
+    返回 (violations, checked_count)。
+    """
+    import glob as _glob
+    fam_dir = Path(__file__).resolve().parent.parent / "references" / "families"
+    files = [f for f in fam_dir.glob(f"{family_id}-*.md")]
+    if not files:
+        return [{"file": f"references/families/{family_id}-*", "kind": "家族未建档",
+                 "value": family_id, "hint": "找不到该家族的定义文件"}], 0
+    text = files[0].read_text(encoding="utf-8")
+    m = re.search(r"```json\s+family-manifest\s*\n(\{.*?\})\s*```", text, re.S)
+    if not m:
+        return [{"file": files[0].name, "kind": "manifest 缺失", "value": family_id,
+                 "hint": "家族文件缺少 family-manifest JSON 块"}], 0
+    manifest = json.loads(m.group(1))
+    violations = []
+
+    def resolve_slot(name: str, d: dict, depth: int = 0) -> str | None:
+        v = d.get(name)
+        if v is None or depth > 4:
+            return v
+        m2 = re.fullmatch(r"var\(\s*(--[\w-]+)\s*\)", v.strip())
+        return resolve_slot(m2.group(1), d, depth + 1) if m2 else v.strip()
+
+    violations = []
+    for slot, registered in manifest.get("identity", {}).items():
+        actual = resolve_slot(slot, defs)
+        if actual is None:
+            violations.append({"file": f"family:{family_id}", "line": 0, "kind": "身份槽位缺失",
+                               "value": slot, "hint": f"登记值 {registered}，项目 tokens 未定义"})
+            continue
+        norm = lambda s: re.sub(r"\s+", " ", s.strip().lower())
+        if norm(actual) != norm(registered):
+            violations.append({"file": f"family:{family_id}", "line": 0, "kind": "身份漂移",
+                               "value": f"{slot}: {actual}",
+                               "hint": f"登记值 {registered}——身份特征不得被项目覆盖，冲突请改选家族"})
+    return violations, len(manifest.get("identity", {}))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="G1 规范符合性检查")
     ap.add_argument("--project", required=True)
     ap.add_argument("--page", default=None, help="只查单个文件（相对项目根）")
+    ap.add_argument("--family", default=None, help="家族保真检查（如 F3），与 --page 互斥")
     ap.add_argument("--json", action="store_true", help="只输出 JSON")
     args = ap.parse_args()
 
@@ -286,6 +329,24 @@ def main() -> int:
         print(f"[G1] 找不到 {tokens}", file=sys.stderr)
         return 2
     defs, hexes = load_tokens(tokens)
+
+    if args.family:
+        violations, n_slots = family_fidelity(project, args.family, defs)
+        report = {"gate": "G1-family", "pass": not violations,
+                  "summary": {"family": args.family, "slots": n_slots, "violations": len(violations)},
+                  "violations": violations}
+        out = project / "qa" / "reports"
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "g1-family.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        elif violations:
+            print(f"[G1-family] FAIL：{args.family} 身份特征漂移 {len(violations)} 处")
+            for v in violations:
+                print(f"  {v['value']}  {v['hint']}")
+        else:
+            print(f"[G1-family] 通过：{args.family} 身份特征 {n_slots} 槽位 diff=0")
+        return 0 if not violations else 1
 
     try:
         targets = collect_files(project, args.page)

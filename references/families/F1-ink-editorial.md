@@ -1,4 +1,20 @@
 # F1 墨纸编辑·黑白
+```json family-manifest
+{
+  "id": "F1",
+  "version": "0.1",
+  "identity": {
+    "--s-bg-page": "#FFFFFF",
+    "--s-color-primary": "#111827",
+    "--s-text-primary": "#09090B",
+    "--s-shadow-card": "none",
+    "--g-radius-6": "2px",
+    "--g-radius-8": "4px",
+    "--g-radius-12": "6px"
+  }
+}
+```
+
 
 > 家族 id：F1 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)
 

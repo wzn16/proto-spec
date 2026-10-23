@@ -1,4 +1,19 @@
 # F4 终端机能·磷光
+```json family-manifest
+{
+  "id": "F4",
+  "version": "0.1",
+  "identity": {
+    "--s-bg-page": "#0A0C10",
+    "--s-color-primary": "#D8DEE9",
+    "--s-color-accent": "#2DD4BF",
+    "--s-font-mono": "ui-monospace, \"SF Mono\", \"Cascadia Code\", Consolas, monospace",
+    "--g-radius-6": "4px",
+    "--g-radius-8": "4px"
+  }
+}
+```
+
 
 > 家族 id：F4 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)
 

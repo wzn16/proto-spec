@@ -93,6 +93,8 @@ metadata:
 python3 scripts/check_tokens.py --project <项目目录>            # G1 规范符合性（可加 --page 单页检）
 python3 scripts/check_links.py  --project <项目目录>            # G3 死链与三方对账
 python3 scripts/check_screens.py --project <项目目录>           # G2 截图矩阵（可选，见下）
+python3 scripts/check_contrast.py --project <项目目录>          # G4 可访问性对比度
+python3 scripts/check_tokens.py --project <项目目录> --family F3  # 家族保真（身份特征 diff=0）
 python3 scripts/final_gate.py   --project <项目目录>            # G5 总验收（重跑全部子门）
 ```
 

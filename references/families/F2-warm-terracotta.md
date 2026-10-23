@@ -1,4 +1,19 @@
 # F2 暖陶人文·赤
+```json family-manifest
+{
+  "id": "F2",
+  "version": "0.1",
+  "identity": {
+    "--s-bg-page": "#F7F5F0",
+    "--s-bg-card": "#FFFDF9",
+    "--s-color-primary": "#B05330",
+    "--s-text-primary": "#2D2A26",
+    "--g-radius-8": "10px",
+    "--g-radius-12": "14px"
+  }
+}
+```
+
 
 > 家族 id：F2 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)
 

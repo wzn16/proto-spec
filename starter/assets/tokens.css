@@ -59,7 +59,7 @@
   --s-bg-hover:var(--g-gray-100);
   --s-bg-overlay:var(--g-overlay);
   --s-text-primary:var(--g-gray-900);
-  --s-text-secondary:var(--g-gray-500);
+  --s-text-secondary:var(--g-gray-600);
   --s-text-disabled:var(--g-gray-400);
   --s-text-inverse:var(--g-white);
   --s-border:var(--g-gray-200);
@@ -113,4 +113,10 @@
   --c-z-sticky:100;
   --c-z-overlay:200;
   --c-z-toast:300;
+  /* ---------- 动效 token（精修层 III） ---------- */
+  --motion-fast:150ms;
+  --motion-base:200ms;
+  --motion-slow:280ms;
+  --ease-out:cubic-bezier(.16, 1, .3, 1);
 }
+

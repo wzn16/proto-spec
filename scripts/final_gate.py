@@ -106,7 +106,7 @@ def main() -> int:
 
     codes: dict[str, int] = {}
     reports: dict[str, dict] = {}
-    for gate, script in (("g1", "check_tokens.py"), ("g3", "check_links.py")):
+    for gate, script in (("g1", "check_tokens.py"), ("g3", "check_links.py"), ("g4", "check_contrast.py")):
         codes[gate], reports[gate] = run_gate(script, project)
 
     shots = project / "qa" / "screenshots"
@@ -136,6 +136,7 @@ def main() -> int:
         "g1": reports["g1"].get("pass", False),
         "g2": g2_state,
         "g3": reports["g3"].get("pass", False),
+        "g4": reports.get("g4", {}).get("pass", False),
         "deliverables": not deliverables,
         "skipped": ["G2（无截图，视觉门未执行）"] if g2_state == "skipped" else [],
         "violations": len(deliverables),
@@ -155,6 +156,9 @@ def main() -> int:
                  f"（violations={g1s.get('violations', '?')}）")
     lines.append(f"  G3 交互完整性 : {'PASS' if summary['g3'] else 'FAIL'}"
                  f"（violations={g3s.get('violations', '?')}）")
+    g4s = reports.get("g4", {}).get("summary", {})
+    lines.append(f"  G4 可访问性   : {'PASS' if summary['g4'] else 'FAIL'}"
+                 f"（violations={g4s.get('violations', '?')}）")
     if g2_state == "skipped":
         lines.append("  G2 截图验证   : SKIPPED（qa/screenshots 为空，视觉门未执行）")
     else:
