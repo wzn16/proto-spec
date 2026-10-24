@@ -40,6 +40,20 @@ def check_page(path: Path, root: Path):
         out.append({"file": name, "kind": "布局硬编码", "value": m.group(0), "hint": "表格/容器不要用 max-width 限宽，改列宽"})
     for m in RE_INLINE_W.finditer(html):
         out.append({"file": name, "kind": "布局硬编码", "value": m.group(0)[:40], "hint": "内联像素宽度不可随视口变化，改用类"})
+    # 主按钮数量：一页最多 2 个实底主按钮（页头 + 区块头）
+    primary = len(re.findall(r'class="c-btn(?![^"]*c-btn--)[^"]*"', html))
+    primary -= len(re.findall(r'<a class="c-btn(?![^"]*c-btn--)[^"]*"', html))  # 文字链不算
+    if primary > 2:
+        out.append({"file": name, "kind": "主操作超量", "value": f"{primary} 个实底按钮", "hint": "一页最多 2 个主按钮，其余降为 secondary/text"})
+
+    # 列表/表格页必须有空态
+    if ("c-data-table" in html or "p-table" in html) and "c-empty" not in html:
+        out.append({"file": name, "kind": "缺空态", "value": "无 c-empty", "hint": "列表/表格页必须有三态之一的无数据表达"})
+
+    # 宽表冻结首列
+    if re.search(r"<th[^>]*>[^<]*编码", html) and len(re.findall(r"<th", html)) > 8 and "pin-first" not in html:
+        out.append({"file": name, "kind": "宽表未冻结", "value": ">8 列且无 pin-first", "hint": "列数 >8 时启用 c-data-table--pin-first"})
+
     for m in RE_KPI.finditer(html):
         label = m.group(1).strip()
         if any(b in label for b in KPI_BAN):

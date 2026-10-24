@@ -107,7 +107,8 @@ def main() -> int:
     codes: dict[str, int] = {}
     reports: dict[str, dict] = {}
     for gate, script in (("g1", "check_tokens.py"), ("g3", "check_links.py"),
-                         ("g4", "check_contrast.py"), ("g6", "check_details.py")):
+                         ("g4", "check_contrast.py"), ("g6", "check_details.py"),
+                         ("g7", "check_visual_review.py")):
         codes[gate], reports[gate] = run_gate(script, project)
 
     shots = project / "qa" / "screenshots"
@@ -131,7 +132,7 @@ def main() -> int:
     deliverables = deliverable_checks(project, mf)
     deliverables += leftovers
     sub_ok = (codes.get("g1") == 0 and codes.get("g3") == 0
-              and codes.get("g4") == 0 and codes.get("g6") == 0 and g2_state != "fail")
+              and codes.get("g4") == 0 and codes.get("g6") == 0 and codes.get("g7") == 0 and g2_state != "fail")
     ok = sub_ok and not deliverables
 
     summary = {
@@ -140,6 +141,7 @@ def main() -> int:
         "g3": reports["g3"].get("pass", False),
         "g4": reports.get("g4", {}).get("pass", False),
         "g6": reports.get("g6", {}).get("pass", False),
+        "g7": reports.get("g7", {}).get("pass", False),
         "deliverables": not deliverables,
         "skipped": ["G2（无截图，视觉门未执行）"] if g2_state == "skipped" else [],
         "violations": len(deliverables),
@@ -162,6 +164,12 @@ def main() -> int:
     g4s = reports.get("g4", {}).get("summary", {})
     lines.append(f"  G4 可访问性   : {'PASS' if summary['g4'] else 'FAIL'}"
                  f"（violations={g4s.get('violations', '?')}）")
+    g6s = reports.get("g6", {}).get("summary", {})
+    lines.append(f"  G6 细节规则   : {'PASS' if summary.get('g6') else 'FAIL'}"
+                 f"（violations={g6s.get('violations', '?')}）")
+    g7s = reports.get("g7", {}).get("summary", {})
+    lines.append(f"  G7 视觉评审   : {'PASS' if summary.get('g7') else 'FAIL'}"
+                 f"（violations={g7s.get('violations', '?')}）")
     if g2_state == "skipped":
         lines.append("  G2 截图验证   : SKIPPED（qa/screenshots 为空，视觉门未执行）")
     else:

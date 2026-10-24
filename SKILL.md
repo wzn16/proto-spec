@@ -126,7 +126,12 @@ metadata:
 - 新页面：先补 SPEC §8 manifest 与站点地图，再按步骤 4 生成。
 同类页面级例外 ≥3 处时，提示用户该走规范级通道（例外变多说明规范该改）。
 
-## 步骤 5.5 — 视觉精修与评审（详见 references/tuning-loop.md 与 references/design-knowledge.md）
+## 步骤 5.5 — 视觉精修与评审（G7 强制门）
+
+每轮页面完成后**立刻**写 `qa/visual-review.md`（模板与判据见 `references/visual-scorecard.md`）：
+三秒测试两句 → 锚线条数 → 六维打分（<4 必须改）→ 改进项 ≤5 条 → 保留 1–2 条。
+`scripts/check_visual_review.py` 会拦：缺文件、缺小节、缺分数、低分未处理（除非写「不采纳 + 理由」）。
+配合 `references/tuning-loop.md`（迭代方法）与 `references/design-knowledge.md`（判断标准）使用。
 
 先跑 `references/design-knowledge.md` 第四节的三秒测试与模型默认做法清单，再按 `tuning-loop.md` 六维打分迭代。
 评审结论写成「位置 → 现象 → 改完要达到的可验收结果」，不写「再精致一点」。
