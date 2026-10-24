@@ -38,6 +38,30 @@ def main() -> int:
         if low and "不采纳" not in text:
             for d, v in low.items():
                 problems.append({"file": "qa/visual-review.md", "kind": "低分未处理", "value": f"{d}={v}", "hint": "低于 4 分必须改，或写「不采纳 + 理由」"})
+    # 独立评审：peer 文件或"未独立评审"说明
+    peer = root / "qa" / "visual-review-peer.md"
+    if not peer.is_file():
+        if "未独立评审" not in (f.read_text(encoding="utf-8") if f.is_file() else ""):
+            problems.append({"file": "qa/visual-review-peer.md", "kind": "缺独立评审",
+                             "value": "未找到", "hint": "派发独立评审并保存其评分单；无执行者时在自评单写「未独立评审 + 原因」"})
+    else:
+        pt = peer.read_text(encoding="utf-8")
+        for s in SECTIONS:
+            if s not in pt:
+                problems.append({"file": "qa/visual-review-peer.md", "kind": "缺小节", "value": s,
+                                 "hint": f"独立评审单必须包含「{s}」"})
+        peer_scores = {}
+        for d in DIMS:
+            m = re.search(r"\|\s*" + d + r"\s*\|\s*([1-5])\s*\|", pt)
+            if m:
+                peer_scores[d] = int(m.group(1))
+        gaps = {d: abs(scores.get(d, 0) - peer_scores[d]) for d in DIMS if d in peer_scores and d in scores}
+        big = {d: g for d, g in gaps.items() if g >= 2}
+        if big and "分歧" not in (t_text := (f.read_text(encoding="utf-8") if f.is_file() else "")):
+            problems.append({"file": "qa/visual-review.md", "kind": "分歧未处理",
+                             "value": ", ".join(f"{d}差{g}分" for d, g in big.items()),
+                             "hint": "自评与他评同一维度差 ≥2 分时，必须写「分歧」小节说明处理方式"})
+
     report = {"gate": "G7", "pass": not problems,
               "summary": {"scores": scores, "violations": len(problems)},
               "violations": problems}
