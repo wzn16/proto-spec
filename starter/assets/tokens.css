@@ -121,7 +121,17 @@
   /* ---------- 精修层 III · 第二批：阴影层级 / 焦点环 ---------- */
   --g-shadow-e0:0 0 0 1px rgba(17, 24, 39, 0.04);
   --g-shadow-e3:0 12px 32px rgba(17, 24, 39, 0.14);
+  --s-font-mono:var(--g-font-mono);
+  /* 工作台侧栏（深底）语义槽位：家族可覆盖为浅色 */
+  --s-bg-sidebar:#1F2937;
+  --s-text-on-dark-muted:#9CA3AF;
+  /* 深底叠加层（侧栏/顶栏的 hover、选中、分隔线） */
+  --s-on-dark-text:rgba(255, 255, 255, 0.86);
+  --s-on-dark-hover:rgba(255, 255, 255, 0.08);
+  --s-on-dark-active:rgba(255, 255, 255, 0.16);
+  --s-on-dark-line:rgba(255, 255, 255, 0.12);
   --s-shadow-hairline:var(--g-shadow-e0);
   --s-shadow-elevated:var(--g-shadow-e3);
   --s-ring:0 0 0 3px var(--s-color-primary-softer);
 }
+  --g-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
