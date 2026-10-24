@@ -106,7 +106,8 @@ def main() -> int:
 
     codes: dict[str, int] = {}
     reports: dict[str, dict] = {}
-    for gate, script in (("g1", "check_tokens.py"), ("g3", "check_links.py"), ("g4", "check_contrast.py")):
+    for gate, script in (("g1", "check_tokens.py"), ("g3", "check_links.py"),
+                         ("g4", "check_contrast.py"), ("g6", "check_details.py")):
         codes[gate], reports[gate] = run_gate(script, project)
 
     shots = project / "qa" / "screenshots"
@@ -129,7 +130,8 @@ def main() -> int:
                 break
     deliverables = deliverable_checks(project, mf)
     deliverables += leftovers
-    sub_ok = codes.get("g1") == 0 and codes.get("g3") == 0 and g2_state != "fail"
+    sub_ok = (codes.get("g1") == 0 and codes.get("g3") == 0
+              and codes.get("g4") == 0 and codes.get("g6") == 0 and g2_state != "fail")
     ok = sub_ok and not deliverables
 
     summary = {
@@ -137,6 +139,7 @@ def main() -> int:
         "g2": g2_state,
         "g3": reports["g3"].get("pass", False),
         "g4": reports.get("g4", {}).get("pass", False),
+        "g6": reports.get("g6", {}).get("pass", False),
         "deliverables": not deliverables,
         "skipped": ["G2（无截图，视觉门未执行）"] if g2_state == "skipped" else [],
         "violations": len(deliverables),

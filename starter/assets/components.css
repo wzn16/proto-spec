@@ -344,6 +344,8 @@
 .c-drawer {
   position: fixed; top: 0; right: 0; bottom: 0;
   width: 720px; max-width: 92vw;
+  top: var(--s-space-4); right: var(--s-space-4); bottom: var(--s-space-4);
+  border-radius: var(--s-radius-card); border: 1px solid var(--s-border);
   display: flex; flex-direction: column;
   background: var(--s-bg-card); box-shadow: var(--s-shadow-overlay);
   z-index: var(--c-z-overlay);
@@ -677,3 +679,14 @@
 .c-split--full { grid-template-columns: minmax(0, 1fr); }
 .c-kpi-row > * { min-width: 0; }
 .c-card__body > .c-data-table, .c-card__body > div > .c-data-table { max-width: 100%; }
+
+/* ---------- 列宽档位（配合 table-layout: fixed 使用） ---------- */
+.c-col-ck { width: 44px; }
+.c-col-idx { width: 56px; }
+.c-col-code { width: 132px; }
+.c-col-code--long { width: 200px; }
+.c-col-num { width: 96px; }
+.c-col-ops { width: 88px; }
+.c-col-name { width: auto; }
+.c-data-table td.c-col-name, .c-data-table th.c-col-name { white-space: normal; }
+.c-data-table td.c-col-code, .c-data-table th.c-col-code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
