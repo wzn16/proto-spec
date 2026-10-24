@@ -3,22 +3,22 @@
 > 上级入口：SKILL.md 步骤 2（Q0-3 家族推荐）与步骤 3（SPEC §2.0 家族登记）。家族定义文件在 `families/` 下，按需只读选中的家族，不全家读入。
 > 美学家族 = 现有「风格包」的超集：风格包只管 tokens 值替换（值的面），美学家族在其上叠加组件实现参数层（形态的面）与规则面（禁忌 + 场景边界）。现有「企业后台·蓝」已升级为家族 F0（基准家族），全部现有机制向后兼容。
 
-## 家族总览（F0–F4）
+## 家族总览（F0–F9）
 
 定义文件：`references/families/F0-corporate-blue.md` · `references/families/F1-ink-editorial.md` · `references/families/F2-warm-terracotta.md` · `references/families/F3-data-console-dark.md` · `references/families/F4-terminal-phosphor.md` · `references/families/F5-fresh-playful.md` · `references/families/F6-warm-sand-civic.md` · `references/families/F7-frost-glass.md` · `references/families/F8-gov-bluegray.md` · `references/families/F9-medical-teal.md`
 
 | id | 名称 | 一句话性格 | Q0-3 承接 | 参照品牌 |
 | --- | --- | --- | --- | --- |
 | F0 | 冷静企业·蓝 | 克制、可信、秩序感——不出错的企业默认 | 简洁专业 / 专业稳重 | Linear 后台、AntD Pro、飞书管理台 |
-| F1 | 墨纸编辑·黑白 | 纸面一样的白，墨一样的黑，一根细线分开世界 | 极简高冷（兼简洁专业） | Vercel、Linear 官网、Notion 冷面 |
+| F1 | 墨纸编辑·黑白 | 纸面一样的白，墨一样的黑，一根细线分开世界 | 极简高冷 / 简洁专业 | Vercel、Linear 官网、Notion 冷面 |
 | F2 | 暖陶人文·赤 | 暖米纸、赤陶土、衬线的呼吸——像精装书不像仪表盘 | 温暖亲和 | Notion 暖面、Mercury |
 | F3 | 数据驾驶舱·暗 | 深色玻璃舱，数字是唯一的主角 | 专业稳重 / 科技未来 | Grafana、ClickHouse、Supabase |
-| F5 | 清新活力·彩 | 明亮轻快的暖白 + 深橙大圆角 | C 端/教育/活动（第二批建档） |
-| F8 | 政务蓝灰·庄重 | 冷灰底 + 公文深蓝 + 方正小圆角 | 政务/审计/报送（第二批建档） |
-| F9 | 医疗青绿·清冷 | 青灰底 + 青绿 + 稍大行高 | 医疗/健康/长时注视（第二批建档） |
-| F7 | 玻璃暗夜·霜 | 深夜磨砂浮层 + 淡靛主色 + 霜蓝强调 | 数据产品/AI 控制台（backdrop-filter 渐进增强） |
-| F6 | 暖砂政务·青绿 | 稳重有温度的暖砂 + 青绿 | 政务/医疗/教育管理（第二批建档） |
 | F4 | 终端机能·磷光 | 近黑底、等宽字、一根磷光青——回车键的秩序 | 科技未来 / 年轻活力 | Ollama、Warp、OpenCode |
+| F5 | 清新活力·彩 | 明亮轻快的暖白 + 深橙大圆角 | 活泼亲和 / C 端教育 | Duolingo 后台、Notion 活动页 |
+| F6 | 暖砂政务·青绿 | 稳重有温度的暖砂 + 青绿 | 政务稳重 / 教育医疗管理 | 政务一体化平台、区域医疗平台 |
+| F7 | 玻璃暗夜·霜 | 深夜磨砂浮层 + 淡靛主色 + 霜蓝强调 | 科技未来（暗） | Vercel Dashboard、Linear 暗面 |
+| F8 | 政务蓝灰·庄重 | 冷灰底 + 公文深蓝 + 方正小圆角 | 政务庄重 / 审计报送 | 政务网厅、审计系统 |
+| F9 | 医疗青绿·清冷 | 青灰底 + 青绿 + 稍大行高 | 医疗清冷 / 长时注视 | 医院 HIS 工作台、检验系统 |
 
 ## 气质关键词 → 家族映射（Q0-3 主索引）
 

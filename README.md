@@ -8,6 +8,11 @@
 - 需要「能点、能看、风格统一」的原型来对齐需求的产品/售前/开发人员；
 - 使用任何支持 skill 机制（读取 SKILL.md 并照做）的 AI 编码工具的用户。
 
+## 首次运行为红（预期行为）
+
+在 starter 上直接跑 `python3 scripts/final_gate.py --project starter` 会是 FAIL：`pages/` 尚未生成、`qa/visual-review.md` 未写。
+这不是缺陷，是门禁在要求「先有项目再生效」。正式项目在步骤 3–5 产出 SPEC/页面/评分单后再跑。
+
 ## 安装
 
 三种方式任选其一：
