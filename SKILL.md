@@ -132,6 +132,7 @@ metadata:
 三秒测试两句 → 锚线条数 → 六维打分（<4 必须改）→ 改进项 ≤5 条 → 保留 1–2 条。
 `scripts/check_visual_review.py` 会拦：缺文件、缺小节、缺分数、低分未处理（除非写「不采纳 + 理由」）。
 配合 `references/tuning-loop.md`（迭代方法）与 `references/design-knowledge.md`（判断标准）使用。
+有截图后跑 `scripts/check_pixels.py`（G8 像素判据见 `references/pixel-rules.md`：锚线/贴边/强调面积/字号层级）。
 自评完成后按 `references/visual-review-protocol.md` 派发独立评审，产出 `qa/visual-review-peer.md`；
 两份评分单同一维度差 ≥2 分时，必须在自评单写「分歧」小节说明处理方式（改 或 不采纳+理由）。
 
