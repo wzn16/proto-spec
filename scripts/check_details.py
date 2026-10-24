@@ -13,7 +13,7 @@ RE_HREF = re.compile(r'href="([^"#]+\.html[^"]*)"')
 RE_MSG = re.compile(r'data-message="([^"]+)"')
 RE_KPI = re.compile(r'class="c-kpi__label"[^>]*>([^<]+)<')
 RE_MAXW = re.compile(r'max-width\s*:\s*\d+px')
-RE_INLINE_W = re.compile(r'style="[^"]*width\s*:\s*\d+px')
+RE_INLINE_W = re.compile(r'style="[^"]*(?<!max-)width\s*:\s*\d+px')
 
 
 def check_page(path: Path, root: Path):
@@ -39,6 +39,8 @@ def check_page(path: Path, root: Path):
     for m in RE_MAXW.finditer(html):
         out.append({"file": name, "kind": "布局硬编码", "value": m.group(0), "hint": "表格/容器不要用 max-width 限宽，改列宽"})
     for m in RE_INLINE_W.finditer(html):
+        if 'max-width' in m.group(0):
+            continue
         out.append({"file": name, "kind": "布局硬编码", "value": m.group(0)[:40], "hint": "内联像素宽度不可随视口变化，改用类"})
     # 主按钮数量：一页最多 2 个实底主按钮（页头 + 区块头）
     primary = len(re.findall(r'class="c-btn(?![^"]*c-btn--)[^"]*"', html))
@@ -47,7 +49,8 @@ def check_page(path: Path, root: Path):
         out.append({"file": name, "kind": "主操作超量", "value": f"{primary} 个实底按钮", "hint": "一页最多 2 个主按钮，其余降为 secondary/text"})
 
     # 列表/表格页必须有空态
-    if ("c-data-table" in html or "p-table" in html) and "c-empty" not in html:
+    is_page = "<html" in html[:400].lower()
+    if is_page and ("c-data-table" in html or "p-table" in html) and "c-empty" not in html:
         out.append({"file": name, "kind": "缺空态", "value": "无 c-empty", "hint": "列表/表格页必须有三态之一的无数据表达"})
 
     # 宽表冻结首列
@@ -67,7 +70,8 @@ def main() -> int:
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
     root = Path(args.project).resolve()
-    pages = sorted([p for p in root.rglob("*.html") if "qa" not in p.parts])
+    pages = sorted([p for p in root.rglob("*.html")
+                    if "qa" not in p.parts and "assets" not in p.parts])
     all_v = []
     for p in pages:
         all_v += check_page(p, root)

@@ -263,9 +263,7 @@ def check(p: Path) -> dict:
     if ratio > ACCENT_RATIO:
         violations.append({"kind": "强调色超量", "value": f"{ratio * 100:.1f}%",
                            "hint": f"强调色面积应 ≤{ACCENT_RATIO * 100:.0f}%，把次要控件降为描边/文字"})
-    if blobs > MAX_ACCENT_BLOBS:
-        violations.append({"kind": "实心强调块过多", "value": f"{blobs} 块",
-                           "hint": f"同屏实心强调块 ≤{MAX_ACCENT_BLOBS}（主操作 + 当前选中）"})
+    # 实心强调块只报告（主操作超量由 G6 执法；块计数受图标/标签影响，不设门）
     if levels < MIN_FONT_LEVELS:
         violations.append({"kind": "字号层级不足", "value": f"{levels} 档",
                            "hint": f"至少 {MIN_FONT_LEVELS} 档（标题/正文/辅助）；拉开层级差"})

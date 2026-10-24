@@ -1,6 +1,21 @@
-# 质量门体系（G1–G5）
+# 质量门体系（G1–G8）
 
 > 上级入口：SKILL.md 步骤 6。设计原则：确定性优先（能脚本判定的绝不目测）、证据落盘（报告 JSON + exit code）、失败即阻断、判据全量化、豁免只能由用户明示给出。
+
+## 总表
+
+| 门 | 脚本 | 判据文件 | 阻断 | 跳过条件 |
+| --- | --- | --- | --- | --- |
+| G1 规范符合性 | check_tokens.py | 本文件 §G1 | 是 | 无 |
+| G2 截图矩阵 | check_screens.py | 本文件 §G2 | 是 | screenshots 为空（记入 skipped） |
+| G3 交互完整性 | check_links.py | 本文件 §G3 | 是 | 无 |
+| G4 可访问性 | check_contrast.py | 本文件 §G4 | 是 | 无 |
+| G6 细节规则 | check_details.py | detail-rules.md | 是 | 无 |
+| G7 评审完整性 | check_visual_review.py | visual-scorecard.md / visual-review-protocol.md | 是 | 无 |
+| G8 像素指标 | check_pixels.py | pixel-rules.md | 是 | 无 1440 截图（记入 skipped） |
+| G5 总验收 | final_gate.py | 本文件 §G5 | 是 | 编排器，不新增判据 |
+
+家族保真（--family）尚未并入 G5，步骤 6 需单独执行。
 
 ## 目录导航
 

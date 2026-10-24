@@ -21,6 +21,8 @@ from pathlib import Path
 # 语义角色配对（前景, 背景, 用途, 门槛）
 # 门槛: 4.5 = 正文; 3.0 = 大字/UI 控件
 DEFAULT_PAIRS = [
+    ("--s-color-success-strong", "--s-bg-card", "状态文字/卡片底", 4.5),
+    ("--s-color-error-strong", "--s-bg-card", "错误文字/卡片底", 4.5),
     ("--s-text-primary", "--s-bg-page", "正文/页面底", 4.5),
     ("--s-text-primary", "--s-bg-card", "正文/卡片底", 4.5),
     ("--s-text-secondary", "--s-bg-page", "辅助文字/页面底", 4.5),

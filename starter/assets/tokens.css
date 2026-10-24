@@ -145,4 +145,3 @@
   --s-shadow-elevated:var(--g-shadow-e3);
   --s-ring:0 0 0 3px var(--s-color-primary-softer);
 }
-  --g-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
