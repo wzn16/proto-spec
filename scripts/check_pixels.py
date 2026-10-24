@@ -31,6 +31,7 @@ CLIP_PX = 3
 ACCENT_RATIO = 0.10
 MAX_ACCENT_BLOBS = 2
 MIN_FONT_LEVELS = 3
+MIN_RIGHT_MARGIN = 12
 
 
 def load(p: Path):
@@ -141,8 +142,8 @@ def accent_stats(a: np.ndarray):
     return ratio, blobs
 
 
-def card_right_edges(a: np.ndarray, x0: int) -> list[int]:
-    """检测竖向卡片边线：与左右各 3px 差异明显的列。"""
+def card_right_edges(a: np.ndarray, x0: int) -> list[dict]:
+    """检测竖向卡片边线，返回 [{x, y0, y1}]：只在该边线真实存在的纵向区间内使用。"""
     H, W, _ = a.shape
     lum = (a[:, :, 0] * 299 + a[:, :, 1] * 587 + a[:, :, 2] * 114) // 1000
     edges = []
@@ -155,14 +156,68 @@ def card_right_edges(a: np.ndarray, x0: int) -> list[int]:
         frac = float(((diff_left > 8) & (diff_right > 8)).mean())
         if frac > 0.55:
             edges.append(x)
-    # 合并相邻
+    # 合并相邻列，并记录每条边线的纵向跨度
     merged = []
     for x in edges:
         if merged and x - merged[-1][-1] <= 2:
             merged[-1].append(x)
         else:
             merged.append([x])
-    return [int(np.median(g)) for g in merged]
+    out = []
+    for group in merged:
+        x = int(np.median(group))
+        col = lum[120:, x]
+        l3 = lum[120:, x - 3]
+        r3 = lum[120:, x + 3]
+        on = (np.abs(col - l3) > 8) & (np.abs(col - r3) > 8)
+        # 取最长连续段作为该边线真实跨度（避免被零散文字污染）
+        best, cur_start = (0, 0), None
+        for i, v in enumerate(on):
+            if v and cur_start is None:
+                cur_start = i
+            elif not v and cur_start is not None:
+                if i - cur_start > best[1] - best[0]:
+                    best = (cur_start, i)
+                cur_start = None
+        if cur_start is not None and len(on) - cur_start > best[1] - best[0]:
+            best = (cur_start, len(on))
+        if best[1] - best[0] < 40:
+            continue
+        out.append({"x": x, "y0": best[0] + 120, "y1": best[1] - 1 + 120})
+    return out
+
+
+def right_margins(a: np.ndarray, m: np.ndarray, edges: list[dict], x0: int) -> list[int]:
+    """每张卡片内（限定该边线的纵向区间），内容墨迹到卡片右边界的最小留白。"""
+    lum = (a[:, :, 0] * 299 + a[:, :, 1] * 587 + a[:, :, 2] * 114) // 1000
+    out = []
+    rights = [e for e in edges
+              if e["x"] + 6 < a.shape[1] and float(lum[e["y0"]:e["y1"] + 1, e["x"] + 6].mean()) > 200]
+    for e in rights:
+        ex = e["x"]
+        region = m[e["y0"]:e["y1"] + 1, max(x0, ex - 400):max(x0 + 1, ex - 1)]
+        cols = np.where(region.any(axis=0))[0]
+        if len(cols) == 0:
+            continue
+        last_ink = max(x0, ex - 400) + int(cols.max())
+        out.append(int(ex - last_ink))
+    return out
+
+
+def row_pitch(mask: np.ndarray) -> dict:
+    """表格行距一致性：相邻文本带顶部的间距统计（只报告，不参与门禁）。"""
+    tops = [b[0] for b in bands(mask)]
+    if len(tops) < 6:
+        return {"samples": 0}
+    diffs = [tops[i + 1] - tops[i] for i in range(len(tops) - 1)]
+    diffs = [d for d in diffs if 8 <= d <= 80]
+    if len(diffs) < 5:
+        return {"samples": len(diffs)}
+    import statistics as st
+    med = st.median(diffs)
+    sd = st.pstdev(diffs)
+    return {"samples": len(diffs), "median": round(med, 1), "stdev": round(sd, 1),
+            "cv": round(sd / med, 3) if med else 0}
 
 
 def check(p: Path) -> dict:
@@ -177,19 +232,28 @@ def check(p: Path) -> dict:
     edges = card_right_edges(a, x0)
     lum = (a[:, :, 0] * 299 + a[:, :, 1] * 587 + a[:, :, 2] * 114) // 1000
     right_edges = []
-    for x in edges:
+    for e in edges:
+        x = e["x"]
         if x + 6 >= W:
             continue
-        right_bright = float(lum[120:, x + 6].mean()) > 200
-        left_has_ink = float(m[:, max(0, x - 30):max(1, x - 6)].mean()) > 0.02
+        right_bright = float(lum[e["y0"]:e["y1"] + 1, x + 6].mean()) > 200
+        left_has_ink = float(m[e["y0"]:e["y1"] + 1, max(0, x - 30):max(1, x - 6)].mean()) > 0.02
         if right_bright and left_has_ink:
-            right_edges.append(x)
+            right_edges.append(e)
     clipped = []
-    for ex in right_edges:
-        seg = m[:, max(0, ex - CLIP_PX):ex]
+    for e in right_edges:
+        ex = e["x"]
+        seg = m[e["y0"]:e["y1"] + 1, max(0, ex - CLIP_PX):ex]
         if seg.sum() > 20:
             clipped.append(ex)
+    margins = right_margins(a, m, edges, x0)
+    tight = [x for x in margins if x < MIN_RIGHT_MARGIN]
+    pitch = row_pitch(m)
+
     violations = []
+    if tight:
+        violations.append({"kind": "右缘留白不足", "value": f"{len(tight)} 张卡片留白 {min(tight)}px",
+                           "hint": f"内容距卡片右边线应 ≥{MIN_RIGHT_MARGIN}px：末列加右内边距或收列宽"})
     if len(strong) > MAX_ANCHORS + 1:
         violations.append({"kind": "锚线过多", "value": f"{len(strong)} 条（{strong}）",
                            "hint": f"正文/标题左缘应归到 ≤{MAX_ANCHORS + 1} 条锚线，检查表内文本与统计卡是否与卡片标题同线"})
@@ -206,7 +270,8 @@ def check(p: Path) -> dict:
         violations.append({"kind": "字号层级不足", "value": f"{levels} 档",
                            "hint": f"至少 {MIN_FONT_LEVELS} 档（标题/正文/辅助）；拉开层级差"})
     return {"file": p.name, "size": [W, H], "anchors": strong, "accent_ratio": round(ratio, 4),
-            "accent_blobs": blobs, "font_levels": levels, "card_edges": edges[-6:],
+            "right_margins": margins, "row_pitch": pitch,
+            "accent_blobs": blobs, "font_levels": levels, "card_edges": [e["x"] for e in edges[-6:]],
             "violations": violations}
 
 
