@@ -5,7 +5,7 @@
 
 ## 家族总览（F0–F4）
 
-定义文件：`references/families/F0-corporate-blue.md` · `references/families/F1-ink-editorial.md` · `references/families/F2-warm-terracotta.md` · `references/families/F3-data-console-dark.md` · `references/families/F4-terminal-phosphor.md` · `references/families/F5-fresh-playful.md` · `references/families/F6-warm-sand-civic.md` · `references/families/F7-frost-glass.md`
+定义文件：`references/families/F0-corporate-blue.md` · `references/families/F1-ink-editorial.md` · `references/families/F2-warm-terracotta.md` · `references/families/F3-data-console-dark.md` · `references/families/F4-terminal-phosphor.md` · `references/families/F5-fresh-playful.md` · `references/families/F6-warm-sand-civic.md` · `references/families/F7-frost-glass.md` · `references/families/F8-gov-bluegray.md` · `references/families/F9-medical-teal.md`
 
 | id | 名称 | 一句话性格 | G0-3 承接 | 参照品牌 |
 | --- | --- | --- | --- | --- |
@@ -14,6 +14,8 @@
 | F2 | 暖陶人文·赤 | 暖米纸、赤陶土、衬线的呼吸——像精装书不像仪表盘 | 温暖亲和 | Notion 暖面、Mercury |
 | F3 | 数据驾驶舱·暗 | 深色玻璃舱，数字是唯一的主角 | 专业稳重 / 科技未来 | Grafana、ClickHouse、Supabase |
 | F5 | 清新活力·彩 | 明亮轻快的暖白 + 深橙大圆角 | C 端/教育/活动（第二批建档） |
+| F8 | 政务蓝灰·庄重 | 冷灰底 + 公文深蓝 + 方正小圆角 | 政务/审计/报送（第二批建档） |
+| F9 | 医疗青绿·清冷 | 青灰底 + 青绿 + 稍大行高 | 医疗/健康/长时注视（第二批建档） |
 | F7 | 玻璃暗夜·霜 | 深夜磨砂浮层 + 淡靛主色 + 霜蓝强调 | 数据产品/AI 控制台（backdrop-filter 渐进增强） |
 | F6 | 暖砂政务·青绿 | 稳重有温度的暖砂 + 青绿 | 政务/医疗/教育管理（第二批建档） |
 | F4 | 终端机能·磷光 | 近黑底、等宽字、一根磷光青——回车键的秩序 | 科技未来 / 年轻活力 | Ollama、Warp、OpenCode |

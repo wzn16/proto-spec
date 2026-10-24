@@ -1,36 +1,9 @@
 <!DOCTYPE html>
-<!--
-  ============================================================
-  模板：tpl-detail.html —— 对象详情页
-  ------------------------------------------------------------
-  用法：复制本文件到 pages/ 改名（如 order-detail.html），再替换插槽内容。
-  模板内相对链接已按 pages/ 位置书写：资源 ../assets/…，
-  页面互链与正式页同级，../index.html 为站点地图。
-
-  区域结构：
-  ┌───────────┬────────────────────────────────────────┐
-  │           │ l-header（面包屑 / 管理员）             │
-  │ l-sidebar ├────────────────────────────────────────┤
-  │ SLOT-0    │ l-page                                 │
-  │ 侧边导航   │   ├ SLOT-1 页头与动作区                │
-  │           │   ├ SLOT-2 描述列表（snippet-desc-list）│
-  │           │   └ SLOT-3 页签（snippet-tabs）        │
-  └───────────┴────────────────────────────────────────┘
-
-  插槽清单：
-    SLOT-0 侧边导航：详情页以「订单详情」为 active 项（snippet-sidebar-nav）
-    SLOT-1 页头与动作区：改标题单号与动作按钮（编辑跳转 / 危险操作 toast）
-    SLOT-2 描述列表：改字段名与值，可增删条目（snippet-desc-list）
-    SLOT-3 页签：改页签名与面板内容（snippet-tabs，第二面板默认 hidden）
-
-  假数据要求：单号 / 客户 / 金额 / 时间须与列表页 SO20261022001 保持一致。
-  ============================================================
--->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>订单详情 - 订单管理 | 订单管理系统</title>
+  <title>详情页模板 - 演示</title>
   <link rel="stylesheet" href="../assets/tokens.css">
   <link rel="stylesheet" href="../assets/base.css">
   <link rel="stylesheet" href="../assets/shell.css">
@@ -39,127 +12,86 @@
   <script defer src="../assets/app.js"></script>
 </head>
 <body>
-<div class="l-app">
-
-  <!-- SLOT-0: 侧边导航（详情页：订单详情为 active 项） -->
-  <nav class="l-sidebar">
-    <nav class="c-nav">
-      <div class="c-nav__group">订单管理</div>
-      <a class="c-nav__item" href="order-list.html">订单列表</a>
-      <a class="c-nav__item" href="order-form.html">新建订单</a>
-      <a class="c-nav__item c-nav__item--active" href="order-detail.html">订单详情</a>
-    </nav>
-  </nav>
-  <!-- /SLOT-0 -->
-
-  <header class="l-header">
-    <nav class="c-breadcrumb" aria-label="面包屑">
-      <a class="c-breadcrumb__item" href="../index.html">首页</a>
-      <span class="c-breadcrumb__sep">/</span>
-      <span class="c-breadcrumb__item">订单管理</span>
-      <span class="c-breadcrumb__sep">/</span>
-      <span class="c-breadcrumb__item" aria-current="page">订单详情</span>
-    </nav>
-    <button class="c-btn c-btn--sm" type="button">管理员</button>
-  </header>
-
-  <main class="l-page">
-
-    <!-- SLOT-1: 页头与动作区（编辑跳转表单页；取消订单走 toast 演示） -->
-    <div class="l-page-head">
-      <h1 class="u-text-title">订单详情 SO20261022001</h1>
-      <div>
-        <a class="c-btn c-btn--secondary" href="order-form.html">编辑</a>
-        <button class="c-btn c-btn--danger" type="button"
-                data-action="show-toast" data-message="演示：已发起取消">取消订单</button>
-      </div>
+<div class="c-workbench">
+  <aside class="c-workbench__side">
+    <div class="c-workbench__brand">DEMO<small>业务系统</small></div>
+    <div class="c-workbench__nav">
+      <div class="c-side-menu__group">业务</div>
+      <a class="c-side-menu__item" href="../index.html"><span class="c-side-menu__dot"></span>返回站点地图</a>
     </div>
-    <!-- /SLOT-1 -->
-
-    <!-- SLOT-2: 订单信息描述列表（片段 snippet-desc-list） -->
-    <section class="c-card">
-      <div class="c-card__header">
-        <h2>订单信息</h2>
+  </aside>
+  <div class="c-workbench__main">
+    <header class="l-header">
+      <div class="u-flex u-gap-md">
+        <span class="p-module">业务</span>
+        <nav class="c-breadcrumb"><span class="c-breadcrumb__item">采购</span><span class="c-breadcrumb__sep">/</span><span class="c-breadcrumb__item" aria-current="page">订单详情</span></nav>
       </div>
-      <div class="c-card__body">
-        <dl class="c-desc">
-          <div class="c-desc__item">
-            <dt>订单号</dt>
-            <dd>SO20261022001</dd>
-          </div>
-          <div class="c-desc__item">
-            <dt>客户</dt>
-            <dd>杭州恒晟机械</dd>
-          </div>
-          <div class="c-desc__item">
-            <dt>金额</dt>
-            <dd class="u-num">¥12,800.00</dd>
-          </div>
-          <div class="c-desc__item">
-            <dt>状态</dt>
-            <dd><span class="c-tag c-tag--success">已完成</span></dd>
-          </div>
-          <div class="c-desc__item">
-            <dt>下单时间</dt>
-            <dd>2026-10-22 09:12</dd>
-          </div>
-          <div class="c-desc__item">
-            <dt>备注</dt>
-            <dd>含 2 套非标夹具，要求 10 月 28 日前送达并完成现场安装调试。</dd>
-          </div>
-        </dl>
+      <div class="u-flex u-gap-sm"><button class="c-btn c-btn--sm c-btn--secondary" type="button">root账号</button></div>
+    </header>
+    <main class="c-workbench__content">
+      <div class="c-workbench__head">
+        <div class="u-flex u-gap-md" style="align-items:baseline">
+          <h1>PO202610240018</h1>
+          <span class="c-tag c-tag--dot c-tag--warning">待审核</span>
+        </div>
+        <span class="u-flex u-gap-sm">
+          <button class="c-btn c-btn--sm c-btn--secondary" type="button" data-action="show-toast" data-message="演示：打印">打印</button>
+          <button class="c-btn c-btn--sm" type="button" data-action="show-toast" data-message="演示：提交审核">提交审核</button>
+        </span>
       </div>
-    </section>
-    <!-- /SLOT-2 -->
 
-    <!-- SLOT-3: 页签（片段 snippet-tabs：基本信息 / 操作日志，日志面板默认 hidden） -->
-    <section class="c-card">
-      <div class="c-card__body">
-        <div class="c-tabs">
-          <div role="tablist" aria-label="订单详情页签">
-            <button class="c-tabs__tab c-tabs__tab--active" type="button" role="tab"
-                    aria-selected="true" data-action="switch-tab"
-                    data-target="#panel-basic">基本信息</button>
-            <button class="c-tabs__tab" type="button" role="tab"
-                    aria-selected="false" data-action="switch-tab"
-                    data-target="#panel-log">操作日志</button>
-          </div>
-
-          <div class="c-tabs__panel" id="panel-basic" role="tabpanel">
-            <dl class="c-desc">
-              <div class="c-desc__item">
-                <dt>收货地址</dt>
-                <dd>浙江省杭州市余杭区文一西路 998 号 5 号厂房</dd>
-              </div>
-              <div class="c-desc__item">
-                <dt>付款方式</dt>
-                <dd>对公银行转账（月结 30 天）</dd>
-              </div>
-              <div class="c-desc__item">
-                <dt>物流单号</dt>
-                <dd>SF1380000123456</dd>
-              </div>
-            </dl>
-          </div>
-
-          <div class="c-tabs__panel" id="panel-log" role="tabpanel" hidden>
-            <p>2026-10-22 09:12　张伟（销售） 创建订单，状态置为「待审核」。</p>
-            <p>2026-10-22 10:05　李娜（计划） 审核通过，状态变更为「已完成」。</p>
-            <p>2026-10-22 11:40　系统 自动生成出库单 CK20261022001，等待仓库拣货。</p>
+      <section class="c-card">
+        <div class="c-card__body">
+          <div class="c-kv">
+            <dt>供应商</dt><dd>杭州恒晟机械有限公司</dd>
+            <dt>采购类型</dt><dd>标准采购</dd>
+            <dt>下单人</dt><dd>王建国 · 采购部</dd>
+            <dt>下单时间</dt><dd class="u-num">2026-10-24 09:12</dd>
+            <dt>订单金额</dt><dd class="u-num">¥128,600.00</dd>
+            <dt>期望到货</dt><dd class="u-num">2026-10-30</dd>
           </div>
         </div>
+      </section>
+
+      <div class="c-segmented" role="tablist">
+        <button class="c-segmented__item is-on" role="tab" type="button">采购明细<span class="c-segmented__count">3</span></button>
+        <button class="c-segmented__item" role="tab" type="button">审批记录<span class="c-segmented__count">4</span></button>
+        <button class="c-segmented__item" role="tab" type="button">附件<span class="c-segmented__count">2</span></button>
       </div>
-    </section>
-    <!-- /SLOT-3 -->
 
-  </main>
+      <section class="c-card c-card--flush">
+        <div class="c-card__head"><span class="c-card__head-title">采购明细</span><span class="c-card__head-meta">按物料逐行</span></div>
+        <div class="c-card__body">
+          <table class="c-data-table c-data-table--dense">
+            <thead><tr><th class="c-col-idx">序号</th><th>物料编码</th><th class="c-col-name">物料名称</th><th style="text-align:right">数量</th><th style="text-align:right">单价</th><th style="text-align:right">金额</th></tr></thead>
+            <tbody>
+              <tr><td class="c-data-table__idx">1</td><td class="c-data-table__code">M-4LZ8G-01</td><td>割台总成</td><td class="u-num" style="text-align:right">12</td><td class="u-num" style="text-align:right">¥8,600</td><td class="u-num" style="text-align:right">¥103,200</td></tr>
+              <tr><td class="c-data-table__idx">2</td><td class="c-data-table__code">M-4LZ8G-02</td><td>滚筒总成</td><td class="u-num" style="text-align:right">4</td><td class="u-num" style="text-align:right">¥5,200</td><td class="u-num" style="text-align:right">¥20,800</td></tr>
+              <tr><td class="c-data-table__idx">3</td><td class="c-data-table__code">M-4LZ8G-03</td><td>履带总成</td><td class="u-num" style="text-align:right">2</td><td class="u-num" style="text-align:right">¥2,300</td><td class="u-num" style="text-align:right">¥4,600</td></tr>
+            </tbody>
+          </table>
+          <!-- 子表为空时启用下面这块，替换上面的 table -->
+          <div class="c-empty c-empty--compact" hidden>
+            <div class="c-empty__title">暂无采购明细</div>
+            <div class="c-empty__desc">添加物料后自动计算金额与税额</div>
+            <div class="c-empty__action"><button class="c-btn c-btn--sm" type="button">＋ 添加物料</button></div>
+          </div>
+        </div>
+      </section>
 
-  <!-- 原型工具条（非业务 UI，正式交付时可整块删除） -->
-  <div class="proto-bar">
-    <a href="../index.html">返回站点地图</a>
-    <span>templates/tpl-detail.html</span>
+      <section class="c-card">
+        <div class="c-card__head"><span class="c-card__head-title">审批记录</span></div>
+        <div class="c-card__body">
+          <ol class="c-timeline">
+            <li class="c-timeline__item"><div class="c-timeline__time">2026-10-24 09:12</div><div class="c-timeline__text">王建国 创建订单</div></li>
+            <li class="c-timeline__item"><div class="c-timeline__time">2026-10-24 09:30</div><div class="c-timeline__text">李主管 审核通过</div></li>
+            <li class="c-timeline__item"><div class="c-timeline__time">2026-10-24 10:05</div><div class="c-timeline__text">赵经理 待审核（超 2 小时未处理）</div></li>
+          </ol>
+        </div>
+      </section>
+    </main>
   </div>
-
 </div>
+<div class="proto-bar"><a href="../index.html">返回站点地图</a><span>templates/tpl-detail.html</span></div>
 </body>
 </html>

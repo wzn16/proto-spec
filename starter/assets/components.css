@@ -690,3 +690,42 @@
 .c-col-name { width: auto; }
 .c-data-table td.c-col-name, .c-data-table th.c-col-name { white-space: normal; }
 .c-data-table td.c-col-code, .c-data-table th.c-col-code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- 详情面板（主从右侧 / 独立详情页共用） ---------- */
+.c-detail { display: flex; flex-direction: column; }
+.c-detail__head { display: flex; align-items: baseline; gap: var(--s-space-3); padding-bottom: var(--s-space-3); border-bottom: 1px solid var(--s-border); }
+.c-detail__name { font-size: var(--s-fs-body); font-weight: var(--s-weight-semibold); color: var(--s-text-primary); }
+.c-detail__meta { margin-left: auto; flex: 0 0 auto; color: var(--s-text-secondary); font-size: var(--s-fs-caption); font-variant-numeric: tabular-nums; }
+.c-detail__body { display: flex; flex-direction: column; gap: var(--s-space-6); padding-top: var(--s-space-4); }
+.c-detail__sec { display: flex; flex-direction: column; gap: var(--s-space-2); }
+.c-detail__sec + .c-detail__sec { padding-top: var(--s-space-4); border-top: 1px solid var(--s-border); }
+.c-detail__sec-title { display: flex; align-items: center; gap: var(--s-space-2); font-size: var(--s-fs-small); font-weight: var(--s-weight-semibold); color: var(--s-text-primary); }
+.c-detail__sec-title .n { font-weight: var(--s-weight-normal); color: var(--s-text-secondary); font-size: var(--s-fs-caption); }
+.c-detail__acts { display: flex; gap: var(--s-space-2); }
+
+/* ---------- KV 列表（键值对，详情/抽屉通用） ---------- */
+.c-kv { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--s-space-2) var(--s-space-4); align-items: baseline; margin: 0; }
+.c-kv dt { color: var(--s-text-secondary); font-size: var(--s-fs-caption); }
+.c-kv dd { margin: 0; color: var(--s-text-primary); font-size: var(--s-fs-small); word-break: break-word; }
+
+/* ---------- 分段器（视图/状态切换） ---------- */
+.c-segmented { display: inline-flex; padding: var(--s-space-1); background: var(--s-bg-hover); border-radius: var(--s-radius-control); gap: var(--s-space-1); }
+.c-segmented__item { display: inline-flex; align-items: center; gap: var(--s-space-1); height: 28px; padding: 0 var(--s-space-3); border-radius: var(--s-radius-small); border: 0; background: transparent; color: var(--s-text-secondary); font-size: var(--s-fs-small); cursor: pointer; transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out); }
+.c-segmented__item:hover { color: var(--s-text-primary); }
+.c-segmented__item.is-on { background: var(--s-bg-card); color: var(--s-text-primary); font-weight: var(--s-weight-medium); box-shadow: var(--s-shadow-hairline); }
+.c-segmented__count { color: var(--s-text-secondary); font-variant-numeric: tabular-nums; }
+
+/* ---------- 时间线（操作日志 / 流转记录） ---------- */
+.c-timeline { display: flex; flex-direction: column; gap: var(--s-space-4); margin: 0; padding: 0; list-style: none; }
+.c-timeline__item { position: relative; padding-left: var(--s-space-5); }
+.c-timeline__item::before { content: ""; position: absolute; left: 3px; top: 6px; width: 8px; height: 8px; border-radius: var(--s-radius-full); background: var(--s-color-primary); }
+.c-timeline__item::after { content: ""; position: absolute; left: 6px; top: 18px; bottom: -16px; width: 1px; background: var(--s-border); }
+.c-timeline__item:last-child::after { display: none; }
+.c-timeline__time { color: var(--s-text-secondary); font-size: var(--s-fs-caption); font-variant-numeric: tabular-nums; }
+.c-timeline__text { color: var(--s-text-primary); font-size: var(--s-fs-small); }
+
+/* ---------- 树 + 表联动布局（左树右表，独立滚动） ---------- */
+.c-split--tree { grid-template-columns: 300px minmax(0, 1fr); }
+.c-split--tree > * { min-width: 0; }
+.c-split--tree .c-tree { max-height: none; }
+@media (max-width: 900px) { .c-split--tree { grid-template-columns: minmax(0, 1fr); } }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>看板模板 - 演示</title>
+  <link rel="stylesheet" href="../assets/tokens.css">
+  <link rel="stylesheet" href="../assets/base.css">
+  <link rel="stylesheet" href="../assets/shell.css">
+  <link rel="stylesheet" href="../assets/components.css">
+  <link rel="stylesheet" href="../assets/family.css">
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="c-workbench">
+  <aside class="c-workbench__side">
+    <div class="c-workbench__brand">DEMO<small>任务板</small></div>
+    <div class="c-workbench__nav">
+      <div class="c-side-menu__group">业务</div>
+      <a class="c-side-menu__item" href="../index.html"><span class="c-side-menu__dot"></span>返回站点地图</a>
+    </div>
+  </aside>
+  <div class="c-workbench__main">
+    <header class="l-header">
+      <div class="u-flex u-gap-md"><span class="p-module">任务板</span></div>
+      <div class="u-flex u-gap-sm"><button class="c-btn c-btn--sm c-btn--secondary" type="button">root账号</button></div>
+    </header>
+    <main class="c-workbench__content">
+      <div class="c-workbench__head">
+        <h1>整改任务</h1>
+        <button class="c-btn c-btn--sm" type="button" data-action="show-toast" data-message="演示：新建任务">＋ 新建任务</button>
+      </div>
+      <div class="c-split--tree" style="display:grid;gap:var(--s-gap-card)">
+        <section class="c-card"><div class="c-card__head"><span class="c-card__head-title">待处理</span><span class="c-card__head-meta">3 项</span></div>
+          <div class="c-card__body">
+            <div class="c-list-rows">
+              <div class="c-list-row"><div class="c-list-row__main"><div class="c-list-row__title">座椅骨架异响</div><div class="c-list-row__meta"><span>内饰 孙丽</span><span>期限 10-20</span></div></div></div>
+              <div class="c-list-row"><div class="c-list-row__main"><div class="c-list-row__title">空调管路保温层破损</div><div class="c-list-row__meta"><span>空调 周涛</span><span>期限 10-21</span></div></div></div>
+              <div class="c-list-row"><div class="c-list-row__main"><div class="c-list-row__title">仪表标定参数偏差</div><div class="c-list-row__meta"><span>电子 吴凯</span><span>期限 10-19</span></div></div></div>
+            </div>
+          </div>
+        </section>
+        <section class="c-card"><div class="c-card__head"><span class="c-card__head-title">进行中</span><span class="c-card__head-meta">2 项</span></div>
+          <div class="c-card__body">
+            <div class="c-list-rows">
+              <div class="c-list-row"><div class="c-list-row__main"><div class="c-list-row__title">焊缝气孔（右后支架）</div><div class="c-list-row__meta"><span>焊接 赵敏</span><span>期限 10-26</span></div></div></div>
+              <div class="c-list-row"><div class="c-list-row__main"><div class="c-list-row__title">接插件退针导致灯光失效</div><div class="c-list-row__meta"><span>电气 陈伟</span><div>期限 10-25</div></div></div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+<div class="proto-bar"><a href="../index.html">返回站点地图</a><span>templates/tpl-board.html</span></div>
+</body>
+</html>

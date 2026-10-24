@@ -1,16 +1,9 @@
 {
   "gate": "G6",
-  "pass": false,
+  "pass": true,
   "summary": {
-    "pages": 18,
-    "violations": 1
+    "pages": 20,
+    "violations": 0
   },
-  "violations": [
-    {
-      "file": "templates/tpl-single.html",
-      "kind": "重复链接",
-      "value": "../index.html ×3",
-      "hint": "同一锚点在同页出现多次：合并为一个入口"
-    }
-  ]
+  "violations": []
 }

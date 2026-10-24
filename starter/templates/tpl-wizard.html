@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>向导模板 - 演示</title>
+  <link rel="stylesheet" href="../assets/tokens.css">
+  <link rel="stylesheet" href="../assets/base.css">
+  <link rel="stylesheet" href="../assets/shell.css">
+  <link rel="stylesheet" href="../assets/components.css">
+  <link rel="stylesheet" href="../assets/family.css">
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+<main class="l-page">
+  <div class="l-page-head">
+    <h1 class="u-text-headline">新建采购申请</h1>
+    <span class="c-tag c-tag--dot c-tag--info">步骤 2 / 4</span>
+  </div>
+
+  <section class="c-card">
+    <div class="c-card__body">
+      <ol class="c-timeline">
+        <li class="c-timeline__item"><div class="c-timeline__time">步骤 1</div><div class="c-timeline__text">基本信息 · 已完成</div></li>
+        <li class="c-timeline__item"><div class="c-timeline__time">步骤 2</div><div class="c-timeline__text"><b>物料明细 · 当前</b></div></li>
+        <li class="c-timeline__item"><div class="c-timeline__time">步骤 3</div><div class="c-timeline__text">预算校验</div></li>
+        <li class="c-timeline__item"><div class="c-timeline__time">步骤 4</div><div class="c-timeline__text">提交审批</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="c-card">
+    <div class="c-card__head"><span class="c-card__head-title">物料明细</span><span class="c-card__head-meta">至少 1 行</span></div>
+    <div class="c-card__body">
+      <div class="c-form-section">
+        <div class="c-form-grid">
+          <label class="c-field c-field--required"><span class="c-field__label">物料编码</span><input class="c-input" placeholder="请输入或扫码"></label>
+          <label class="c-field c-field--required"><span class="c-field__label">数量</span><input class="c-input u-num" placeholder="0"><span class="c-field__hint">按最小包装取整</span></label>
+          <label class="c-field"><span class="c-field__label">单价</span><input class="c-input u-num" placeholder="¥0.00"></label>
+          <label class="c-field"><span class="c-field__label">需求日期</span><input class="c-input u-num" placeholder="YYYY-MM-DD"></label>
+        </div>
+      </div>
+      <div class="c-form-footer">
+        <span class="c-field__hint">已添加 3 行 · 合计 ¥128,600</span>
+        <span style="margin-left:auto"></span>
+        <button class="c-btn c-btn--secondary" type="button">上一步</button>
+        <button class="c-btn c-btn--text" type="button">保存草稿</button>
+        <button class="c-btn" type="button" data-action="show-toast" data-message="演示：进入步骤 3">下一步</button>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="proto-bar"><a href="../index.html">返回站点地图</a><span>templates/tpl-wizard.html</span></div>
+</body>
+</html>
