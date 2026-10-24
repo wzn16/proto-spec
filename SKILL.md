@@ -157,14 +157,35 @@ python3 scripts/gen_delivery_readme.py --project <项目目录>      # 生成交
 
 ## 参考资料索引
 
+**探索与规范**（步骤 1.5–3）
+
 | 文件 | 何时读 |
 | --- | --- |
-| `references/interview-bank.md` | 步骤 2 开始前（题库、美学家族库、访谈协议） |
-| `references/family-library.md` | 步骤 2 定家族与步骤 3 冻结时（家族索引、G0-3 映射、治理规则） |
-| `references/spec-template.md` | 填写 SPEC.md 时（章节结构与填写说明） |
-| `references/tokens-reference.md` | 改 tokens 或生成页面前（三层变量、类名命名空间） |
-| `references/snippets-catalog.md` | 步骤 4 拼装页面前（组件片段白名单） |
-| `references/templates-catalog.md` | 步骤 4 选模板时（模板清单、插槽、目录与链接约定） |
-| `references/taste-checklist.md` | 每页生成后自查与 G5 前（反模板感判据） |
-| `references/qa-gates.md` | 步骤 6（各门判据、执行时点、降级规则） |
-| `references/visual-refinement.md` | 步骤 5.5（精修原则、逐维清单、评审清单） |
+| `references/design-from-brief.md` | 文字需求 → 六步推理 |
+| `references/layout-patterns.md` | 八个骨架与错法 |
+| `references/design-direction.md` | 品类、调性、引擎、方向卡 |
+| `references/direction-explorer.md` | 方向对比页做法 |
+| `references/design-knobs.md` | 五旋钮与组合矩阵 |
+| `references/interview-bank.md` | 访谈协议与题库 |
+| `references/family-library.md` | 家族索引与治理 |
+| `references/spec-template.md` | SPEC 章节结构 |
+
+**生成**（步骤 4）
+
+| 文件 | 何时读 |
+| --- | --- |
+| `references/tokens-reference.md` | 三层变量与命名空间 |
+| `references/snippets-catalog.md` | 组件片段白名单 |
+| `references/templates-catalog.md` | 模板清单与插槽 |
+| `references/patterns-ledger.md` | 台账基线 |
+| `references/patterns-form.md` | 表单基线 |
+
+**评审与验收**（步骤 5–6）
+
+| 文件 | 何时读 |
+| --- | --- |
+| `references/design-knowledge.md` | 三秒测试与判断标准 |
+| `references/tuning-loop.md` | 六维评分与迭代 |
+| `references/visual-refinement.md` | 精修清单 |
+| `references/taste-checklist.md` | 反模板感自查 |
+| `references/qa-gates.md` | 各门判据与降级 |
