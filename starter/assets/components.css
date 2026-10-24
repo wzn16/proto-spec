@@ -343,7 +343,7 @@
 /* 右侧滑出抽屉：全高 320px；遮罩可复用 .c-modal 叠加 */
 .c-drawer {
   position: fixed; top: 0; right: 0; bottom: 0;
-  width: 320px;
+  width: 720px; max-width: 92vw;
   display: flex; flex-direction: column;
   background: var(--s-bg-card); box-shadow: var(--s-shadow-overlay);
   z-index: var(--c-z-overlay);
@@ -486,6 +486,7 @@
 @keyframes drawer-in { from { opacity: 0; transform: translateX(24px); } }
 @keyframes modal-in { from { opacity: 0; transform: translateY(8px); } }
 .c-drawer { animation: drawer-in var(--motion-base) var(--ease-out); }
+.c-drawer--sm { width: 420px; max-width: 92vw; }
 .c-modal { animation: overlay-in var(--motion-fast) var(--ease-out); }
 .c-modal__dialog { animation: modal-in var(--motion-base) var(--ease-out); }
 .c-drawer__body .c-card + .c-card { margin-top: var(--s-gap-card); }
@@ -522,7 +523,7 @@
 /* ---------- 工作台层（后台工作台页：侧栏/页签/KPI/查询/树/表） ---------- */
 .c-workbench { display: flex; min-height: 100vh; background: var(--s-bg-page); }
 .c-workbench__side { width: 232px; flex: 0 0 232px; background: var(--s-bg-sidebar); display: flex; flex-direction: column; }
-.c-workbench__brand { height: var(--c-header-h); display: flex; align-items: center; padding: 0 var(--s-space-4); border-bottom: 1px solid var(--s-on-dark-line); color: var(--s-text-inverse); font-size: var(--s-fs-lead); font-weight: var(--s-weight-semibold); letter-spacing: .02em; }
+.c-workbench__brand { height: var(--c-header-h); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 var(--s-space-4); border-bottom: 1px solid var(--s-on-dark-line); color: var(--s-text-inverse); font-size: var(--s-fs-lead); font-weight: var(--s-weight-semibold); letter-spacing: .02em; }
 .c-workbench__brand small { display: block; font-size: var(--s-fs-caption); font-weight: var(--s-weight-normal); color: var(--s-text-on-dark-muted); letter-spacing: 0; }
 .c-workbench__nav { flex: 1; overflow-y: auto; padding: var(--s-space-3) var(--s-space-2) var(--s-space-4); }
 .c-workbench__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -585,3 +586,35 @@
 
 @media (max-width: 1180px) { .c-kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .c-workbench__side { display: none; } .c-split { grid-template-columns: 1fr; } }
+
+/* ---------- 台账层（工具栏 / 条件 chips / 批量条 / 表单栅格 / 骨架） ---------- */
+.c-toolbar { display: flex; align-items: center; gap: var(--s-space-2); padding: var(--s-space-2) var(--s-space-4); background: var(--s-bg-card); border-bottom: 1px solid var(--s-border); }
+.c-toolbar__left { display: flex; align-items: center; gap: var(--s-space-2); }
+.c-toolbar__right { margin-left: auto; display: flex; align-items: center; gap: var(--s-space-2); }
+.c-toolbar__count { color: var(--s-color-primary); font-size: var(--s-fs-small); font-weight: var(--s-weight-medium); }
+
+.c-chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-space-2); }
+.c-chip { display: inline-flex; align-items: center; gap: var(--s-space-1); height: 24px; padding: 0 var(--s-space-2); border-radius: var(--s-radius-full); background: var(--s-color-primary-soft); color: var(--s-color-primary); font-size: var(--s-fs-caption); }
+.c-chip__x { cursor: pointer; }
+
+.c-bulkbar { display: flex; align-items: center; gap: var(--s-space-3); padding: var(--s-space-2) var(--s-space-4); background: var(--s-color-primary-soft); border-bottom: 1px solid var(--s-border); font-size: var(--s-fs-small); color: var(--s-color-primary); }
+
+.c-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-space-3) var(--s-space-5); }
+.c-form-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.c-form-grid--1 { grid-template-columns: 1fr; }
+.c-form-grid .c-field--full { grid-column: 1 / -1; }
+.c-form-section { display: flex; flex-direction: column; gap: var(--s-space-3); }
+.c-form-section + .c-form-section { margin-top: var(--s-space-5); padding-top: var(--s-space-4); border-top: 1px solid var(--s-border); }
+.c-form-section__title { font-size: var(--s-fs-body); font-weight: var(--s-weight-semibold); color: var(--s-text-primary); }
+.c-form-footer { position: sticky; bottom: 0; display: flex; align-items: center; gap: var(--s-space-2); padding: var(--s-space-3) 0; background: var(--s-bg-card); border-top: 1px solid var(--s-border); }
+.c-form-footer__danger { margin-right: auto; }
+
+.c-data-table__actions { position: sticky; right: 0; background: var(--s-bg-card); box-shadow: -1px 0 0 var(--s-border); }
+.c-data-table tbody tr:hover .c-data-table__actions { background: var(--s-color-primary-soft); }
+.c-skeleton { height: var(--s-space-3); border-radius: var(--s-radius-small); background: var(--s-bg-hover); }
+
+/* ---------- 表单校验态 ---------- */
+.c-field.is-error .c-input, .c-field.is-error .c-select, .c-field.is-error .c-textarea { border-color: var(--s-color-error); }
+.c-field.is-error .c-field__label { color: var(--s-color-error-strong); }
+.c-field__error { font-size: var(--s-fs-caption); color: var(--s-color-error-strong); }
+.c-field--readonly .c-input { background: var(--s-bg-hover); border-color: var(--s-border); }
