@@ -618,3 +618,39 @@
 .c-field.is-error .c-field__label { color: var(--s-color-error-strong); }
 .c-field__error { font-size: var(--s-fs-caption); color: var(--s-color-error-strong); }
 .c-field--readonly .c-input { background: var(--s-bg-hover); border-color: var(--s-border); }
+
+/* ---------- 台账变体修饰 ---------- */
+.c-data-table th, .c-data-table td { padding: 0 var(--c-cell-px); }
+.c-data-table td { height: var(--c-row-h); }
+.c-data-table--dense td { height: var(--c-row-h-dense); }
+.c-data-table--dense th, .c-data-table--dense td { padding: 0 var(--c-cell-px-dense); }
+.c-data-table--comfort td { height: var(--c-row-h-comfort); }
+.c-data-table--comfort th, .c-data-table--comfort td { padding: 0 var(--c-cell-px-comfort); }
+.c-data-table--zebra tbody tr:nth-child(even) td { background: var(--s-bg-page); }
+.c-data-table--zebra tbody tr:hover td { background: var(--s-color-primary-soft); }
+.c-data-table--pin-first th:first-child, .c-data-table--pin-first td:first-child { position: sticky; left: 0; background: var(--s-bg-card); box-shadow: 1px 0 0 var(--s-border); z-index: 1; }
+.c-data-table--pin-first tbody tr:hover td:first-child { background: var(--s-color-primary-soft); }
+
+/* 卡片台账（形态 C） */
+.c-list-rows { display: flex; flex-direction: column; }
+.c-list-row { display: flex; align-items: flex-start; gap: var(--s-space-4); padding: var(--s-space-4); border-bottom: 1px solid var(--s-border); transition: background-color var(--motion-fast) var(--ease-out); }
+.c-list-row:hover { background: var(--s-color-primary-soft); }
+.c-list-row__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--s-space-1); }
+.c-list-row__title { font-size: var(--s-fs-body); font-weight: var(--s-weight-medium); color: var(--s-text-primary); }
+.c-list-row__meta { display: flex; flex-wrap: wrap; gap: var(--s-space-3); color: var(--s-text-secondary); font-size: var(--s-fs-caption); }
+.c-list-row__ops { display: flex; gap: var(--s-space-1); flex: 0 0 auto; }
+.c-list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--s-gap-card); }
+
+/* 抽屉尺寸档 + 标签左置 + KPI 列数变体 */
+.c-drawer { width: var(--c-drawer-lg); }
+.c-drawer--sm { width: var(--c-drawer-sm); }
+.c-drawer--md { width: var(--c-drawer-md); }
+.c-form-grid--label-left .c-field { display: grid; grid-template-columns: var(--c-label-w) 1fr; align-items: center; column-gap: var(--s-space-3); }
+.c-form-grid--label-left .c-field__hint, .c-form-grid--label-left .c-field__count { grid-column: 2; }
+.c-form-grid--label-left .c-field--full { grid-column: 1 / -1; }
+.c-kpi-row--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.c-kpi-row--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.c-kpi-row--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+/* 筛选抽屉（形态：>4 字段时收起） */
+.c-filter-drawer__foot { display: flex; gap: var(--s-space-2); justify-content: flex-end; padding: var(--s-space-3) 0 0; }

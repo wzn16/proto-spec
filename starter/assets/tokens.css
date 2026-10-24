@@ -122,6 +122,17 @@
   --g-shadow-e0:0 0 0 1px rgba(17, 24, 39, 0.04);
   --g-shadow-e3:0 12px 32px rgba(17, 24, 39, 0.14);
   --s-font-mono:var(--g-font-mono);
+  /* 台账/表单可调档位（变体装配用，改这里即改全站密度） */
+  --c-row-h-dense:36px;
+  --c-row-h:44px;
+  --c-row-h-comfort:52px;
+  --c-cell-px-dense:8px;
+  --c-cell-px:12px;
+  --c-cell-px-comfort:16px;
+  --c-drawer-sm:420px;
+  --c-drawer-md:560px;
+  --c-drawer-lg:720px;
+  --c-label-w:120px;
   /* 工作台侧栏（深底）语义槽位：家族可覆盖为浅色 */
   --s-bg-sidebar:#1F2937;
   --s-text-on-dark-muted:#9CA3AF;
