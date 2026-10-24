@@ -666,3 +666,14 @@
 .c-drawer--float .c-drawer__footer { padding: var(--s-space-3) var(--s-space-5); }
 .c-drawer--float .c-data-table th:last-child,
 .c-drawer--float .c-data-table td:last-child { padding-right: var(--s-space-3); }
+
+/* ---------- 防溢出基线（结构性，不靠人眼检查） ----------
+   卡片/网格/弹性容器里的表格与长文本会把容器撑破；
+   给容器与子项统一 min-width:0，并在需要时由子项自己滚动。 */
+.c-workbench__main, .c-workbench__content { min-width: 0; }
+.c-card, .c-card__body { min-width: 0; }
+.c-split { grid-template-columns: 292px minmax(0, 1fr); }
+.c-split > * { min-width: 0; }
+.c-split--full { grid-template-columns: minmax(0, 1fr); }
+.c-kpi-row > * { min-width: 0; }
+.c-card__body > .c-data-table, .c-card__body > div > .c-data-table { max-width: 100%; }
