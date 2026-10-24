@@ -655,3 +655,14 @@
 
 /* 筛选抽屉（形态：>4 字段时收起） */
 .c-filter-drawer__foot { display: flex; gap: var(--s-space-2); justify-content: flex-end; padding: var(--s-space-3) 0 0; }
+
+/* ---------- 浮动抽屉（不贴窗口边缘，留呼吸空间） ---------- */
+.c-drawer--float {
+  top: var(--s-space-4); right: var(--s-space-4); bottom: var(--s-space-4);
+  border-radius: var(--s-radius-card); border: 1px solid var(--s-border);
+}
+.c-drawer--float .c-drawer__header { padding: var(--s-space-4) var(--s-space-5); }
+.c-drawer--float .c-drawer__body { padding: var(--s-space-4) var(--s-space-5) var(--s-space-5); }
+.c-drawer--float .c-drawer__footer { padding: var(--s-space-3) var(--s-space-5); }
+.c-drawer--float .c-data-table th:last-child,
+.c-drawer--float .c-data-table td:last-child { padding-right: var(--s-space-3); }
