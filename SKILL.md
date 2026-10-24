@@ -54,7 +54,7 @@ metadata:
 
 ## 步骤 4 — 生成
 
-选模板 `references/templates-catalog.md`，拼装用 `references/snippets-catalog.md` 白名单组件，变量查 `references/tokens-reference.md`（三层：`--g-*` / `--s-*` / `--c-*`；类名前缀 `c-/l-/u-/p-`）。
+选模板 `references/templates-catalog.md`，拼装用 `references/snippets-catalog.md` 白名单组件，类名语义查 `references/component-map.md`，变量查 `references/tokens-reference.md`（三层：`--g-*` / `--s-*` / `--c-*`；类名前缀 `c-/l-/u-/p-`）。
 
 **4.2 细节默认值**：读 `references/detail-rules.md`（27 条，含防溢出、列宽档位、动作不重复、KPI 语义、数字口径、抽屉浮动、三态）。
 **4.3 设计→实现映射**：读 `references/implementation-map.md`，逐区块写「组件 / token / 是否新增原语 / 成本（低中高）」；高成本手段默认不做。
@@ -113,7 +113,7 @@ G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价�
 
 **规范**：`references/interview-bank.md` · `references/family-library.md`（F0–F9）· `references/spec-template.md` · `references/tokens-reference.md`
 
-**生成**：`references/templates-catalog.md` · `references/snippets-catalog.md` · `references/patterns-ledger.md` · `references/patterns-form.md` · `references/detail-rules.md` · `references/implementation-map.md`
+**生成**：`references/component-map.md` · `references/templates-catalog.md` · `references/snippets-catalog.md` · `references/patterns-ledger.md` · `references/patterns-form.md` · `references/detail-rules.md` · `references/implementation-map.md`
 
 **评审**：`references/taste-checklist.md` · `references/visual-refinement.md` · `references/visual-scorecard.md` · `references/visual-review-protocol.md` · `references/tuning-loop.md` · `references/design-knowledge.md` · `references/pixel-rules.md` · `references/qa-gates.md`
 
