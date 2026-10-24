@@ -609,6 +609,7 @@
 .c-form-footer { position: sticky; bottom: 0; display: flex; align-items: center; gap: var(--s-space-2); padding: var(--s-space-3) 0; background: var(--s-bg-card); border-top: 1px solid var(--s-border); }
 .c-form-footer__danger { margin-right: auto; }
 
+.c-data-table th.c-data-table__actions { background: var(--s-bg-page); }
 .c-data-table__actions { position: sticky; right: 0; background: var(--s-bg-card); box-shadow: -1px 0 0 var(--s-border); }
 .c-data-table tbody tr:hover .c-data-table__actions { background: var(--s-color-primary-soft); }
 .c-skeleton { height: var(--s-space-3); border-radius: var(--s-radius-small); background: var(--s-bg-hover); }
