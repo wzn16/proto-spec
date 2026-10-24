@@ -115,7 +115,12 @@ metadata:
 - 新页面：先补 SPEC §8 manifest 与站点地图，再按步骤 4 生成。
 同类页面级例外 ≥3 处时，提示用户该走规范级通道（例外变多说明规范该改）。
 
-## 步骤 5.5 — 视觉精修（详见 references/tuning-loop.md）（推荐）
+## 步骤 5.5 — 视觉精修与评审（详见 references/tuning-loop.md 与 references/design-knowledge.md）
+
+先跑 `references/design-knowledge.md` 第四节的三秒测试与模型默认做法清单，再按 `tuning-loop.md` 六维打分迭代。
+评审结论写成「位置 → 现象 → 改完要达到的可验收结果」，不写「再精致一点」。
+
+## 步骤 5.6 — 视觉精修执行（原步骤 5.5）（推荐）
 
 质量门通过后，从**组件库层**做一轮视觉精修：只加过渡、状态反馈（hover/active/focus-visible）、
 层次节奏（表头字距、卡片表头分隔、选中指示条、细滚动条），**不改规范值**——改的是组件实现质量，
