@@ -70,6 +70,14 @@ def build_fixture(root: Path, bad: bool) -> Path:
         encoding="utf-8")
     review = proj / "qa" / "visual-review.md"
     review.parent.mkdir(parents=True, exist_ok=True)
+    (proj / "qa" / "visual-review-peer.md").write_text(
+        "# 独立视觉评审\n\n## 一、三秒测试\n- 像企业后台；第一眼看到表格。\n\n"
+        "## 二、锚线检查\n- 2 条锚线。\n\n## 三、六维打分\n\n"
+        "| 维度 | 分数 | 依据 | 改法 |\n| --- | --- | --- | --- |\n"
+        "| 层级 | 4 | 可辨 | — |\n| 节奏 | 4 | 成组 | — |\n| 焦点 | 4 | 唯一 | — |\n"
+        "| 密度 | 4 | 匹配 | — |\n| 一致性 | 5 | 同规格 | — |\n| 可信度 | 4 | 真实 | — |\n\n"
+        "## 四、改进项\n1. 无。\n\n## 五、保留\n1. 表格密度。\n\n## 六、结论\n- 最低分 4。\n", encoding="utf-8")
+
     review.write_text(
         "# 视觉评分单（G7）\n\n## 一、三秒测试\n- 像 2020s 企业后台；第一眼看到表格。\n\n"
         "## 二、锚线检查\n- 2 条锚线。\n\n"
