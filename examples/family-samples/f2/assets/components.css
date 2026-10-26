@@ -219,8 +219,9 @@
 
 .c-nav__item--active,
 .c-nav__item--active:hover {
-  background: var(--s-color-primary-soft);
-  color: var(--s-color-primary); font-weight: var(--s-weight-medium);
+  /* 深色家族用 --s-on-dark-active 覆盖；浅色回退到主色浅底 */
+  background: var(--s-nav-active-bg, var(--s-color-primary-soft));
+  color: var(--s-nav-active-text, var(--s-color-primary)); font-weight: var(--s-weight-medium);
 }
 
 /* ---------- 9. 面包屑 c-breadcrumb / 分页 c-pagination ---------- */
@@ -312,9 +313,9 @@
   background: var(--s-bg-hover);
 }
 
-.c-tag--success { color: var(--s-color-success-strong); }
-.c-tag--warning { color: var(--s-color-warning-strong); }
-.c-tag--error { color: var(--s-color-error-strong); }
+.c-tag--success { background: var(--s-tag-success-bg, var(--s-bg-hover)); color: var(--s-tag-success-text, var(--s-color-success-strong)); border-color: var(--s-tag-success-line, transparent); }
+.c-tag--warning { background: var(--s-tag-warning-bg, var(--s-bg-hover)); color: var(--s-tag-warning-text, var(--s-color-warning-strong)); border-color: var(--s-tag-warning-line, transparent); }
+.c-tag--error   { background: var(--s-tag-error-bg, var(--s-bg-hover));   color: var(--s-tag-error-text, var(--s-color-error-strong));     border-color: var(--s-tag-error-line, transparent); }
 
 /* ---------- 12. 浮层：c-modal / c-drawer / c-dropdown / c-toast ---------- */
 .c-modal {

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  模板：tpl-list.html —— 业务对象列表页
+  ------------------------------------------------------------
+  用法：复制本文件到 pages/ 改名（如 order-list.html），再替换插槽内容。
+  模板内相对链接已按 pages/ 位置书写：资源 ../assets/…，
+  页面互链与正式页同级，../index.html 为站点地图。
+
+  区域结构：
+  ┌───────────┬────────────────────────────────────────┐
+  │           │ l-header（面包屑 / 管理员）             │
+  │ l-sidebar ├────────────────────────────────────────┤
+  │ SLOT-0    │ l-page                                 │
+  │ 侧边导航   │   ├ SLOT-1 页头与筛选栏                │
+  │           │   ├ SLOT-2 表格列与数据                │
+  │           │   └ SLOT-3 分页                        │
+  └───────────┴────────────────────────────────────────┘
+
+  插槽清单：
+    SLOT-0 侧边导航：改模块名、菜单项与 active 项（片段 snippet-sidebar-nav）
+    SLOT-1 页头与筛选栏：改标题与主按钮；筛选项可增删（片段 snippet-filter-bar）
+    SLOT-2 表格列与数据：改列头与 tbody 行，可增删行（片段 snippet-data-table）
+    SLOT-3 分页：改页码数量与上下页链接（片段 snippet-page-nav）
+
+  假数据要求：订单号 / 客户 / 金额 / 时间用真实格式，状态混排，禁 lorem。
+  ============================================================
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F0 家族回归 - corporate-blue</title>
+  <link rel="stylesheet" href="../assets/tokens.css">
+  <link rel="stylesheet" href="../assets/base.css">
+  <link rel="stylesheet" href="../assets/shell.css">
+  <link rel="stylesheet" href="../assets/components.css">
+  <link rel="stylesheet" href="../assets/family.css">
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="l-app">
+
+  <!-- SLOT-0: 侧边导航（列表页：订单列表为 active 项） -->
+  <nav class="l-sidebar">
+    <nav class="c-nav">
+      <div class="c-nav__group">订单管理</div>
+      <a class="c-nav__item c-nav__item--active" href="order-list.html">订单列表</a>
+      <a class="c-nav__item" href="order-form.html">新建订单</a>
+      <a class="c-nav__item" href="order-detail.html">订单详情</a>
+    </nav>
+  </nav>
+  <!-- /SLOT-0 -->
+
+  <header class="l-header">
+    <nav class="c-breadcrumb" aria-label="面包屑">
+      <a class="c-breadcrumb__item" href="../index.html">首页</a>
+      <span class="c-breadcrumb__sep">/</span>
+      <span class="c-breadcrumb__item">订单管理</span>
+      <span class="c-breadcrumb__sep">/</span>
+      <span class="c-breadcrumb__item" aria-current="page">订单列表</span>
+    </nav>
+    <button class="c-btn c-btn--sm" type="button">管理员</button>
+  </header>
+
+  <main class="l-page">
+
+    <!-- SLOT-1: 页头与筛选栏（片段 snippet-filter-bar） -->
+    <div class="l-page-head">
+      <h1 class="u-text-title">订单列表</h1>
+      <a class="c-btn" href="order-form.html">新建订单</a>
+    </div>
+
+    <div class="c-filterbar">
+      <input class="c-input" type="text" placeholder="搜索订单号" aria-label="搜索订单号">
+      <select class="c-select" aria-label="订单状态">
+        <option value="">全部</option>
+        <option value="done">已完成</option>
+        <option value="review">待审核</option>
+        <option value="canceled">已取消</option>
+      </select>
+      <button class="c-btn c-btn--secondary" type="button">重置</button>
+      <button class="c-btn" type="button">查询</button>
+    </div>
+    <!-- /SLOT-1 -->
+
+    <!-- SLOT-2: 表格列与数据（片段 snippet-data-table） -->
+    <div class="c-table-scroll"><table class="c-table">
+      <thead>
+        <tr>
+          <th class="c-table__th">订单号</th>
+          <th class="c-table__th">客户</th>
+          <th class="c-table__th">金额</th>
+          <th class="c-table__th">状态</th>
+          <th class="c-table__th">下单时间</th>
+          <th class="c-table__th">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SO20261022001</td>
+          <td>杭州恒晟机械</td>
+          <td class="c-table__num u-num">¥12,800.00</td>
+          <td><span class="c-tag c-tag--success">已完成</span></td>
+          <td>2026-10-22 09:12</td>
+          <td>
+            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+          </td>
+        </tr>
+        <tr>
+          <td>SO20261022002</td>
+          <td>苏州凌云自动化</td>
+          <td class="c-table__num u-num">¥45,600.00</td>
+          <td><span class="c-tag c-tag--warning">待审核</span></td>
+          <td>2026-10-22 08:47</td>
+          <td>
+            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+          </td>
+        </tr>
+        <tr>
+          <td>SO20261022003</td>
+          <td>宁波海通轴承</td>
+          <td class="c-table__num u-num">¥8,950.00</td>
+          <td><span class="c-tag c-tag--success">已完成</span></td>
+          <td>2026-10-21 17:30</td>
+          <td>
+            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+          </td>
+        </tr>
+        <tr>
+          <td>SO20261022004</td>
+          <td>上海磐石重工</td>
+          <td class="c-table__num u-num">¥23,400.00</td>
+          <td><span class="c-tag c-tag--error">已取消</span></td>
+          <td>2026-10-21 14:05</td>
+          <td>
+            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+          </td>
+        </tr>
+        <tr>
+          <td>SO20261022005</td>
+          <td>无锡锐驰精密</td>
+          <td class="c-table__num u-num">¥67,200.00</td>
+          <td><span class="c-tag c-tag--warning">待审核</span></td>
+          <td>2026-10-21 10:22</td>
+          <td>
+            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+          </td>
+        </tr>
+      </tbody>
+    </table></div>
+    <!-- /SLOT-2 -->
+
+    <!-- SLOT-3: 分页（片段 snippet-page-nav） -->
+    <nav class="c-pagination" aria-label="分页">
+      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">上一页</a>
+      <a class="c-btn c-btn--sm" href="order-list.html" aria-current="page">1</a>
+      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">2</a>
+      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">3</a>
+      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">下一页</a>
+    </nav>
+    <!-- /SLOT-3 -->
+
+  </main>
+
+  <!-- 原型工具条（非业务 UI，正式交付时可整块删除） -->
+  <div class="proto-bar">
+    <a href="../index.html">返回站点地图</a>
+    <span>templates/tpl-list.html</span>
+  </div>
+
+</div>
+</body>
+</html>

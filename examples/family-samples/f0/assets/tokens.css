@@ -1,0 +1,168 @@
+/* ============================================================
+   proto-spec design tokens — 唯一事实源（风格包：企业后台·蓝 v0.1）
+   ------------------------------------------------------------
+   三层变量：
+     --g-*  基元层  原始值，仅许被 L1/L2 引用，页面禁止直接使用
+     --s-*  语义层  按用途命名，页面与组件统一使用这一层
+     --c-*  组件层  组件几何默认值，保证跨页一致
+   红线：
+     1. 页面出现裸色值 / 档外间距 / 档外字号即违规（G1 拦截）
+     2. CSS 变量只许在本文件定义，页面自定义颜色变量即违规
+     3. 本文件与 SPEC.md 冲突时，以本文件为准回改文档
+   ============================================================ */
+
+:root {
+  /* ---------- L0 基元：品牌蓝（主色 #2563EB 的 50–900 阶） ---------- */
+  --g-blue-50:#EFF6FF;  --g-blue-100:#DBEAFE; --g-blue-200:#BFDBFE;
+  --g-blue-300:#93C5FD; --g-blue-400:#60A5FA; --g-blue-500:#3B82F6;
+  --g-blue-600:#2563EB; --g-blue-700:#1D4ED8; --g-blue-800:#1E40AF;
+  --g-blue-900:#1E3A8A;
+
+  /* ---------- L0 基元：中性灰 ---------- */
+  --g-gray-50:#F9FAFB;  --g-gray-100:#F3F4F6; --g-gray-200:#E5E7EB;
+  --g-gray-300:#D1D5DB; --g-gray-400:#9CA3AF; --g-gray-500:#6B7280;
+  --g-gray-600:#4B5563; --g-gray-700:#374151; --g-gray-800:#1F2937;
+  --g-gray-900:#111827;
+
+  /* ---------- L0 基元：功能色 / 表面 / 白 ---------- */
+  --g-green-600:#16A34A; --g-green-700:#15803D;
+  --g-amber-600:#D97706; --g-amber-700:#B45309;
+  --g-red-600:#DC2626;   --g-red-700:#B91C1C;
+  --g-bg-page:#F5F7FA;
+  --g-white:#FFFFFF;
+  --g-overlay:rgba(17, 24, 39, 0.5);
+
+  /* ---------- L0 基元：字号 / 圆角 / 阴影 ---------- */
+  --g-fs-12:12px; --g-fs-13:13px; --g-fs-14:14px; --g-fs-16:16px;
+  --g-fs-20:20px; --g-fs-24:24px; --g-fs-30:30px;
+  --g-radius-6:6px; --g-radius-8:8px; --g-radius-12:12px; --g-radius-full:9999px;
+  --g-shadow-e1:0 1px 2px rgba(17, 24, 39, 0.06);
+  --g-shadow-e2:0 4px 12px rgba(17, 24, 39, 0.10);
+
+  /* ---------- L1 语义：色彩 ---------- */
+  --s-color-primary:var(--g-blue-600);
+  --s-color-primary-hover:var(--g-blue-700);
+  --s-color-primary-active:var(--g-blue-800);
+  --s-color-primary-soft:var(--g-blue-50);
+  --s-color-primary-softer:var(--g-blue-100);
+  --s-color-success:var(--g-green-600);
+  --s-color-warning:var(--g-amber-600);
+  --s-color-error:var(--g-red-600);
+  --s-color-info:var(--g-blue-600);
+  /* strong：浅底文字专用（对比度 ≥4.5:1），用于 tag/alert 文字 */
+  --s-color-success-strong:var(--g-green-700);
+  --s-color-warning-strong:var(--g-amber-700);
+  --s-color-error-strong:var(--g-red-700);
+  --s-color-info-strong:var(--g-blue-700);
+  --s-bg-page:var(--g-bg-page);
+  --s-bg-card:var(--g-white);
+  --s-bg-hover:var(--g-gray-100);
+  --s-bg-overlay:var(--g-overlay);
+  --s-text-primary:var(--g-gray-900);
+  --s-text-secondary:var(--g-gray-600);
+  --s-text-disabled:var(--g-gray-400);
+  --s-text-inverse:var(--g-white);
+  --s-border:var(--g-gray-200);
+  --s-border-strong:var(--g-gray-300);
+
+  /* ---------- L1 语义：排版 ---------- */
+  --s-font-ui:-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --s-fs-caption:var(--g-fs-12);
+  --s-fs-small:var(--g-fs-13);
+  --s-fs-body:var(--g-fs-14);
+  --s-fs-lead:var(--g-fs-16);
+  --s-fs-title:var(--g-fs-20);
+  --s-fs-headline:var(--g-fs-24);
+  --s-fs-display:var(--g-fs-30);
+  --s-weight-normal:400;
+  --s-weight-medium:500;
+  --s-weight-semibold:600;
+  --s-lh-body:1.6;
+  --s-lh-heading:1.3;
+
+  /* ---------- L1 语义：间距（8 档，档外取值即违规） ---------- */
+  --s-space-1:4px;
+  --s-space-2:8px;
+  --s-space-3:12px;
+  --s-space-4:16px;
+  --s-space-5:20px;
+  --s-space-6:24px;
+  --s-space-7:32px;
+  --s-space-8:48px;
+  --s-gap-page:var(--s-space-6);
+  --s-gap-card:var(--s-space-4);
+  --s-gap-inline:var(--s-space-2);
+
+  /* ---------- L1 语义：圆角与阴影 ---------- */
+  --s-nav-active-bg:var(--s-color-primary-soft);
+  --s-nav-active-text:var(--s-color-primary);
+  --s-tag-success-bg:var(--s-bg-hover);
+  --s-tag-success-text:var(--s-color-success-strong);
+  --s-tag-success-line:transparent;
+  --s-tag-warning-bg:var(--s-bg-hover);
+  --s-tag-warning-text:var(--s-color-warning-strong);
+  --s-tag-warning-line:transparent;
+  --s-tag-error-bg:var(--s-bg-hover);
+  --s-tag-error-text:var(--s-color-error-strong);
+  --s-tag-error-line:transparent;
+  --s-radius-small:var(--g-radius-6);
+  --s-radius-control:var(--g-radius-8);
+  --s-radius-card:var(--g-radius-12);
+  --s-radius-full:var(--g-radius-full);
+  --s-shadow-card:var(--g-shadow-e1);
+  --s-shadow-overlay:var(--g-shadow-e2);
+
+  /* ---------- L2 组件：跨页几何一致性 ---------- */
+  --c-btn-h-sm:28px;
+  --c-btn-h-md:36px;
+  --c-btn-h-lg:44px;
+  --c-input-h:36px;
+  --c-table-row-h:44px;
+  --c-card-pad:16px;
+  --c-sidebar-w:240px;
+  --c-header-h:56px;
+  --c-z-sticky:100;
+  --c-z-overlay:200;
+  --c-z-toast:300;
+  /* ---------- 动效 token（精修层 III） ---------- */
+  --motion-fast:150ms;
+  --motion-base:200ms;
+  --motion-slow:280ms;
+  --ease-out:cubic-bezier(.16, 1, .3, 1);
+  /* ---------- 精修层 III · 第二批：阴影层级 / 焦点环 ---------- */
+  --g-shadow-e0:0 0 0 1px rgba(17, 24, 39, 0.04);
+  --g-shadow-e3:0 12px 32px rgba(17, 24, 39, 0.14);
+  --g-font-mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --s-font-mono:var(--g-font-mono);
+  /* 台账/表单可调档位（变体装配用，改这里即改全站密度） */
+  --c-row-h-dense:36px;
+  --c-row-h:44px;
+  --c-row-h-comfort:52px;
+  --c-cell-px-dense:8px;
+  --c-cell-px:12px;
+  --c-cell-px-comfort:16px;
+  --c-drawer-sm:420px;
+  --c-drawer-md:560px;
+  --c-drawer-lg:720px;
+  --c-label-w:120px;
+  /* 工作台侧栏（深底）语义槽位：家族可覆盖为浅色 */
+  --s-bg-sidebar:#1F2937;
+  --s-text-on-dark-muted:#9CA3AF;
+  /* 深底叠加层（侧栏/顶栏的 hover、选中、分隔线） */
+  --s-on-dark-text:rgba(255, 255, 255, 0.86);
+  --s-on-dark-hover:rgba(255, 255, 255, 0.08);
+  --s-on-dark-active:rgba(255, 255, 255, 0.16);
+  --s-on-dark-line:rgba(255, 255, 255, 0.12);
+  --s-shadow-hairline:var(--g-shadow-e0);
+  --s-shadow-elevated:var(--g-shadow-e3);
+  --s-ring:0 0 0 3px var(--s-color-primary-softer);
+}
+
+:root{
+  --s-bg-page:#F5F7FA;
+  --s-bg-card:#FFFFFF;
+  --s-color-primary:#2563EB;
+  --g-radius-6:6px;
+  --g-radius-8:8px;
+  --g-radius-12:12px;
+}

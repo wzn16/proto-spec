@@ -1,9 +1,9 @@
 {
-  "gate": "G1-family",
+  "gate": "G1",
   "pass": true,
   "summary": {
-    "family": "F2",
-    "slots": 6,
+    "files": 20,
+    "declarations": 8171,
     "violations": 0
   },
   "violations": []

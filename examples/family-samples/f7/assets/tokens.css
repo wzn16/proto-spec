@@ -94,6 +94,17 @@
   --s-gap-inline:var(--s-space-2);
 
   /* ---------- L1 语义：圆角与阴影 ---------- */
+  --s-nav-active-bg:var(--s-color-primary-soft);
+  --s-nav-active-text:var(--s-color-primary);
+  --s-tag-success-bg:var(--s-bg-hover);
+  --s-tag-success-text:var(--s-color-success-strong);
+  --s-tag-success-line:transparent;
+  --s-tag-warning-bg:var(--s-bg-hover);
+  --s-tag-warning-text:var(--s-color-warning-strong);
+  --s-tag-warning-line:transparent;
+  --s-tag-error-bg:var(--s-bg-hover);
+  --s-tag-error-text:var(--s-color-error-strong);
+  --s-tag-error-line:transparent;
   --s-radius-small:var(--g-radius-6);
   --s-radius-control:var(--g-radius-8);
   --s-radius-card:var(--g-radius-12);

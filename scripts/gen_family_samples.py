@@ -30,8 +30,15 @@ def build(fam: str, force: bool) -> Path:
     if d.exists() and not force:
         return d
     if d.exists():
-        shutil.rmtree(d)
-    (d / "pages").mkdir(parents=True)
+        # 保留已拍的回归截图（shot/），其余重建
+        for sub in d.iterdir():
+            if sub.name == "shot":
+                continue
+            shutil.rmtree(sub) if sub.is_dir() else sub.unlink()
+        (d / "pages").mkdir(exist_ok=True)
+    (d / "pages").mkdir(parents=True, exist_ok=True)
+    if (d / "assets").exists():
+        shutil.rmtree(d / "assets")
     shutil.copytree(ROOT / "starter" / "assets", d / "assets")
     tokens = (d / "assets" / "tokens.css").read_text(encoding="utf-8")
     override = "\n:root{\n" + "".join(f"  {k}:{v};\n" for k, v in data["identity"].items()) + "}\n"

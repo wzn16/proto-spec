@@ -322,7 +322,7 @@ def dangling_refs(project: Path) -> list[dict]:
         return []
     text = re.sub(r"/\*.*?\*/", "", f.read_text(encoding="utf-8"), flags=re.S)
     defined = set(re.findall(r"(--[\w-]+)\s*:", text))
-    used = set(re.findall(r"var\(\s*(--[\w-]+)", text))
+    used = set(re.findall(r"var\(\s*(--[\w-]+)\s*\)", text))  # 带回退的 var(--x, y) 不算悬空
     return [{"file": "assets/tokens.css", "line": 0, "property": "var()", "kind": "悬空变量引用",
              "value": v, "hint": "该变量在 tokens.css 未定义（可能落在 :root 之外）"}
             for v in sorted(used - defined)]

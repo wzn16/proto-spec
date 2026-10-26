@@ -1,9 +1,0 @@
-{
-  "gate": "G4",
-  "pass": true,
-  "summary": {
-    "pairs": 8,
-    "violations": 0
-  },
-  "violations": []
-}
