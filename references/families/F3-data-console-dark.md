@@ -41,7 +41,15 @@
     ".c-workbench__head { border-bottom: 1px solid var(--s-border); }",
     ".c-data-table th { text-transform: uppercase; letter-spacing: .06em; font-size: var(--s-fs-caption); }",
     ".c-card { border-radius: var(--s-radius-control); box-shadow: none; }",
-    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }",
+    ".c-data-table td, .c-data-table th { padding-top: var(--s-space-1); padding-bottom: var(--s-space-1); }",
+    ".c-workbench__head { padding-block: var(--s-space-6); }",
+    ".c-kpi-row { grid-template-columns: 1.6fr 1fr 1fr; }"
+  ],
+  "skeleton": [
+    "dense-table",
+    "wide-head",
+    "kpi-split"
   ]
 }```
 

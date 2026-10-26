@@ -5,3 +5,8 @@
 .c-data-table th { background: var(--s-color-primary-soft); }
 .c-kpi { border-radius: var(--s-radius-card); }
 .c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }
+.c-workbench__side { background: var(--s-bg-card); border-right: 1px solid var(--s-border); }
+.c-side-menu__item { color: var(--s-text-secondary); }
+.c-side-menu__item.is-active, .c-side-menu__item--active { color: var(--s-text-primary); }
+.c-side-menu__group { color: var(--s-text-secondary); }
+.c-workbench__brand { border-bottom-color: var(--s-border); }

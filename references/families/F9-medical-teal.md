@@ -21,6 +21,9 @@
     ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
     ".c-data-table th { background: var(--s-color-primary-soft); }",
     ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+  ],
+  "skeleton": [
+    "comfort-rows"
   ]
 }```
 

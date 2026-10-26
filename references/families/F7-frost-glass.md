@@ -45,7 +45,12 @@
     ".c-workbench__side { backdrop-filter: blur(18px); }",
     ".c-workbench__head h1 { letter-spacing: .02em; }",
     ".c-data-table th { background: var(--s-glass-bg); }",
-    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }",
+    ".c-kpi-row { grid-template-columns: 1.6fr 1fr 1fr; }",
+    ".c-kpi:first-child .c-kpi__num { font-size: var(--s-fs-display); }"
+  ],
+  "skeleton": [
+    "kpi-split"
   ]
 }```
 

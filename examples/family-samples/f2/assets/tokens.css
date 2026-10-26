@@ -172,4 +172,7 @@
   --g-radius-12:14px;
   --c-sidebar-w:240px;
   --c-content-max:1120px;
+  --s-brand-text:var(--s-text-primary);
+  --s-side-line:var(--s-border);
+  --s-bg-sidebar:var(--s-bg-card);
 }

@@ -169,4 +169,7 @@
   --s-color-primary:#0F766E;
   --c-sidebar-w:248px;
   --c-content-max:1180px;
+  --s-brand-text:var(--s-text-primary);
+  --s-side-line:var(--s-border);
+  --s-bg-sidebar:var(--s-bg-card);
 }

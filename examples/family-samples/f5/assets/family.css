@@ -5,3 +5,5 @@
 .c-kpi { border: 1px solid var(--s-color-primary-soft); }
 .c-data-table th { background: transparent; text-transform: none; }
 .c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }
+.c-kpi-row { grid-template-columns: 1.6fr 1fr 1fr; }
+.c-kpi:first-child .c-kpi__num { font-size: var(--s-fs-display); }

@@ -59,6 +59,13 @@ def resolve(name: str, defs: dict, depth: int = 0) -> str | None:
     return v.strip()
 
 
+def hex_rgb(hexs: str) -> tuple[int, int, int]:
+    h = hexs.lstrip("#")
+    if len(h) == 3:
+        h = "".join(c * 2 for c in h)
+    return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+
+
 def norm_color(v: str | None) -> str | None:
     """归一化为 #rrggbb；无法识别返回 None。"""
     if not v:
@@ -117,9 +124,17 @@ def main() -> int:
     if args.pairs_json and Path(args.pairs_json).is_file():
         pairs = [tuple(x) for x in json.loads(Path(args.pairs_json).read_text(encoding="utf-8"))]
     else:
-        # 条件配对：深色框架槽位存在时才检查（家族/项目自带侧栏 token）
+        # 条件配对：仅当侧栏确实是「深底」时才检查 on-dark 槽（浅色侧栏家族不适用）
         if "--s-bg-sidebar" in defs and "--s-text-on-dark-muted" in defs:
-            pairs.append(("--s-text-on-dark-muted", "--s-bg-sidebar", "深底弱文字/侧栏底", UI_T))
+            side = norm_color(resolve("--s-bg-sidebar", defs))
+            if side:
+                r, g, b = hex_rgb(side)
+                if (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 < 0.45:
+                    pairs.append(("--s-text-on-dark-muted", "--s-bg-sidebar", "深底弱文字/侧栏底", UI_T))
+                else:
+                    # 浅色侧栏：检查正文/辅助字在侧栏上的对比
+                    pairs.append(("--s-text-primary", "--s-bg-sidebar", "正文/浅色侧栏底", TEXT_T))
+                    pairs.append(("--s-text-secondary", "--s-bg-sidebar", "辅助/浅色侧栏底", TEXT_T))
 
     violations: list[dict] = []
     checked = 0

@@ -11,7 +11,10 @@
     "--g-radius-8": "10px",
     "--g-radius-12": "14px",
     "--c-sidebar-w": "240px",
-    "--c-content-max": "1120px"
+    "--c-content-max": "1120px",
+    "--s-brand-text": "var(--s-text-primary)",
+    "--s-side-line": "var(--s-border)",
+    "--s-bg-sidebar": "var(--s-bg-card)"
   },
   "structure": [
     ".c-workbench__head h1, .l-page-head h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; letter-spacing: 0; }",
@@ -19,7 +22,15 @@
     ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
     ".c-data-table th { background: var(--s-color-primary-soft); }",
     ".c-kpi { border-radius: var(--s-radius-card); }",
-    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }",
+    ".c-workbench__side { background: var(--s-bg-card); border-right: 1px solid var(--s-border); }",
+    ".c-side-menu__item { color: var(--s-text-secondary); }",
+    ".c-side-menu__item.is-active, .c-side-menu__item--active { color: var(--s-text-primary); }",
+    ".c-side-menu__group { color: var(--s-text-secondary); }",
+    ".c-workbench__brand { border-bottom-color: var(--s-border); }"
+  ],
+  "skeleton": [
+    "side-light"
   ]
 }```
 

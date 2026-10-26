@@ -43,7 +43,11 @@
     ".c-workbench__head h1 { font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: .04em; }",
     ".c-data-table th { text-transform: uppercase; letter-spacing: .08em; }",
     ".c-card { border-radius: var(--s-radius-square); }",
-    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }",
+    ".c-data-table td, .c-data-table th { padding-top: var(--s-space-1); padding-bottom: var(--s-space-1); }"
+  ],
+  "skeleton": [
+    "dense-table"
   ]
 }```
 

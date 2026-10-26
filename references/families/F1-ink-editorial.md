@@ -22,7 +22,12 @@
     ".c-workbench__head { border-bottom: 2px solid var(--s-text-primary); padding-bottom: var(--s-space-3); }",
     ".c-data-table th { text-transform: uppercase; letter-spacing: .08em; font-size: var(--s-fs-caption); background: transparent; }",
     ".c-card { border-radius: var(--s-radius-square); }",
-    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }",
+    ".c-card { border: 0; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--s-border-strong); }",
+    ".c-card__head { padding-inline: 0; }"
+  ],
+  "skeleton": [
+    "flat-sections"
   ]
 }```
 

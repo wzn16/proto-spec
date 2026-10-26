@@ -11,14 +11,27 @@
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#0F766E",
     "--c-sidebar-w": "248px",
-    "--c-content-max": "1180px"
+    "--c-content-max": "1180px",
+    "--s-brand-text": "var(--s-text-primary)",
+    "--s-side-line": "var(--s-border)",
+    "--s-bg-sidebar": "var(--s-bg-card)"
   },
   "structure": [
     ".c-workbench__head h1, .l-page-head h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; }",
     ".c-card { border-radius: var(--s-radius-card); }",
     ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
     ".c-data-table th { background: var(--s-bg-hover); }",
-    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }",
+    ".c-workbench__side { background: var(--s-bg-card); border-right: 1px solid var(--s-border); }",
+    ".c-side-menu__item { color: var(--s-text-secondary); }",
+    ".c-side-menu__item.is-active, .c-side-menu__item--active { color: var(--s-text-primary); }",
+    ".c-side-menu__group { color: var(--s-text-secondary); }",
+    ".c-workbench__brand { border-bottom-color: var(--s-border); }",
+    ".c-workbench__head { padding-block: var(--s-space-6); }"
+  ],
+  "skeleton": [
+    "side-light",
+    "wide-head"
   ]
 }```
 
