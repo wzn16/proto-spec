@@ -6,17 +6,6 @@
     "zoom": 1,
     "animationWaitMs": 0,
     "issues": [],
-    "lint": [
-      {
-        "rule": "contrastLow",
-        "label": "文字对比度不达标（正文低于 4.5:1，大字低于 3:1）",
-        "count": 39,
-        "examples": [
-          "div.c-nav__group「订单管理」（2.30:1）",
-          "a.c-nav__item.c-nav__item--active「订单列表」（2.94:1）",
-          "a.c-nav__item「新建订单」（1.02:1）"
-        ]
-      }
-    ]
+    "lint": []
   }
 ]

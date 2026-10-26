@@ -1,0 +1,24 @@
+<!--
+  【片段】snippet-button · 按钮（c-btn）
+  【用途】页面内主操作、次操作、文字操作、危险操作的统一按钮，可用 button 元素或链接 a 元素承载。
+  【变体】默认主按钮；c-btn--secondary 描边次按钮；c-btn--text 文字按钮；c-btn--danger 危险操作；
+          c-btn--sm / c-btn--lg 尺寸修饰；c-btn--disabled 禁用态（配合 disabled 属性）。
+  【子元素】按钮本体即可，无必选子元素；多个按钮并排时外包 <div class="u-flex u-gap-md">。
+  【可改范围】只改按钮文案与 disabled 禁用态；禁改类名与结构，禁加内联样式。
+-->
+<div class="u-flex u-gap-md">
+  <button class="c-btn" type="button">查询</button>
+  <button class="c-btn c-btn--secondary" type="button">重置</button>
+  <button class="c-btn c-btn--text" type="button">查看明细</button>
+  <button class="c-btn c-btn--danger" type="button">删除</button>
+</div>
+<div class="u-flex u-gap-md">
+  <button class="c-btn c-btn--sm" type="button">小按钮</button>
+  <button class="c-btn" type="button">中按钮</button>
+  <button class="c-btn c-btn--lg" type="button">大按钮</button>
+</div>
+<div class="u-flex u-gap-md">
+  <button class="c-btn c-btn--disabled" type="button" disabled>已停用</button>
+  <a class="c-btn" href="order-form.html">新建订单</a>
+  <a class="c-btn c-btn--secondary" href="order-detail.html">查看详情</a>
+</div>

@@ -35,12 +35,21 @@
 
 ## 已验证样本（回归基线）
 
-| 样本 | 家族 | 锚线 | 字号档 | 强调面积 |
-| --- | --- | --- | --- | --- |
-| `examples/family-samples/f3/shot/v3.png` | F3 数据驾驶舱·暗 | 1 条 @276 | 6 档 | 0.8%（in-band） |
-| `examples/family-samples/f7/shot/v1.png` | F7 玻璃暗夜·霜 | 1 条 @276 | 6 档 | 0.1%（low，符合风格） |
+| 家族 | 样本 | G1 | G1f | G4 | 锚线 | 字号档 | 强调面积 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| F0 | `examples/demo-project` | ✓ | ✓ | ✓ | 1–2 | 4–5 | 0.2% |
+| F1 | `family-samples/f1` | ✓ | ✓ | ✓ | 1 | 7 | 0.1% |
+| F2 | `family-samples/f2` | ✓ | ✓ | ✓ | 1 | 5 | 0.7% |
+| F3 | `family-samples/f3` | ✓ | ✓ | ✓ | 1 | 6 | 0.8% |
+| F4 | `family-samples/f4` | ✓ | ✓ | ✓ | 1 | 7 | 0.1% |
+| F5 | `family-samples/f5` | ✓ | ✓ | ✓ | 1 | 4 | 0.7% |
+| F6 | `family-samples/f6` | ✓ | ✓ | ✓ | 1 | 5 | 0.7% |
+| F7 | `family-samples/f7` | ✓ | ✓ | ✓ | 1 | 6 | 0.1% |
+| F8 | `family-samples/f8` | ✓ | ✓ | ✓ | 1 | 5 | 0.7% |
+| F9 | `family-samples/f9` | ✓ | ✓ | ✓ | 1 | 5 | 0.7% |
 
-**改阈值或判据后必须跑** `python3 scripts/regress_pixels.py`：深色家族曾因亮度阈值让 G8 空转，这是防复发的基线。
+**改阈值或判据后必须跑**：`python3 scripts/gen_family_samples.py --force` + `python3 scripts/regress_pixels.py`。
+深色家族（F3/F4/F7）曾因只用亮度判据让 G8 空转、且只换底色不换文字色导致正文 1.1:1 不可读——这是防复发的基线。
 
 ## 与双评的关系
 

@@ -138,5 +138,7 @@ G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价�
 ## 自检
 
 ```bash
-python3 scripts/selftest.py    # 本 skill 的合规/违规样例双向验证
+python3 scripts/selftest.py            # 合规/违规样例双向验证
+python3 scripts/gen_family_samples.py --force   # 重建十家族回归样本
+python3 scripts/regress_pixels.py      # 像素判据回归（改阈值后必跑）
 ```

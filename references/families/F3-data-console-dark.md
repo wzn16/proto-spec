@@ -15,7 +15,18 @@
     "--s-bg-sidebar": "#0B0D12",
     "--s-on-dark-text": "#E5E7EB",
     "--s-color-error-strong": "#F87171",
-    "--s-color-success-strong": "#4ADE80"
+    "--s-color-success-strong": "#4ADE80",
+    "--s-nav-active-bg": "rgba(255, 255, 255, .12)",
+    "--s-nav-active-text": "#E5E7EB",
+    "--s-tag-success-bg": "rgba(74, 222, 128, .14)",
+    "--s-tag-success-text": "#86EFAC",
+    "--s-tag-success-line": "rgba(74, 222, 128, .24)",
+    "--s-tag-warning-bg": "rgba(251, 191, 36, .14)",
+    "--s-tag-warning-text": "#FCD34D",
+    "--s-tag-warning-line": "rgba(251, 191, 36, .24)",
+    "--s-tag-error-bg": "rgba(248, 113, 113, .14)",
+    "--s-tag-error-text": "#FCA5A5",
+    "--s-tag-error-line": "rgba(248, 113, 113, .24)"
   }
 }```
 
