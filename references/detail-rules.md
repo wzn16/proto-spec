@@ -62,7 +62,7 @@
 
 判据：把页面缩到 40% 看，能否说出"先看哪里、再看哪里"；说不出就是分量分配失败。
 
-## 八、可机检的三条（`scripts/check_details.py`）
+## 八、可机检的六类（由 check_details.py 执行）（`scripts/check_details.py`）
 
 - 同一 `href` 或同一 `data-message` 在同页出现 ≥2 次 → 重复动作；
 - 表格/容器出现 `max-width` 或内联 `width: Npx` → 布局硬编码；

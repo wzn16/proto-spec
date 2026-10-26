@@ -315,6 +315,19 @@ def family_fidelity(project: Path, family_id: str, defs: dict):
     return violations, len(manifest.get("identity", {}))
 
 
+def dangling_refs(project: Path) -> list[dict]:
+    """tokens.css 内 var(--x) 引用必须能在本文件定义。"""
+    f = project / "assets" / "tokens.css"
+    if not f.is_file():
+        return []
+    text = re.sub(r"/\*.*?\*/", "", f.read_text(encoding="utf-8"), flags=re.S)
+    defined = set(re.findall(r"(--[\w-]+)\s*:", text))
+    used = set(re.findall(r"var\(\s*(--[\w-]+)", text))
+    return [{"file": "assets/tokens.css", "line": 0, "property": "var()", "kind": "悬空变量引用",
+             "value": v, "hint": "该变量在 tokens.css 未定义（可能落在 :root 之外）"}
+            for v in sorted(used - defined)]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="G1 规范符合性检查")
     ap.add_argument("--project", required=True)
@@ -329,6 +342,7 @@ def main() -> int:
         print(f"[G1] 找不到 {tokens}", file=sys.stderr)
         return 2
     defs, hexes = load_tokens(tokens)
+    dangling = dangling_refs(project)
 
     if args.family:
         violations, n_slots = family_fidelity(project, args.family, defs)
@@ -382,7 +396,10 @@ def main() -> int:
                 violations.extend(
                     check_value(css_rel, line, prop, value, defs, hexes))
 
+    violations += dangling
+
     report = {
+
         "gate": "G1",
         "pass": not violations,
         "summary": {"files": n_files, "declarations": n_decls,
@@ -399,8 +416,9 @@ def main() -> int:
     elif violations:
         print(f"[G1] FAIL：{len(violations)} 处违规（{n_files} 文件 / {n_decls} 声明）")
         for v in violations[:40]:
-            print(f"  {v['file']}:{v['line']}  {v['property']}: {v['value']}"
-                  f"  → {v['nearestToken']}  {v['hint']}")
+            near = v.get("nearestToken") or "-"
+            print(f"  {v['file']}:{v['line']}  {v.get('property', '-')}: {v.get('value', '')}"
+                  f"  → {near}  {v.get('hint', '')}")
         if len(violations) > 40:
             print(f"  …其余 {len(violations) - 40} 条见 qa/reports/g1.json")
     else:

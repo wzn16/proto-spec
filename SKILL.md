@@ -26,6 +26,11 @@ metadata:
 
 命名约定：**Q = 提问题号**（`Q0-1`…），**G = 质量门**（`G1`…`G8`，G5 是编排器不是判据）。不可跳：步骤 3 与 6。
 
+## 步骤 0 — 起骨架
+
+`cp -R starter/ <项目目录>/`（或用 `examples/demo-project/` 作起点）。必留四件：SPEC 骨架、`starter/assets/tokens.css`、`starter/assets/components.css`、页面清单 manifest——缺任一禁止进入生成。
+之后每次改组件请重跑 `python3 scripts/gen_component_map.py`，保证组件文档与代码同源。
+
 ## 步骤 1 — 目标与约束
 
 一句话目标 + 成功标准；记下角色、数据量级、使用场合、是否打印/投影、是否触屏。缺的信息列入待确认，不静默假设。
@@ -37,7 +42,7 @@ metadata:
 
 ## 步骤 2 — 访谈
 
-读 `references/interview-bank.md`：G0 语境 4 题必答 → 气质词映射家族（`references/family-library.md`，10 个家族 F0–F9）→ G1–G8 分组批量确认（一次一组，给「当前值 + 备选 + 理由」）。细节类问题必须问到答案。
+读 `references/interview-bank.md`：Q0 语境 4 题必答 → 气质词映射家族（`references/family-library.md`，10 个家族 F0–F9）→ Q1–Q8 分组批量确认（一次一组，给「当前值 + 备选 + 理由」）。细节类问题必须问到答案。
 
 ## 步骤 2.5 — 定旋钮
 
@@ -58,9 +63,9 @@ metadata:
 
 选模板 `references/templates-catalog.md`，拼装用 `references/snippets-catalog.md` 白名单组件，类名语义查 `references/component-map.md`，变量查 `references/tokens-reference.md`（三层：`--g-*` / `--s-*` / `--c-*`；类名前缀 `c-/l-/u-/p-`）。
 
-**4.2 细节默认值**：读 `references/detail-rules.md`（27 条，含防溢出、列宽档位、动作不重复、KPI 语义、数字口径、抽屉浮动、三态）。
+**4.2 细节默认值**：读 `references/detail-rules.md`（31 条，含防溢出、列宽档位、动作不重复、KPI 语义、数字口径、抽屉浮动、三态、高密度层次）。
 **4.3 设计→实现映射**：读 `references/implementation-map.md`，逐区块写「组件 / token / 是否新增原语 / 成本（低中高）」；高成本手段默认不做。
-**4.4 含图表/概览页**：先读 `references/viz-rules.md`（决策故事、图表选择、数据墨水比、配色 ≤2 系列）。
+**4.45 含图表/概览页**：先读 `references/viz-rules.md`（决策故事、图表选择、数据墨水比、配色 ≤2 系列）。
 **4.4 台账与表单基线**：`references/patterns-ledger.md` 给台账形态菜单与可调维度，`references/patterns-form.md` 给容器判据与字段规格；可偏离，需写理由。
 **4.5 工具页例外**：交互密集单页允许 `p-` 级脚本（≤120 行、零依赖、只读 DOM）；超出则下沉为组件行为。
 

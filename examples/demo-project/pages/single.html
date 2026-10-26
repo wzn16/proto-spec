@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+  模板：tpl-single.html —— 单页轻量模式（模式 E）
+  用途：≤3 页的轻量原型、单屏演示、路演/汇报单页。无侧栏壳，单页信息密度高。
+  插槽：SLOT-1 指标区 / SLOT-2 图表卡 / SLOT-3 列表卡 / SLOT-4 快捷入口
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>运营概览 - 数据分析 | 示例项目</title>
+  <link rel="stylesheet" href="../assets/tokens.css">
+  <link rel="stylesheet" href="../assets/base.css">
+  <link rel="stylesheet" href="../assets/shell.css">
+  <link rel="stylesheet" href="../assets/components.css">
+  <link rel="stylesheet" href="../assets/family.css">
+  <script defer src="../assets/app.js"></script>
+  <style>
+  .p-chart { display: flex; align-items: flex-end; gap: var(--s-space-3); height: 160px; }
+  .p-bar { flex: 1; background: var(--s-color-primary-softer); border-radius: var(--s-radius-small); }
+  .p-bar:nth-child(1) { height: 62%; }
+  .p-bar:nth-child(2) { height: 78%; }
+  .p-bar:nth-child(3) { height: 55%; }
+  .p-bar:nth-child(4) { height: 88%; }
+  .p-bar:nth-child(5) { height: 71%; }
+  .p-bar:nth-child(6) { height: 94%; }
+  .p-bar:nth-child(7) { height: 83%; }
+  </style>
+
+</head>
+<body>
+<main class="l-page">
+  <div class="l-page-head">
+    <h1 class="u-text-headline">运营概览</h1>
+    <span class="u-flex u-gap-sm">
+      <span class="c-tag c-tag--dot c-tag--success">数据实时</span>
+      <a class="c-btn c-btn--sm c-btn--secondary" href="../index.html">返回站点地图</a>
+    </span>
+  </div>
+
+  <!-- SLOT-1 指标区 -->
+  <div class="u-flex u-gap-md">
+    <div class="c-card" >
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">今日订单</span>
+          <span class="c-stat__value u-num">1,238</span>
+          <span class="c-stat__delta c-stat__delta--up">+8.6% 环比</span>
+        </div>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">交付准时率</span>
+          <span class="c-stat__value u-num">96.4%</span>
+          <span class="c-stat__delta c-stat__delta--up">+1.2pt 环比</span>
+        </div>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">待审核</span>
+          <span class="c-stat__value u-num">27</span>
+          <span class="c-stat__delta c-stat__delta--down">-3 单</span>
+        </div>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">异常工单</span>
+          <span class="c-stat__value u-num">3</span>
+          <span class="c-stat__delta c-stat__delta--down">-1 单</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT-2 图表卡（纯 CSS 条形示意） -->
+  <div class="c-card">
+    <div class="c-card__header"><span class="u-text-title">近 7 日订单趋势</span></div>
+    <div class="c-card__body">
+      <div class="p-chart" aria-label="柱状示意">
+        <span class="p-bar"></span><span class="p-bar"></span><span class="p-bar"></span>
+        <span class="p-bar"></span><span class="p-bar"></span><span class="p-bar"></span>
+        <span class="p-bar"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT-3 列表卡 -->
+  <div class="c-card">
+    <div class="c-card__header">
+      <span class="u-text-title">待办事项</span>
+      <button class="c-btn c-btn--sm c-btn--secondary" type="button" data-action="show-toast" data-message="演示：新增待办">＋ 新增</button>
+    </div>
+    <div class="c-card__body">
+      <div class="c-table-scroll"><table class="c-table c-table--dense">
+        <thead><tr><th class="c-table__th">事项</th><th class="c-table__th">负责人</th><th class="c-table__th">期限</th><th class="c-table__th">状态</th></tr></thead>
+        <tbody>
+          <tr><td>华东区 Q4 服务续约确认</td><td>王玥</td><td class="u-num">10-24</td><td><span class="c-tag c-tag--dot c-tag--warning">待审核</span></td></tr>
+          <tr><td>客户档案字段梳理</td><td>李哲</td><td class="u-num">10-25</td><td><span class="c-tag c-tag--dot c-tag--success">进行中</span></td></tr>
+          <tr><td>月度经营报表归档</td><td>赵敏</td><td class="u-num">10-26</td><td><span class="c-tag c-tag--dot c-tag--success">已完成</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- SLOT-4 快捷入口 -->
+  <div class="u-flex u-gap-sm">
+    <a class="c-btn c-btn--secondary" href="../index.html">演示说明</a>
+    <button class="c-btn" type="button" data-action="show-toast" data-message="演示：导出报表">导出报表</button>
+  </div>
+
+  <div class="proto-bar"><a href="../index.html">返回站点地图</a><span>templates/tpl-single.html</span></div>
+</main>
+</body>
+</html>

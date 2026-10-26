@@ -1,0 +1,88 @@
+{
+  "gate": "G5",
+  "pass": true,
+  "summary": {
+    "g1": true,
+    "g2": "pass",
+    "g3": true,
+    "g4": true,
+    "g6": true,
+    "g7": true,
+    "g8": true,
+    "deliverables": true,
+    "skipped": [
+      null,
+      null
+    ],
+    "violations": 0
+  },
+  "violations": [],
+  "sub_reports": {
+    "g1": {
+      "files": 17,
+      "declarations": 4642,
+      "violations": 0
+    },
+    "g3": {
+      "pages": 3,
+      "violations": 0,
+      "notes": 0
+    },
+    "g4": {
+      "pairs": 8,
+      "violations": 0
+    },
+    "g6": {
+      "pages": 4,
+      "violations": 0
+    },
+    "g7": {
+      "self": {
+        "层级": 4,
+        "节奏": 4,
+        "焦点": 4,
+        "密度": 4,
+        "一致性": 4,
+        "可信度": 4
+      },
+      "peer": {
+        "层级": 4,
+        "节奏": 4,
+        "焦点": 4,
+        "密度": 4,
+        "一致性": 4,
+        "可信度": 4
+      },
+      "peer_present": true,
+      "effective": {
+        "层级": 4,
+        "节奏": 4,
+        "焦点": 4,
+        "密度": 4,
+        "一致性": 4,
+        "可信度": 4
+      },
+      "effective_min": 4,
+      "violations": 0
+    },
+    "g8": {
+      "shots": 3,
+      "violations": 0,
+      "anchors": {
+        "form-1440.png": 2,
+        "list-1440.png": 1,
+        "single-1440.png": 1
+      },
+      "accent": {
+        "form-1440.png": 0.0029,
+        "list-1440.png": 0.0078,
+        "single-1440.png": 0.0027
+      }
+    },
+    "g2": {
+      "expected": 9,
+      "found": 9,
+      "violations": 0
+    }
+  }
+}

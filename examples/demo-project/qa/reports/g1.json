@@ -1,8 +1,9 @@
 {
-  "gate": "G6",
+  "gate": "G1",
   "pass": true,
   "summary": {
-    "pages": 7,
+    "files": 17,
+    "declarations": 4642,
     "violations": 0
   },
   "violations": []

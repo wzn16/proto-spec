@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  模板：tpl-form.html —— 新建 / 编辑表单页
+  ------------------------------------------------------------
+  用法：复制本文件到 pages/ 改名（如 order-form.html），再替换插槽内容。
+  模板内相对链接已按 pages/ 位置书写：资源 ../assets/…，
+  页面互链与正式页同级，../index.html 为站点地图。
+
+  区域结构：
+  ┌───────────┬────────────────────────────────────────┐
+  │           │ l-header（面包屑 / 管理员）             │
+  │ l-sidebar ├────────────────────────────────────────┤
+  │ SLOT-0    │ l-page                                 │
+  │ 侧边导航   │   ├ SLOT-1 页头                        │
+  │           │   └ SLOT-2 表单卡片                    │
+  │           │       └ SLOT-3 底部操作栏              │
+  └───────────┴────────────────────────────────────────┘
+
+  插槽清单：
+    SLOT-0 侧边导航：新建 / 编辑页以「新建订单」为 active 项（snippet-sidebar-nav）
+    SLOT-1 页头：改页面标题
+    SLOT-2 表单卡片：按需增删 c-field 组（片段 snippet-form-controls）
+    SLOT-3 底部操作栏：改按钮文案与去向（l-toolbar 右对齐）
+
+  假数据要求：placeholder / hint 用真实业务口吻；演示按钮一律走 toast，不真实提交。
+  ============================================================
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>新建订单 - 订单管理 | 示例项目</title>
+  <link rel="stylesheet" href="../assets/tokens.css">
+  <link rel="stylesheet" href="../assets/base.css">
+  <link rel="stylesheet" href="../assets/shell.css">
+  <link rel="stylesheet" href="../assets/components.css">
+  <link rel="stylesheet" href="../assets/family.css">
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="l-app">
+
+  <!-- SLOT-0: 侧边导航（表单页：新建订单为 active 项） -->
+  <nav class="l-sidebar">
+    <nav class="c-nav">
+      <div class="c-nav__group">订单管理</div>
+      <a class="c-nav__item" href="list.html">订单列表</a>
+      <a class="c-nav__item c-nav__item--active" href="form.html">新建订单</a>
+      <a class="c-nav__item" href="single.html">订单详情</a>
+    </nav>
+  </nav>
+  <!-- /SLOT-0 -->
+
+  <header class="l-header">
+    <nav class="c-breadcrumb" aria-label="面包屑">
+      <a class="c-breadcrumb__item" href="../index.html">首页</a>
+      <span class="c-breadcrumb__sep">/</span>
+      <span class="c-breadcrumb__item">订单管理</span>
+      <span class="c-breadcrumb__sep">/</span>
+      <span class="c-breadcrumb__item" aria-current="page">新建订单</span>
+    </nav>
+    <button class="c-btn c-btn--sm" type="button">管理员</button>
+  </header>
+
+  <main class="l-page">
+
+    <!-- SLOT-1: 页头 -->
+    <div class="l-page-head">
+      <h1 class="u-text-title">新建订单</h1>
+    </div>
+    <!-- /SLOT-1 -->
+
+    <!-- SLOT-2: 表单卡片（片段 snippet-form-controls：c-field 组与 c-check） -->
+    <section class="c-card">
+      <div class="c-card__header">
+        <h2>订单信息</h2>
+      </div>
+      <div class="c-card__body">
+        <form>
+          <div class="c-field">
+            <label class="c-field__label" for="order-customer">客户名称</label>
+            <input class="c-input" id="order-customer" name="customer" type="text"
+                   placeholder="请输入客户全称，如：杭州恒晟机械" required>
+          </div>
+
+          <div class="c-field">
+            <label class="c-field__label" for="order-status">订单状态</label>
+            <select class="c-select" id="order-status" name="status">
+              <option value="review" selected>待审核</option>
+              <option value="done">已完成</option>
+              <option value="canceled">已取消</option>
+            </select>
+          </div>
+
+          <div class="c-field">
+            <label class="c-field__label" for="order-remark">备注</label>
+            <textarea class="c-textarea" id="order-remark" name="remark" rows="4"
+                      placeholder="选填，可补充交期、收货与安装要求"></textarea>
+            <p class="c-field__hint">备注为选填项，最多 200 字，将随订单展示给仓库与客户。</p>
+          </div>
+
+          <label class="c-check">
+            <input type="checkbox" name="invoice"> 需要发票
+          </label>
+        </form>
+      </div>
+
+      <!-- SLOT-3: 底部操作栏（l-toolbar 右对齐：取消回列表，提交走 toast 演示） -->
+      <div class="c-card__footer">
+        <div class="l-toolbar">
+          <a class="c-btn c-btn--secondary" href="list.html">取消</a>
+          <button class="c-btn" type="button" data-action="show-toast"
+                  data-message="演示：表单不真实提交">提交</button>
+        </div>
+      </div>
+      <!-- /SLOT-3 -->
+    </section>
+    <!-- /SLOT-2 -->
+
+  </main>
+
+  <!-- 原型工具条（非业务 UI，正式交付时可整块删除） -->
+  <div class="proto-bar">
+    <a href="../index.html">返回站点地图</a>
+    <span>templates/tpl-form.html</span>
+  </div>
+
+</div>
+</body>
+</html>

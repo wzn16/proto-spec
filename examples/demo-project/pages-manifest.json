@@ -1,0 +1,36 @@
+{
+  "project": "proto-spec 示例项目",
+  "specVersion": "1.0.0",
+  "specStatus": "frozen",
+  "breakpoints": [
+    1440,
+    768,
+    375
+  ],
+  "pages": [
+    {
+      "id": "list",
+      "path": "pages/list.html",
+      "title": "订单列表 - 订单管理 | 示例项目",
+      "type": "list",
+      "nav": true,
+      "states": []
+    },
+    {
+      "id": "form",
+      "path": "pages/form.html",
+      "title": "新建订单 - 订单管理 | 示例项目",
+      "type": "list",
+      "nav": true,
+      "states": []
+    },
+    {
+      "id": "single",
+      "path": "pages/single.html",
+      "title": "运营概览 - 数据分析 | 示例项目",
+      "type": "list",
+      "nav": true,
+      "states": []
+    }
+  ]
+}

@@ -71,22 +71,29 @@ def build_fixture(root: Path, bad: bool) -> Path:
     review = proj / "qa" / "visual-review.md"
     review.parent.mkdir(parents=True, exist_ok=True)
     (proj / "qa" / "visual-review-peer.md").write_text(
-        "# 独立视觉评审\n\n## 一、三秒测试\n- 像企业后台；第一眼看到表格。\n\n"
-        "## 二、锚线检查\n- 2 条锚线。\n\n## 三、六维打分\n\n"
+        "# 独立视觉评审\n\n## 一、三秒测试\n- 像工业后台；第一眼落在表格首列。\n\n"
+        "## 二、锚线检查\n- 3 条锚线，表内文本偏左 4px。\n\n## 三、六维打分\n\n"
         "| 维度 | 分数 | 依据 | 改法 |\n| --- | --- | --- | --- |\n"
-        "| 层级 | 4 | 可辨 | — |\n| 节奏 | 4 | 成组 | — |\n| 焦点 | 4 | 唯一 | — |\n"
-        "| 密度 | 4 | 匹配 | — |\n| 一致性 | 5 | 同规格 | — |\n| 可信度 | 4 | 真实 | — |\n\n"
+        "| 层级 | 4 | 标题与正文层级清楚 | — |\n"
+        "| 节奏 | 4 | 区块间距成组 | — |\n"
+        "| 焦点 | 4 | 主操作可见 | — |\n"
+        "| 密度 | 4 | 一屏 12 行合适 | — |\n"
+        "| 一致性 | 5 | 同类控件同规格 | — |\n"
+        "| 可信度 | 4 | 编号与时间可信 | — |\n\n"
         "## 四、改进项\n1. 无。\n\n## 五、保留\n1. 表格密度。\n\n## 六、结论\n- 最低分 4。\n", encoding="utf-8")
 
     review.write_text(
         "# 视觉评分单（G7）\n\n## 一、三秒测试\n- 像 2020s 企业后台；第一眼看到表格。\n\n"
         "## 二、锚线检查\n- 2 条锚线。\n\n"
         "## 三、六维打分\n\n| 维度 | 分数 | 依据 | 改法 |\n| --- | --- | --- | --- |\n"
-        "| 层级 | 4 | 标题与正文可辨 | — |\n| 节奏 | 4 | 组内紧组间松 | — |\n"
-        "| 焦点 | 4 | 主操作唯一 | — |\n| 密度 | 4 | 与任务匹配 | — |\n"
-        "| 一致性 | 5 | 组件同规格 | — |\n| 可信度 | 4 | 数据真实 | — |\n\n"
+        "| 层级 | 4 | 页标题 24 与正文 13 可辨 | — |\n"
+        "| 节奏 | 4 | 组间 16 组内 8 成组 | — |\n"
+        "| 焦点 | 4 | 页头唯一主按钮 | — |\n"
+        "| 密度 | 4 | 行高 40 与任务匹配 | — |\n"
+        "| 一致性 | 5 | 组件同规格无例外 | — |\n"
+        "| 可信度 | 4 | 数据与文案自洽 | — |\n\n"
         "## 四、改进项\n1. 无。\n\n## 五、保留\n1. 表格密度。\n\n"
-        "## 六、结论\n- 最低分 4；不采纳：无。\n", encoding="utf-8")
+        "## 六、结论\n- 最低分 4。\n", encoding="utf-8")
 
     (proj / "pages-manifest.json").write_text(json.dumps({
         "project": "自测项目", "specVersion": "0.1.0", "specStatus": "frozen",
@@ -98,6 +105,49 @@ def build_fixture(root: Path, bad: bool) -> Path:
              "title": "页面B - 演示 | 自测项目", "type": "detail", "states": []},
         ]}, ensure_ascii=False, indent=2), encoding="utf-8")
     return proj
+
+
+G7_BAD_ALL_ONE = """# 自评
+## 一、三秒测试\n像模板\n## 二、锚线检查\n3 条\n## 三、六维打分
+| 维度 | 分数 | 依据 | 改法 |
+| --- | --- | --- | --- |
+| 层级 | 1 | 页面很乱没有层次 | 复评5 |
+| 节奏 | 1 | 间距不均节奏差 | 复评5 |
+| 焦点 | 1 | 没有主操作焦点 | 复评5 |
+| 密度 | 1 | 密度失衡太挤 | 复评5 |
+| 一致性 | 1 | 规格不统一 | 复评5 |
+| 可信度 | 1 | 像模板不像产品 | 复评5 |
+## 四、改进项\n1. 全改\n## 五、保留\n1. 无\n## 六、结论\n已复评
+"""
+
+G7_BAD_PIPE = """# 自评
+## 一、三秒测试\n像模板\n## 二、锚线检查\n3 条\n## 三、六维打分
+| 维度 | 分数 | 依据 | 改法 |
+| --- | --- | --- | --- |
+| 层级 | 3 | 页面层次偏弱 | 不采纳 |||||||||||||||||
+| 节奏 | 4 | 间距成组 | — |
+| 焦点 | 4 | 主操作唯一 | — |
+| 密度 | 4 | 与任务匹配 | — |
+| 一致性 | 4 | 规格统一 | — |
+| 可信度 | 4 | 数据自洽 | — |
+## 四、改进项\n1. 无\n## 五、保留\n1. 无\n## 六、结论\n不采纳
+"""
+
+
+def g7_negative() -> list[str]:
+    """G7 必须拦住：全 1 分、竖线填充理由、缺他评无理由。"""
+    errs = []
+    import tempfile, shutil
+    for label, body in (("全 1 分", G7_BAD_ALL_ONE), ("竖线填充", G7_BAD_PIPE)):
+        d = Path(tempfile.mkdtemp())
+        (d / "qa").mkdir(parents=True)
+        (d / "qa" / "visual-review.md").write_text(body, encoding="utf-8")
+        r = subprocess.run([sys.executable, str(HERE / "check_visual_review.py"), "--project", str(d)],
+                           capture_output=True, text=True)
+        if r.returncode == 0:
+            errs.append(f"G7 未拦住「{label}」")
+        shutil.rmtree(d, ignore_errors=True)
+    return errs
 
 
 def main() -> int:
@@ -117,6 +167,16 @@ def main() -> int:
         c, r = run("check_links.py", good)
         checks.append(("合规项目 G3 通过", c == 0,
                        f"exit={c} violations={r.get('summary', {}).get('violations')}"))
+        # G7 对抗负例：全 1 分 / 竖线填充 不得通过
+        import tempfile as _tf, shutil as _sh
+        for label, body in (("全 1 分", G7_BAD_ALL_ONE), ("竖线填充", G7_BAD_PIPE)):
+            d = Path(_tf.mkdtemp())
+            (d / "qa").mkdir(parents=True)
+            (d / "qa" / "visual-review.md").write_text(body, encoding="utf-8")
+            c7, _ = run("check_visual_review.py", d)
+            checks.append((f"G7 拦截「{label}」", c7 == 1, f"exit={c7}"))
+            _sh.rmtree(d, ignore_errors=True)
+
         c, r = run("final_gate.py", good)
         skipped = r.get("summary", {}).get("skipped", [])
         checks.append(("合规项目 G5 通过（G2 skipped）",

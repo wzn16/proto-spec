@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-"""G7 评审门：自评 + 独立评审 + 分歧处理，按「较小值」判定。
+"""G7 评审门：自评 + 独立评审 + 分歧处理，按「自评/他评取小」判定，并分级处置。
 
-规则：
-  1) 自评单 qa/visual-review.md 必须含四小节与六维分数（1–5）。
-  2) 独立评审 qa/visual-review-peer.md 必须存在；缺失时自评单需写
-     「未独立评审 + ≥20 字理由」。
-  3) 有效分 = min(自评, 他评)；有效分 <4 的维度，必须在该维度同一行内写
-     「不采纳 + ≥20 字理由」，或写「复评」并给出改后分。
-  4) 同维差 ≥2 分时，自评单必须有「分歧」小节。
+分级（有效分 = min(自评, 他评)）：
+  1 分 → 无条件 FAIL（不允许任何理由放行）
+  2 分 → 必须他评单存在，且该维写「改后 3–5」；否则 FAIL
+  3 分 → 允许「不采纳 + 去符号后 ≥15 字理由」，或「改后 4–5」
+  ≥4 分 → 通过
 
-用法: python3 check_visual_review.py --project <目录> [--json]
-退出码: 0=通过 1=未通过 2=用法错误
+其它规则：
+  - 无他评单时，自评单必须同行写「未独立评审：<去符号后 ≥20 字>」（不跨行抓取）
+  - 同维差 ≥2 分 → 自评单必须有「分歧」小节
 """
 from __future__ import annotations
 import argparse, json, re, sys
@@ -18,18 +17,18 @@ from pathlib import Path
 
 DIMS = ["层级", "节奏", "焦点", "密度", "一致性", "可信度"]
 SECTIONS = ["三秒测试", "锚线", "改进项", "保留"]
-MIN_REASON = 20
+SYM = re.compile(r"[|\s*_`\-—:：]")
 
+def clean(t: str) -> str:
+    return SYM.sub("", t or "")
 
 def rows(text: str) -> dict[str, tuple[int, str]]:
-    """提取 | 维度 | 分数 | 其余… | 行，返回 {维度: (分, 行内其余文本)}。"""
-    out: dict[str, tuple[int, str]] = {}
+    out = {}
     for d in DIMS:
         m = re.search(r"^\|\s*" + d + r"\s*\|\s*([1-5])\s*\|(.*)$", text, re.M)
         if m:
             out[d] = (int(m.group(1)), m.group(2))
     return out
-
 
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -41,30 +40,37 @@ def main() -> int:
     peer_f = root / "qa" / "visual-review-peer.md"
     problems: list[dict] = []
 
+    self_text = self_f.read_text(encoding="utf-8") if self_f.is_file() else ""
     if not self_f.is_file():
         problems.append({"file": "qa/visual-review.md", "kind": "缺失", "value": "未找到",
                          "hint": "每轮完成后必须写视觉评分单（references/visual-scorecard.md）"})
-        self_text = ""
     else:
-        self_text = self_f.read_text(encoding="utf-8")
         for s in SECTIONS:
             if s not in self_text:
                 problems.append({"file": "qa/visual-review.md", "kind": "缺小节", "value": s,
                                  "hint": f"必须包含「{s}」小节"})
 
-    self_scores = rows(self_text) if self_text else {}
+    self_scores = rows(self_text)
     for d in DIMS:
         if d not in self_scores:
             problems.append({"file": "qa/visual-review.md", "kind": "缺评分", "value": d,
                              "hint": "六维每项必须给 1–5 分"})
+        else:
+            # 依据列必须有内容（原「位置 + 现象」要求）
+            cells = [c.strip() for c in self_scores[d][1].split("|")]
+            basis = cells[0] if cells else ""
+            if len(clean(basis)) < 6:
+                problems.append({"file": "qa/visual-review.md", "kind": "缺依据", "value": f"{d}",
+                                 "hint": "该维「依据」列必须写位置 + 现象（≥6 个有效字符）"})
 
     peer_scores: dict[str, tuple[int, str]] = {}
-    if not peer_f.is_file():
-        m = re.search(r"未独立评审[:：]?\s*(.{0,200})", self_text, re.S)
-        reason = (m.group(1).strip() if m else "")
-        if len(reason) < MIN_REASON:
+    peer_present = peer_f.is_file()
+    if not peer_present:
+        m = re.search(r"未独立评审[:：]\s*([^\n]*)", self_text)
+        reason = clean(m.group(1)) if m else ""
+        if len(reason) < 20:
             problems.append({"file": "qa/visual-review-peer.md", "kind": "缺独立评审", "value": "未找到",
-                             "hint": f"派发独立评审并保存评分单；确无执行者时在自评单写「未独立评审：<{MIN_REASON} 字以上理由>」"})
+                             "hint": "派发独立评审并存评分单；确无执行者时在同一行写「未独立评审：<≥20 字理由>」"})
     else:
         peer_text = peer_f.read_text(encoding="utf-8")
         for s in SECTIONS:
@@ -72,8 +78,15 @@ def main() -> int:
                 problems.append({"file": "qa/visual-review-peer.md", "kind": "缺小节", "value": s,
                                  "hint": f"独立评审单必须包含「{s}」"})
         peer_scores = rows(peer_text)
+        # 自评与他评不得同一份（同分同文视为抄写）
+        for d in DIMS:
+            if d in self_scores and d in peer_scores:
+                if self_scores[d][0] == peer_scores[d][0] and \
+                   clean(self_scores[d][1].split("|")[0]) == clean(peer_scores[d][1].split("|")[0]) and \
+                   clean(self_scores[d][1].split("|")[0]):
+                    problems.append({"file": "qa/visual-review-peer.md", "kind": "评审未独立",
+                                     "value": f"{d} 同分同文", "hint": "他评不得与自评逐字相同"})
 
-    # 有效分 = 较小值
     effective: dict[str, int] = {}
     for d in DIMS:
         if d in self_scores:
@@ -82,15 +95,27 @@ def main() -> int:
             effective[d] = min(s, p)
 
     for d, v in effective.items():
+        row = self_scores.get(d, (0, ""))[1]
         if v >= 4:
             continue
-        row_text = self_scores.get(d, (0, ""))[1]
-        handled = (("不采纳" in row_text and len(row_text.strip()) >= MIN_REASON)
-                   or re.search(r"复评\s*[1-5]", row_text))
-        if not handled:
-            peer_note = f"（他评 {peer_scores[d][0]} 分）" if d in peer_scores else ""
-            problems.append({"file": "qa/visual-review.md", "kind": "低分未处理", "value": f"{d}={v}{peer_note}",
-                             "hint": "低于 4 分的维度必须在该行写「不采纳 + ≥20 字理由」或「复评 + 改后分」"})
+        if v == 1:
+            problems.append({"file": "qa/visual-review.md", "kind": "1 分不得放行", "value": d,
+                             "hint": "出现 1 分说明该维不合格：必须重做，不接受任何理由或复评"})
+            continue
+        if v == 2:
+            if not peer_present:
+                problems.append({"file": "qa/visual-review.md", "kind": "2 分缺他评", "value": d,
+                                 "hint": "2 分维度必须有独立评审的「改后 3–5」"})
+            elif not re.search(r"改后\s*[3-5]", row):
+                problems.append({"file": "qa/visual-review.md", "kind": "2 分未复评", "value": d,
+                                 "hint": "2 分维度必须在该行写「改后 3–5」并说明改了什么"})
+            continue
+        # v == 3
+        ok = (("不采纳" in row and len(clean(row)) >= 15)
+              or re.search(r"改后\s*[4-5]", row))
+        if not ok:
+            problems.append({"file": "qa/visual-review.md", "kind": "3 分未处置", "value": d,
+                             "hint": "3 分维度必须「不采纳 + 去符号后 ≥15 字理由」或「改后 4–5」"})
 
     gaps = {d: abs(self_scores[d][0] - peer_scores[d][0])
             for d in DIMS if d in self_scores and d in peer_scores}
@@ -103,6 +128,8 @@ def main() -> int:
     report = {"gate": "G7", "pass": not problems,
               "summary": {"self": {d: self_scores[d][0] for d in self_scores},
                           "peer": {d: peer_scores[d][0] for d in peer_scores},
+                          "peer_present": peer_present,
+                          "effective": effective,
                           "effective_min": min(effective.values()) if effective else None,
                           "violations": len(problems)},
               "violations": problems}
@@ -117,7 +144,7 @@ def main() -> int:
             print(f"  {p['file']}  [{p['kind']}] {p['value']} → {p['hint']}")
     else:
         lo = min(effective.values()) if effective else 0
-        print(f"[G7] 通过：有效分（自评/他评取小）{lo}–{max(effective.values()) if effective else 0} 分")
+        print(f"[G7] 通过：有效分 {lo}–{max(effective.values()) if effective else 0}（独立评审：{'有' if peer_present else '无'}）")
     return 0 if not problems else 1
 
 

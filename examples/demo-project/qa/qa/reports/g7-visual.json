@@ -1,0 +1,62 @@
+{
+  "gate": "G7",
+  "pass": false,
+  "summary": {
+    "self": {},
+    "peer": {},
+    "peer_present": false,
+    "effective": {},
+    "effective_min": null,
+    "violations": 8
+  },
+  "violations": [
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺失",
+      "value": "未找到",
+      "hint": "每轮完成后必须写视觉评分单（references/visual-scorecard.md）"
+    },
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺评分",
+      "value": "层级",
+      "hint": "六维每项必须给 1–5 分"
+    },
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺评分",
+      "value": "节奏",
+      "hint": "六维每项必须给 1–5 分"
+    },
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺评分",
+      "value": "焦点",
+      "hint": "六维每项必须给 1–5 分"
+    },
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺评分",
+      "value": "密度",
+      "hint": "六维每项必须给 1–5 分"
+    },
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺评分",
+      "value": "一致性",
+      "hint": "六维每项必须给 1–5 分"
+    },
+    {
+      "file": "qa/visual-review.md",
+      "kind": "缺评分",
+      "value": "可信度",
+      "hint": "六维每项必须给 1–5 分"
+    },
+    {
+      "file": "qa/visual-review-peer.md",
+      "kind": "缺独立评审",
+      "value": "未找到",
+      "hint": "派发独立评审并存评分单；确无执行者时在同一行写「未独立评审：<≥20 字理由>」"
+    }
+  ]
+}

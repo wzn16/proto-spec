@@ -1,0 +1,18 @@
+{
+  "gate": "G3",
+  "pass": false,
+  "summary": {
+    "pages": 0,
+    "violations": 1,
+    "notes": 0
+  },
+  "violations": [
+    {
+      "file": "pages-manifest.json",
+      "line": 0,
+      "type": "manifest 缺失",
+      "value": "pages-manifest.json",
+      "hint": "G3 对账基准不存在"
+    }
+  ]
+}

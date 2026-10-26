@@ -112,8 +112,10 @@ def main() -> int:
         codes[gate], reports[gate] = run_gate(script, project)
 
     shots = project / "qa" / "screenshots"
+    g8_state = "skipped"
     if shots.is_dir() and any(shots.iterdir()):
         codes["g8"], reports["g8"] = run_gate("check_pixels.py", project)
+        g8_state = "pass" if codes["g8"] == 0 else "fail"
     g2_state = "skipped"
     if shots.is_dir() and any(shots.iterdir()):
         codes["g2"], reports["g2"] = run_gate("check_screens.py", project)
@@ -133,6 +135,10 @@ def main() -> int:
                 break
     deliverables = deliverable_checks(project, mf)
     deliverables += leftovers
+    g7s = reports.get("g7", {}).get("summary", {})
+    g7_min = g7s.get("effective_min")
+    if g7_min is not None and g7_min < 3:
+        codes["g7"] = 1
     sub_ok = (codes.get("g1") == 0 and codes.get("g3") == 0
               and codes.get("g4") == 0 and codes.get("g6") == 0 and codes.get("g7") == 0 and codes.get("g8", 0) == 0 and g2_state != "fail")
     ok = sub_ok and not deliverables
@@ -144,9 +150,11 @@ def main() -> int:
         "g4": reports.get("g4", {}).get("pass", False),
         "g6": reports.get("g6", {}).get("pass", False),
         "g7": reports.get("g7", {}).get("pass", False),
-        "g8": reports.get("g8", {}).get("pass", True),
+        "g8": reports.get("g8", {}).get("pass", "skipped") if "g8" in reports else "skipped",
         "deliverables": not deliverables,
-        "skipped": ["G2（无截图，视觉门未执行）"] if g2_state == "skipped" else [],
+        "skipped": ([("G2（无截图，视觉门未执行）" if g2_state == "skipped" else None),
+                     ("G8（无截图，像素门未执行）" if g8_state == "skipped" else None)]),
+
         "violations": len(deliverables),
     }
     report = {"gate": "G5", "pass": ok, "summary": summary,

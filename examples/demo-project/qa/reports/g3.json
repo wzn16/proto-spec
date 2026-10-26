@@ -1,0 +1,10 @@
+{
+  "gate": "G3",
+  "pass": true,
+  "summary": {
+    "pages": 3,
+    "violations": 0,
+    "notes": 0
+  },
+  "violations": []
+}

@@ -1,0 +1,100 @@
+/* ============================================================
+   base.css — reset · body 基线 · u- 工具类白名单
+   ------------------------------------------------------------
+   取值一律引用 tokens.css 的语义层（--s-*）与组件层（--c-*）变量，
+   禁止色值字面量与档外字号/间距；工具类是白名单，只用不新造。
+   ============================================================ */
+
+/* ---------- reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- body 基线 ---------- */
+body {
+  font-family: var(--s-font-ui);
+  background: var(--s-bg-page);
+  color: var(--s-text-primary);
+  font-size: var(--s-fs-body);
+  line-height: var(--s-lh-body);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- u- 工具类（白名单，页面只用不新造） ---------- */
+
+/* 排版组合类：字号 + 行高 + 字重一次锁定，避免字阶漂移 */
+.u-text-caption {
+  font-size: var(--s-fs-caption);
+  line-height: var(--s-lh-body);
+  font-weight: var(--s-weight-normal);
+}
+
+.u-text-small {
+  font-size: var(--s-fs-small);
+  line-height: var(--s-lh-body);
+  font-weight: var(--s-weight-normal);
+}
+
+.u-text-body {
+  font-size: var(--s-fs-body);
+  line-height: var(--s-lh-body);
+  font-weight: var(--s-weight-normal);
+}
+
+.u-text-lead {
+  font-size: var(--s-fs-lead);
+  line-height: var(--s-lh-body);
+  font-weight: var(--s-weight-normal);
+}
+
+.u-text-title {
+  font-size: var(--s-fs-title);
+  line-height: var(--s-lh-heading);
+  font-weight: var(--s-weight-semibold);
+}
+
+.u-text-headline {
+  font-size: var(--s-fs-headline);
+  line-height: var(--s-lh-heading);
+  font-weight: var(--s-weight-semibold);
+}
+
+.u-text-display {
+  font-size: var(--s-fs-display);
+  line-height: var(--s-lh-heading);
+  font-weight: var(--s-weight-semibold);
+}
+
+/* 数字等宽（表格数值、指标卡对齐） */
+.u-num { font-variant-numeric: tabular-nums; }
+
+/* 布局与间距：sm=行内 / md=卡片内 / lg=页面级 */
+.u-flex { display: flex; }
+.u-flex-col { display: flex; flex-direction: column; }
+.u-gap-sm { gap: var(--s-gap-inline); }
+.u-gap-md { gap: var(--s-gap-card); }
+.u-gap-lg { gap: var(--s-gap-page); }
+
+/* 页面容器 */
+.u-page { padding: var(--s-gap-page); }

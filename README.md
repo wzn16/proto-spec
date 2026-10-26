@@ -8,10 +8,10 @@
 - 需要「能点、能看、风格统一」的原型来对齐需求的产品/售前/开发人员；
 - 使用任何支持 skill 机制（读取 SKILL.md 并照做）的 AI 编码工具的用户。
 
-## 首次运行为红（预期行为）
+## 母版与示例项目
 
-在 starter 上直接跑 `python3 scripts/final_gate.py --project starter` 会是 FAIL：`pages/` 尚未生成、`qa/visual-review.md` 未写。
-这不是缺陷，是门禁在要求「先有项目再生效」。正式项目在步骤 3–5 产出 SPEC/页面/评分单后再跑。
+- `starter/` 是**母版**（tokens + 组件 + 模板 + 站点地图骨架），没有页面与评分单，所以对它跑 `final_gate` 会是红的——这是设计如此，不是缺陷。
+- `examples/demo-project/` 是**跑通八门的完整示例**（三页 + 截图 + 自评 + 独立评审），可直接 `python3 scripts/final_gate.py --project examples/demo-project` 复验，也可作为新项目的起点复制。
 
 ## 能力一览
 

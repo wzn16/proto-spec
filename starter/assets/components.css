@@ -764,3 +764,8 @@
 .c-board__card-meta { display: flex; flex-wrap: wrap; gap: var(--s-space-2); color: var(--s-text-secondary); font-size: var(--s-fs-caption); }
 @media (max-width: 1180px) { .c-board, .c-board--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 768px) { .c-board, .c-board--3 { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- 表格横向滚动容器（窄屏不破版） ---------- */
+.c-table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.c-table-scroll > table { min-width: 720px; }
+@media (max-width: 768px) { .c-table-scroll > table { min-width: 640px; } }

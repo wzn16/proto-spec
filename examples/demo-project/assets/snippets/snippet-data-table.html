@@ -1,0 +1,56 @@
+<!--
+  【片段】snippet-data-table · 数据表格（c-table）
+  【用途】订单列表等业务列表页的主体表格。
+  【变体】c-table__th 表头单元格（可加排序标记）；金额列 c-table__num u-num 右对齐数字；
+          行内状态用 c-tag（c-tag--success 已完成 / c-tag--warning 待审核 / c-tag--error 已取消）；
+          行操作用 c-btn c-btn--text。
+  【子元素】必选：thead（列头行）+ tbody（数据行）；可选：更多 tbody 行。
+  【可改范围】只改列头与单元格内容；可增删 tbody 行；禁改类名与结构，禁加内联样式。
+-->
+<table class="c-table">
+  <thead>
+    <tr>
+      <th class="c-table__th">订单号</th>
+      <th class="c-table__th">客户</th>
+      <th class="c-table__th">金额</th>
+      <th class="c-table__th">状态</th>
+      <th class="c-table__th">下单时间</th>
+      <th class="c-table__th">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SO20261022001</td>
+      <td>杭州恒晟机械有限公司</td>
+      <td class="c-table__num u-num">¥12,800.00</td>
+      <td><span class="c-tag c-tag--success">已完成</span></td>
+      <td>2026-10-22 09:30</td>
+      <td>
+        <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+        <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+      </td>
+    </tr>
+    <tr>
+      <td>SO20261021008</td>
+      <td>苏州德力精密模具厂</td>
+      <td class="c-table__num u-num">¥8,560.00</td>
+      <td><span class="c-tag c-tag--warning">待审核</span></td>
+      <td>2026-10-21 15:42</td>
+      <td>
+        <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+        <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+      </td>
+    </tr>
+    <tr>
+      <td>SO20261020015</td>
+      <td>宁波海通轴承有限公司</td>
+      <td class="c-table__num u-num">¥23,400.00</td>
+      <td><span class="c-tag c-tag--error">已取消</span></td>
+      <td>2026-10-20 11:05</td>
+      <td>
+        <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
+        <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,68 +1,129 @@
 #!/usr/bin/env python3
-"""把 tokens.css 导出为开发可直接消费的资产：tokens.json / tokens.d.ts / tailwind.preset.js
+"""tokens.css → 开发可直接消费的资产：tokens.json / tokens.d.ts / tokens.js / tailwind.preset.js
 
-用法: python3 export_tokens.py --tokens <tokens.css> --out <目录>
-退出码: 0=成功 2=用法错误
+用法:
+  python3 export_tokens.py --tokens <tokens.css> --out <目录> [--override <extra.css>]
+
+产出：
+  tokens.json         结构化（含 resolved 值：var() 链已解析）
+  tokens.d.ts         TypeScript 类型（键名可索引，能被 tsc 编译）
+  tokens.js           CommonJS 运行时模块（resolved 值，可直接内联使用）
+  tailwind.preset.js  Tailwind v3 预设（colors/fontSize/radius/spacing/shadow/zIndex/transition）
+
+分组：g 基元 / s 语义 / c 组件 / motion 动效（--motion-* / --c-motion-*） / ease 缓动
 """
 from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
 
-GROUPS = ("g", "s", "c")
+GROUP_RULES = [
+    ("g", lambda n: n.startswith("--g-")),
+    ("s", lambda n: n.startswith("--s-")),
+    ("c", lambda n: n.startswith("--c-")),
+    ("motion", lambda n: n.startswith("--motion-") or n.startswith("--c-motion-")),
+    ("ease", lambda n: n.startswith("--ease")),
+]
 
 
-def parse(css: str) -> dict[str, dict[str, str]]:
-    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
-    out: dict[str, dict[str, str]] = {k: {} for k in GROUPS}
-    for m in re.finditer(r"(--[a-z0-9-]+)\s*:\s*([^;]+);", css, re.I):
-        name, value = m.group(1).strip(), m.group(2).strip()
-        parts = name.lstrip("-").split("-")
-        if parts and parts[0] in GROUPS:
-            out[parts[0]][name] = value
-    return out
+def parse(css_paths: list[Path]) -> tuple[dict[str, str], list[str]]:
+    text = "\n".join(p.read_text(encoding="utf-8") for p in css_paths)
+    text = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+    defs: dict[str, str] = {}
+    warnings: list[str] = []
+    # 只收 :root 与 [data-*] 内的声明；扫描非 root 段以给警告
+    for block in re.finditer(r"([^{}]+)\{([^{}]*)\}", text):
+        selector, body = block.group(1).strip(), block.group(2)
+        if ":root" not in selector and not selector.startswith("."):
+            for name in re.findall(r"(--[\w-]+)\s*:", body):
+                if name not in defs:
+                    warnings.append(f"{name} 定义在非 :root 选择器（{selector[:30]}），可能不生效")
+        for m in re.finditer(r"(--[\w-]+)\s*:\s*([^;]+);", body):
+            defs[m.group(1)] = m.group(2).strip()
+    return defs, warnings
+
+
+def resolve(name: str, defs: dict[str, str], depth: int = 0, seen: set[str] | None = None) -> str:
+    seen = seen or set()
+    if depth > 6 or name in seen:
+        return defs.get(name, "")
+    seen.add(name)
+    v = defs.get(name, "")
+    m = re.fullmatch(r"var\(\s*(--[\w-]+)\s*(?:,[^)]*)?\)", v.strip())
+    return resolve(m.group(1), defs, depth + 1, seen) if m else v
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--tokens", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--override", default=None, help="额外的覆盖文件（如项目覆盖层）")
     args = ap.parse_args()
-    src = Path(args.tokens)
-    if not src.is_file():
-        print(f"[export] 找不到 {src}", file=sys.stderr)
+    paths = [Path(args.tokens)]
+    if args.override:
+        paths.append(Path(args.override))
+    if not paths[0].is_file():
+        print(f"[export] 找不到 {paths[0]}", file=sys.stderr)
         return 2
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    groups = parse(src.read_text(encoding="utf-8"))
+    defs, warnings = parse(paths)
 
+    groups: dict[str, dict[str, str]] = {k: {} for k, _ in GROUP_RULES}
+    for name, value in defs.items():
+        for gname, test in GROUP_RULES:
+            if test(name):
+                groups[gname][name] = value
+                break
+    resolved = {k: {n: resolve(n, defs) for n in v} for k, v in groups.items()}
     total = sum(len(v) for v in groups.values())
-    payload = {"$schema": "proto-spec/tokens@1", "generatedFrom": src.name,
-               "count": total, "primitive": groups["g"], "semantic": groups["s"], "component": groups["c"]}
+
+    payload = {"$schema": "proto-spec/tokens@2", "sources": [str(p) for p in paths],
+               "count": total, "resolved": resolved, "raw": groups, "warnings": warnings}
     (out / "tokens.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    lines = ["// 由 proto-spec/scripts/export_tokens.py 生成，勿手改",
-             "export declare const tokens: {"]
-    for k, v in groups.items():
-        lines.append(f"  /** {k} 层：{len(v)} 个 */")
-        lines.append(f"  {k}: {{")
-        for name in v:
-            lines.append(f"    '{name}': string;")
-        lines.append("  };")
-    lines += ["};", "export type TokenName = keyof typeof tokens.semantic;", ""]
-    (out / "tokens.d.ts").write_text("\n".join(lines), encoding="utf-8")
+    dts = ["// 由 proto-spec/scripts/export_tokens.py 生成，勿手改",
+           "export interface TokenGroups {",]
+    for gname, v in groups.items():
+        dts.append(f"  /** {gname} 层：{len(v)} 个 */")
+        dts.append(f"  {gname}: {{")
+        dts += [f"    '{n}': string;" for n in v]
+        dts.append("  };")
+    dts += ["}", "",
+            "export declare const tokens: TokenGroups;",
+            "export declare const resolved: { [K in keyof TokenGroups]: { [P in keyof TokenGroups[K]]: string } };",
+            "export type TokenName = { [K in keyof TokenGroups]: keyof TokenGroups[K] }[keyof TokenGroups] & string;",
+            ""]
+    (out / "tokens.d.ts").write_text("\n".join(dts), encoding="utf-8")
 
-    tw = {"theme": {"extend": {
-        "colors": {n.replace("--s-color-", "").replace("--g-", ""): f"var({n})"
-                   for n in list(groups["s"]) + list(groups["g"]) if "color" in n or n.startswith("--g-")},
-        "borderRadius": {n.replace("--g-radius-", ""): f"var({n})" for n in groups["g"] if "radius" in n},
-        "spacing": {n.replace("--s-space-", ""): f"var({n})" for n in groups["s"] if "space" in n},
+    (out / "tokens.js").write_text(
+        "// 由 proto-spec/scripts/export_tokens.py 生成（resolved：var() 已解析）\n"
+        "module.exports = " + json.dumps(resolved, ensure_ascii=False, indent=2) + ";\n",
+        encoding="utf-8")
+
+    def pick(prefix: str, *, keep=lambda n: True):
+        return {n.replace(prefix, ""): f"var({n})"
+                for n in defs if n.startswith(prefix) and keep(n)}
+    preset = {"theme": {"extend": {
+        "colors": pick("--s-color-", keep=lambda n: "color" in n) | {n.replace("--g-", ""): f"var({n})"
+                                                                    for n in defs if n.startswith("--g-") and "color" in n},
+        "fontSize": pick("--s-fs-"),
+        "spacing": pick("--s-space-"),
+        "borderRadius": pick("--g-radius-"),
+        "boxShadow": pick("--s-shadow-") | pick("--g-shadow-"),
+        "zIndex": pick("--c-z-"),
+        "transitionDuration": pick("--motion-") | pick("--c-motion-"),
+        "transitionTimingFunction": pick("--ease-"),
+        "height": pick("--c-row-h"),
+        "minWidth": pick("--c-drawer-"),
     }}}
     (out / "tailwind.preset.js").write_text(
-        "// 由 proto-spec/scripts/export_tokens.py 生成\nmodule.exports = "
-        + json.dumps(tw, ensure_ascii=False, indent=2) + ";\n", encoding="utf-8")
+        "// Tailwind v3 preset（由 export_tokens.py 生成）\nmodule.exports = "
+        + json.dumps(preset, ensure_ascii=False, indent=2) + ";\n", encoding="utf-8")
 
-    print(f"[export] {total} 个 token → {out}/tokens.json · tokens.d.ts · tailwind.preset.js")
-    print(f"  分层：g={len(groups['g'])} s={len(groups['s'])} c={len(groups['c'])}")
+    print(f"[export] {total} 个 token → {out}/tokens.json · tokens.d.ts · tokens.js · tailwind.preset.js")
+    print("  分层：" + " ".join(f"{k}={len(v)}" for k, v in groups.items()))
+    if warnings:
+        print(f"  ⚠ {len(warnings)} 个变量定义在非 :root 选择器：" + "; ".join(warnings[:3]))
     return 0
 
 

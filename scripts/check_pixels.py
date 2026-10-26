@@ -23,7 +23,8 @@ except Exception as e:  # pragma: no cover
     print(f"[G8] SKIP：缺少 Pillow/numpy（{e}）")
     sys.exit(0)
 
-INK_LUMA = 120          # 深色文字判定
+INK_LUMA = 120          # 保留：备用亮度判据
+INK_DIST = 150          # 与页面背景色的曼哈顿距离阈值（深/浅底通用）
 ACCENT_SAT = 0.45       # 强调色饱和度下限
 ACCENT_VAL = 0.35
 MAX_ANCHORS = 3
@@ -39,9 +40,18 @@ def load(p: Path):
     return np.asarray(im, dtype=np.int32), im.size
 
 
+def page_bg(a: np.ndarray) -> tuple[int, int, int]:
+    """取全图出现频次最高的颜色作为页面背景。"""
+    flat = a.reshape(-1, 3)
+    q = (flat // 8 * 8)
+    uniq, counts = np.unique(q, axis=0, return_counts=True)
+    return tuple(int(v) for v in uniq[counts.argmax()])
+
+
 def ink_mask(a: np.ndarray, x0: int) -> np.ndarray:
-    lum = (a[:, :, 0] * 299 + a[:, :, 1] * 587 + a[:, :, 2] * 114) // 1000
-    m = lum <= INK_LUMA
+    bg = np.array(page_bg(a), dtype=np.int32)
+    dist = np.abs(a - bg).sum(axis=2)
+    m = dist >= INK_DIST
     m[:, :x0] = False          # 排除侧栏
     m[:120, :] = False         # 排除顶栏与页签（深色按钮底会被误判为墨迹）
     return m
@@ -170,20 +180,16 @@ def card_right_edges(a: np.ndarray, x0: int) -> list[dict]:
         l3 = lum[120:, x - 3]
         r3 = lum[120:, x + 3]
         on = (np.abs(col - l3) > 8) & (np.abs(col - r3) > 8)
-        # 取最长连续段作为该边线真实跨度（避免被零散文字污染）
-        best, cur_start = (0, 0), None
-        for i, v in enumerate(on):
-            if v and cur_start is None:
-                cur_start = i
-            elif not v and cur_start is not None:
-                if i - cur_start > best[1] - best[0]:
-                    best = (cur_start, i)
-                cur_start = None
-        if cur_start is not None and len(on) - cur_start > best[1] - best[0]:
-            best = (cur_start, len(on))
-        if best[1] - best[0] < 40:
+        # 允许断续：找占比最高的窗口（宽 120px 滑窗），窗口内占比 ≥0.5 即视为该段有边线
+        win, best_span, best_ratio = 120, (0, len(on)), 0.0
+        for s in range(0, max(1, len(on) - win), 20):
+            seg = on[s:s + win]
+            r = float(seg.mean())
+            if r > best_ratio:
+                best_ratio, best_span = r, (s, s + win)
+        if best_ratio < 0.5:
             continue
-        out.append({"x": x, "y0": best[0] + 120, "y1": best[1] - 1 + 120})
+        out.append({"x": x, "y0": best_span[0] + 120, "y1": min(best_span[1], len(on)) - 1 + 120})
     return out
 
 
@@ -316,6 +322,9 @@ def main() -> int:
             print(f"  {v['file']}  [{v['kind']}] {v['value']} → {v['hint']}")
     else:
         print(f"[G8] 通过：{len(results)} 张，锚线/贴边/强调面积/字号层级均达标")
+        measured = [r["file"] for r in results if r["anchors"]]
+        if len(measured) < len(results):
+            print(f"  skipped：{len(results) - len(measured)} 张未测到锚线（{', '.join(set(r['file'] for r in results) - set(measured))}）")
         for r in results:
             ab = r.get("accent_budget", {})
             print(f"  {r['file']}: 锚线 {len(r['anchors'])} 条 {r['anchors']} · 强调 {r['accent_ratio']*100:.1f}%（{ab.get('verdict','-')}，常态 {ab.get('band','')}） · 块 {r['accent_blobs']} · 字号 {r['font_levels']} 档")
