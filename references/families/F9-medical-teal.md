@@ -11,9 +11,13 @@
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#0F766E",
     "--g-radius-12": "12px"
-  }
-}
-```
+  },
+  "structure": [
+    ".c-data-table td, .c-data-table th { padding-top: var(--s-space-3); padding-bottom: var(--s-space-3); }",
+    ".c-kpi { border-radius: var(--s-radius-card); }",
+    ".c-card { border-radius: var(--s-radius-card); }"
+  ]
+}```
 
 ## ① 调性
 

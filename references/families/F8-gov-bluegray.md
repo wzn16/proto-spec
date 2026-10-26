@@ -11,9 +11,12 @@
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#1B4B8F",
     "--g-radius-12": "8px"
-  }
-}
-```
+  },
+  "structure": [
+    ".c-card { box-shadow: none; border-radius: var(--s-radius-small); }",
+    ".c-workbench__head h1 { border-left: var(--s-space-1) solid var(--s-color-primary); padding-left: var(--s-space-2); }"
+  ]
+}```
 
 ## ① 调性
 

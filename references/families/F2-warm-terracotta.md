@@ -10,9 +10,12 @@
     "--s-text-primary": "#2D2A26",
     "--g-radius-8": "10px",
     "--g-radius-12": "14px"
-  }
-}
-```
+  },
+  "structure": [
+    ".c-workbench__head h1, .l-page-head h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; letter-spacing: 0; }",
+    ".c-card { border-radius: var(--s-radius-card); }"
+  ]
+}```
 
 
 > 家族 id：F2 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)

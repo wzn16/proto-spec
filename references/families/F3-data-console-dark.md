@@ -27,7 +27,12 @@
     "--s-tag-error-bg": "rgba(248, 113, 113, .14)",
     "--s-tag-error-text": "#FCA5A5",
     "--s-tag-error-line": "rgba(248, 113, 113, .24)"
-  }
+  },
+  "structure": [
+    ".c-data-table th { background: transparent; border-bottom-color: var(--s-border); }",
+    ".c-card { box-shadow: none; }",
+    ".c-kpi { border-radius: var(--s-radius-control); }"
+  ]
 }```
 
 

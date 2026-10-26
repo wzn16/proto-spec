@@ -43,6 +43,11 @@ def build(fam: str, force: bool) -> Path:
     tokens = (d / "assets" / "tokens.css").read_text(encoding="utf-8")
     override = "\n:root{\n" + "".join(f"  {k}:{v};\n" for k, v in data["identity"].items()) + "}\n"
     (d / "assets" / "tokens.css").write_text(tokens + override, encoding="utf-8")
+    # family.css：结构层声明（真实差异），不是空占位
+    decls = data.get("structure", [])
+    (d / "assets" / "family.css").write_text(
+        f"/* {fam} {name} · 结构层（由 family-manifest.structure 生成） */\n" + "\n".join(decls) + "\n",
+        encoding="utf-8")
     page = (ROOT / "starter" / "templates" / "tpl-list.html").read_text(encoding="utf-8")
     page = re.sub(r"<title>[^<]*</title>", f"<title>{fam} 家族回归 - {name}</title>", page, count=1)
     (d / "pages" / "list.html").write_text(page, encoding="utf-8")

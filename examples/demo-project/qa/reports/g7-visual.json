@@ -28,6 +28,8 @@
       "可信度": 4
     },
     "effective_min": 4,
+    "floor": 3,
+    "pass_score": 4,
     "violations": 0
   },
   "violations": []

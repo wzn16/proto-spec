@@ -6,7 +6,7 @@ description: >-
 license: MIT
 metadata:
   author: wzn16
-  version: 1.2.0
+  version: 2.4.1
   tags: prototype html spec-driven axure frontend design-system
 ---
 
@@ -28,7 +28,8 @@ metadata:
 
 ## 步骤 0 — 起骨架
 
-`cp -R starter/ <项目目录>/`（或用 `examples/demo-project/` 作起点）。必留四件：SPEC 骨架、`starter/assets/tokens.css`、`starter/assets/components.css`、页面清单 manifest——缺任一禁止进入生成。
+`cp -R starter/ <项目目录>/`（或用 `examples/demo-project/` 作起点——它是八门全绿的完整示例）。
+**starter 本身跑 G5 必然红**（没有 pages 与评分单），绿基线看 `examples/demo-project`。必留四件：SPEC 骨架、`starter/assets/tokens.css`、`starter/assets/components.css`、页面清单 manifest——缺任一禁止进入生成。
 之后每次改组件请重跑 `python3 scripts/gen_component_map.py`，保证组件文档与代码同源。
 
 ## 步骤 1 — 目标与约束

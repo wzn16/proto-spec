@@ -30,7 +30,12 @@
     "--s-tag-error-bg": "rgba(248, 113, 113, .14)",
     "--s-tag-error-text": "#FCA5A5",
     "--s-tag-error-line": "rgba(248, 113, 113, .24)"
-  }
+  },
+  "structure": [
+    ".c-data-table td, .c-data-table th { font-family: var(--s-font-mono); font-size: var(--s-fs-small); }",
+    ".c-kpi__num { font-family: var(--s-font-mono); letter-spacing: -0.02em; }",
+    ".c-card { box-shadow: none; border-color: var(--s-border); }"
+  ]
 }```
 
 

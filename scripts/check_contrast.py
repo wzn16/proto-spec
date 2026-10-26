@@ -102,8 +102,12 @@ def main() -> int:
     cfg_pairs = cfg_get(cfg, "contrast.pairs", None)
     TEXT_T = cfg_get(cfg, "contrast.text_threshold", 4.5)
     UI_T = cfg_get(cfg, "contrast.ui_threshold", 3.0)
-    pairs = ([(p["fg"], p["bg"], p.get("usage", ""), TEXT_T if p.get("level", "text") == "text" else UI_T)
-              for p in cfg_pairs] if cfg_pairs else DEFAULT_PAIRS)
+    if cfg_pairs:
+        # 配置优先：阈值随 level 注入
+        pairs = [(p["fg"], p["bg"], p.get("usage", ""),
+                  TEXT_T if p.get("level", "text") == "text" else UI_T) for p in cfg_pairs]
+    else:
+        pairs = [(fg, bg, usage, TEXT_T if th >= 4.5 else UI_T) for fg, bg, usage, th in DEFAULT_PAIRS]
     tokens = project / "assets" / "tokens.css"
     if not tokens.is_file():
         print("[G4] 找不到 assets/tokens.css", file=sys.stderr)
@@ -113,10 +117,9 @@ def main() -> int:
     if args.pairs_json and Path(args.pairs_json).is_file():
         pairs = [tuple(x) for x in json.loads(Path(args.pairs_json).read_text(encoding="utf-8"))]
     else:
-        pairs = list(DEFAULT_PAIRS)
         # 条件配对：深色框架槽位存在时才检查（家族/项目自带侧栏 token）
         if "--s-bg-sidebar" in defs and "--s-text-on-dark-muted" in defs:
-            pairs.append(("--s-text-on-dark-muted", "--s-bg-sidebar", "深底弱文字/侧栏底", 3.0))
+            pairs.append(("--s-text-on-dark-muted", "--s-bg-sidebar", "深底弱文字/侧栏底", UI_T))
 
     violations: list[dict] = []
     checked = 0
@@ -155,7 +158,7 @@ def main() -> int:
         for v in violations:
             print(f"  {v['pair']}  {v['actual']}  需要 ≥{v['threshold']}  {v['hint']}")
     else:
-        print(f"[G4] 通过：{checked} 对语义配对全部达标（正文 ≥4.5:1 / UI ≥3:1）")
+        print(f"[G4] 通过：{checked} 对语义配对全部达标（正文 ≥{TEXT_T}:1 / UI ≥{UI_T}:1）")
     return 0 if not violations else 1
 
 

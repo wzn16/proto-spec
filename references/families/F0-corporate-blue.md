@@ -10,9 +10,9 @@
     "--g-radius-6": "6px",
     "--g-radius-8": "8px",
     "--g-radius-12": "12px"
-  }
-}
-```
+  },
+  "structure": []
+}```
 
 
 > 家族 id：F0 · 版本：v0.1（正式建档） · 上级：[美学家族库](../family-library.md)

@@ -10,9 +10,12 @@
     "--s-bg-page": "#F7F6F2",
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#0F766E"
-  }
-}
-```
+  },
+  "structure": [
+    ".c-workbench__head h1, .l-page-head h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; }",
+    ".c-card { border-radius: var(--s-radius-card); }"
+  ]
+}```
 
 ## ① 调性
 

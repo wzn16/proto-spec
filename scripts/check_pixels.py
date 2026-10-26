@@ -25,7 +25,7 @@ try:
     import numpy as np
 except Exception as e:  # pragma: no cover
     print(f"[G8] SKIP：缺少 Pillow/numpy（{e}）")
-    sys.exit(0)
+    sys.exit(3)
 
 INK_LUMA = 120          # 保留：备用亮度判据
 INK_DIST = 150          # 默认值，运行时由 config 覆盖
@@ -236,7 +236,7 @@ def row_pitch(mask: np.ndarray) -> dict:
 def check(p: Path, cfg: dict | None = None) -> dict:
     # 阈值一律从配置取（config/gates.json ← 项目 qa/gates.config.json）
     global INK_DIST, ACCENT_SAT, ACCENT_VAL, MAX_ANCHORS, MIN_FONT_LEVELS
-    global MIN_RIGHT_MARGIN, FONT_SHARE, ANCHOR_TOL
+    global MIN_RIGHT_MARGIN, FONT_SHARE, ANCHOR_TOL, CLIP_PX, ACCENT_RATIO
     cfg = cfg or {}
     INK_DIST = cfg_get(cfg, "pixels.ink_dist", INK_DIST)
     ACCENT_SAT = cfg_get(cfg, "pixels.accent_sat", ACCENT_SAT)
@@ -246,6 +246,8 @@ def check(p: Path, cfg: dict | None = None) -> dict:
     MIN_RIGHT_MARGIN = cfg_get(cfg, "pixels.min_right_margin", MIN_RIGHT_MARGIN)
     FONT_SHARE = cfg_get(cfg, "pixels.font_level_share", FONT_SHARE)
     ANCHOR_TOL = cfg_get(cfg, "pixels.anchor_tolerance_px", ANCHOR_TOL)
+    CLIP_PX = cfg_get(cfg, "pixels.clip_px", CLIP_PX)
+    ACCENT_RATIO = cfg_get(cfg, "pixels.accent_hard_cap", ACCENT_RATIO)
     a, (W, H) = load(p)
     x0 = 240 if W > 900 else 0
     m = ink_mask(a, x0)
@@ -279,9 +281,9 @@ def check(p: Path, cfg: dict | None = None) -> dict:
     if tight:
         violations.append({"kind": "右缘留白不足", "value": f"{len(tight)} 张卡片留白 {min(tight)}px",
                            "hint": f"内容距卡片右边线应 ≥{MIN_RIGHT_MARGIN}px：末列加右内边距或收列宽"})
-    if len(strong) > MAX_ANCHORS + 1:
+    if len(strong) > MAX_ANCHORS:
         violations.append({"kind": "锚线过多", "value": f"{len(strong)} 条（{strong}）",
-                           "hint": f"正文/标题左缘应归到 ≤{MAX_ANCHORS + 1} 条锚线，检查表内文本与统计卡是否与卡片标题同线"})
+                           "hint": f"正文/标题左缘应归到 ≤{MAX_ANCHORS} 条锚线，检查表内文本与统计卡是否与卡片标题同线"})
     if clipped:
         violations.append({"kind": "文本贴边/裁切", "value": f"边线 x={clipped}",
                            "hint": "文本墨迹距卡片右边线 ≤3px：改列宽或给单元格留右内边距"})
@@ -323,7 +325,7 @@ def main() -> int:
         shots = sorted(d.glob("*1440*.png")) or sorted(d.glob("*.png"))[:3] if d.is_dir() else []
     if not shots:
         print("[G8] SKIP：没有 1440 宽截图")
-        return 0
+        return 3
     cfg = load_cfg(root if root else None, args.config)
     results = [check(p, cfg) for p in shots]
     viol = [v | {"file": r["file"]} for r in results for v in r["violations"]]

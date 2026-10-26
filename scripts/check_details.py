@@ -16,7 +16,7 @@ CFG: dict = {}
 KPI_BAN = ["字段数", "层级数", "模块数", "数据列", "节点数", "数据集", "列数"]   # 默认值，运行时被配置覆盖
 RE_HREF = re.compile(r'href="([^"#]+\.html[^"]*)"')
 RE_MSG = re.compile(r'data-message="([^"]+)"')
-RE_KPI = re.compile(r'class="c-kpi__label"[^>]*>([^<]+)<')
+RE_KPI = re.compile(r'class="(?:c-kpi__label|c-stat__label)"[^>]*>([^<]+)<')
 RE_MAXW = re.compile(r'max-width\s*:\s*\d+px')
 RE_INLINE_W = re.compile(r'style="[^"]*(?<!max-)width\s*:\s*\d+px')
 
@@ -39,7 +39,7 @@ def check_page(path: Path, root: Path):
                 continue
             seen[v] = seen.get(v, 0) + 1
         for v, n in seen.items():
-            if n >= 4:  # 导航/页脚复用允许 3 次，4 次以上视为重复入口
+            if n >= cfg_get(CFG, 'details.duplicate_link_min', 4):  # 导航/页脚复用允许 3 次，4 次以上视为重复入口
                 out.append({"file": name, "kind": kind, "value": f"{v} ×{n}", "hint": hint})
     for m in RE_MAXW.finditer(html):
         out.append({"file": name, "kind": "布局硬编码", "value": m.group(0), "hint": "表格/容器不要用 max-width 限宽，改列宽"})

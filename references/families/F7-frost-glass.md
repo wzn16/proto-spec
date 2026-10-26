@@ -30,8 +30,14 @@
     "--s-tag-warning-line": "rgba(251, 191, 36, .24)",
     "--s-tag-error-bg": "rgba(248, 113, 113, .14)",
     "--s-tag-error-text": "#FCA5A5",
-    "--s-tag-error-line": "rgba(248, 113, 113, .24)"
-  }
+    "--s-tag-error-line": "rgba(248, 113, 113, .24)",
+    "--s-glass-bg": "rgba(255, 255, 255, .06)",
+    "--s-glass-line": "rgba(255, 255, 255, .12)"
+  },
+  "structure": [
+    ".c-card { background: var(--s-glass-bg); backdrop-filter: blur(14px); border-color: var(--s-glass-line); }",
+    ".c-workbench__side { backdrop-filter: blur(18px); }"
+  ]
 }```
 
 ## ① 调性

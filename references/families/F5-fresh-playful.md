@@ -12,9 +12,12 @@
     "--s-color-primary": "#C2410C",
     "--g-radius-8": "16px",
     "--g-radius-12": "20px"
-  }
-}
-```
+  },
+  "structure": [
+    ".c-card { box-shadow: var(--s-shadow-elevated); border-color: transparent; }",
+    ".c-btn { border-radius: var(--s-radius-full); }"
+  ]
+}```
 
 ## ① 调性
 

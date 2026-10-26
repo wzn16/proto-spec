@@ -35,11 +35,14 @@ class RefCollector(HTMLParser):
                 self.refs.append((tag, d[a].strip()))
 
 
-def run_gate(script: str, project: Path, extra: list[str] | None = None):
+def run_gate(script: str, project: Path, extra: list[str] | None = None, config: str | None = None):
     """子进程重跑子门，返回 (exit_code, 报告dict)。"""
     r = subprocess.run(
-        [sys.executable, str(HERE / script), "--project", str(project), "--json"] + (extra or []),
+        [sys.executable, str(HERE / script), "--project", str(project), "--json"]
+        + (extra or []) + (["--config", config] if config else []),
         capture_output=True, text=True)
+    if r.returncode == 3:
+        return 3, {"gate": script, "pass": "skipped", "summary": {"reason": r.stdout.strip()[:120]}}
     try:
         report = json.loads(r.stdout)
     except json.JSONDecodeError:
@@ -98,6 +101,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="G5 交付前总验收")
     ap.add_argument("--project", required=True)
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--config", default=None, help="配置覆盖文件，透传给全部子门")
     args = ap.parse_args()
     project = Path(args.project).resolve()
 
@@ -118,15 +122,15 @@ def main() -> int:
         m = re.search(r"\|\s*家族\s*\|\s*(F[0-9])", spec.read_text(encoding="utf-8"))
         fam = m.group(1) if m else None
     if fam:
-        codes["g1f"], reports["g1f"] = run_gate("check_tokens.py", project, ["--family", fam])
+        codes["g1f"], reports["g1f"] = run_gate("check_tokens.py", project, ["--family", fam], args.config)
     else:
         reports["g1f"] = {"pass": "skipped", "summary": {"reason": "SPEC 未声明家族"}}
 
     shots = project / "qa" / "screenshots"
     g8_state = "skipped"
     if shots.is_dir() and any(shots.iterdir()):
-        codes["g8"], reports["g8"] = run_gate("check_pixels.py", project)
-        g8_state = "pass" if codes["g8"] == 0 else "fail"
+        codes["g8"], reports["g8"] = run_gate("check_pixels.py", project, None, args.config)
+        g8_state = {0: "pass", 3: "skipped"}.get(codes["g8"], "fail")
     g2_state = "skipped"
     if shots.is_dir() and any(shots.iterdir()):
         codes["g2"], reports["g2"] = run_gate("check_screens.py", project)

@@ -11,9 +11,13 @@
     "--g-radius-6": "2px",
     "--g-radius-8": "4px",
     "--g-radius-12": "6px"
-  }
-}
-```
+  },
+  "structure": [
+    ".c-card, .c-data-table { box-shadow: none; }",
+    ".c-card { border-color: var(--s-border-strong); }",
+    ".c-btn { border-radius: var(--s-radius-small); }"
+  ]
+}```
 
 
 > 家族 id：F1 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)
