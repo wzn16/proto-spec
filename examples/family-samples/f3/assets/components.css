@@ -710,7 +710,7 @@
 .c-kv dd { margin: 0; color: var(--s-text-primary); font-size: var(--s-fs-small); word-break: break-word; }
 
 /* ---------- 分段器（视图/状态切换） ---------- */
-.c-segmented { display: inline-flex; padding: var(--s-space-1); background: var(--s-bg-hover); border-radius: var(--s-radius-control); gap: var(--s-space-1); }
+.c-segmented { display: inline-flex; padding: var(--s-space-1); background: var(--s-segmented-bg, var(--s-bg-hover)); border-radius: var(--s-radius-control); gap: var(--s-space-1); }
 .c-segmented__item { color: var(--s-segmented-text, var(--s-text-secondary)); display: inline-flex; align-items: center; gap: var(--s-space-1); height: 28px; padding: 0 var(--s-space-3); border-radius: var(--s-radius-small); border: 0; background: transparent; font-size: var(--s-fs-small); cursor: pointer; transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out); }
 .c-segmented__item:hover { color: var(--s-text-primary); }
 .c-segmented__item.is-on { background: var(--s-bg-card); color: var(--s-text-primary); font-weight: var(--s-weight-medium); box-shadow: var(--s-shadow-hairline); }

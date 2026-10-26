@@ -20,7 +20,7 @@
   "sub_reports": {
     "g1": {
       "files": 17,
-      "declarations": 4642,
+      "declarations": 4666,
       "violations": 0
     },
     "g3": {
@@ -29,7 +29,7 @@
       "notes": 0
     },
     "g4": {
-      "pairs": 8,
+      "pairs": 10,
       "violations": 0
     },
     "g6": {

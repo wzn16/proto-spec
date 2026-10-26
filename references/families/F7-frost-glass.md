@@ -34,13 +34,18 @@
     "--s-glass-bg": "rgba(255, 255, 255, .06)",
     "--s-glass-line": "rgba(255, 255, 255, .12)",
     "--s-brand-text": "#E5E7EB",
-    "--s-segmented-text": "#C7CBD3"
+    "--s-segmented-text": "#C7CBD3",
+    "--s-bg-hover": "#1A1F2B",
+    "--s-segmented-bg": "#1A1F2B",
+    "--c-sidebar-w": "256px",
+    "--c-content-max": "1140px"
   },
   "structure": [
     ".c-card { background: var(--s-glass-bg); backdrop-filter: blur(14px); border-color: var(--s-glass-line); }",
     ".c-workbench__side { backdrop-filter: blur(18px); }",
     ".c-workbench__head h1 { letter-spacing: .02em; }",
-    ".c-data-table th { background: var(--s-glass-bg); }"
+    ".c-data-table th { background: var(--s-glass-bg); }",
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
   ]
 }```
 

@@ -32,7 +32,9 @@
     "--s-tag-error-line": "rgba(248, 113, 113, .24)",
     "--s-radius-square": "2px",
     "--s-brand-text": "#E5E7EB",
-    "--s-segmented-text": "#C7CBD3"
+    "--s-segmented-text": "#C7CBD3",
+    "--c-sidebar-w": "240px",
+    "--c-content-max": "1100px"
   },
   "structure": [
     ".c-data-table td, .c-data-table th { font-family: var(--s-font-mono); font-size: var(--s-fs-small); }",
@@ -40,7 +42,8 @@
     ".c-card { box-shadow: none; border-color: var(--s-border); }",
     ".c-workbench__head h1 { font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: .04em; }",
     ".c-data-table th { text-transform: uppercase; letter-spacing: .08em; }",
-    ".c-card { border-radius: var(--s-radius-square); }"
+    ".c-card { border-radius: var(--s-radius-square); }",
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
   ]
 }```
 

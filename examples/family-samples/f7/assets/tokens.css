@@ -95,6 +95,7 @@
 
   /* ---------- L1 语义：圆角与阴影 ---------- */
   --s-brand-text:var(--s-text-inverse);
+  --s-segmented-bg:var(--s-bg-hover);
   --s-segmented-text:var(--s-text-secondary);
   --s-nav-active-bg:var(--s-color-primary-soft);
   --s-nav-active-text:var(--s-color-primary);
@@ -123,6 +124,7 @@
   --c-table-row-h:44px;
   --c-card-pad:16px;
   --c-sidebar-w:240px;
+  --c-content-max:1280px;
   --c-header-h:56px;
   --c-z-sticky:100;
   --c-z-overlay:200;
@@ -190,4 +192,8 @@
   --s-glass-line:rgba(255, 255, 255, .12);
   --s-brand-text:#E5E7EB;
   --s-segmented-text:#C7CBD3;
+  --s-bg-hover:#1A1F2B;
+  --s-segmented-bg:#1A1F2B;
+  --c-sidebar-w:256px;
+  --c-content-max:1140px;
 }

@@ -3,3 +3,4 @@
 .c-workbench__side { backdrop-filter: blur(18px); }
 .c-workbench__head h1 { letter-spacing: .02em; }
 .c-data-table th { background: var(--s-glass-bg); }
+.c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }

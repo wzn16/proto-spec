@@ -2,7 +2,7 @@
   "gate": "G4",
   "pass": true,
   "summary": {
-    "pairs": 8,
+    "pairs": 10,
     "violations": 0
   },
   "violations": []

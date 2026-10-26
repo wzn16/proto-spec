@@ -219,8 +219,9 @@
 
 .c-nav__item--active,
 .c-nav__item--active:hover {
-  background: var(--s-color-primary-soft);
-  color: var(--s-color-primary); font-weight: var(--s-weight-medium);
+  /* 深色家族用 --s-on-dark-active 覆盖；浅色回退到主色浅底 */
+  background: var(--s-nav-active-bg, var(--s-color-primary-soft));
+  color: var(--s-nav-active-text, var(--s-color-primary)); font-weight: var(--s-weight-medium);
 }
 
 /* ---------- 9. 面包屑 c-breadcrumb / 分页 c-pagination ---------- */
@@ -312,9 +313,9 @@
   background: var(--s-bg-hover);
 }
 
-.c-tag--success { color: var(--s-color-success-strong); }
-.c-tag--warning { color: var(--s-color-warning-strong); }
-.c-tag--error { color: var(--s-color-error-strong); }
+.c-tag--success { background: var(--s-tag-success-bg, var(--s-bg-hover)); color: var(--s-tag-success-text, var(--s-color-success-strong)); border-color: var(--s-tag-success-line, transparent); }
+.c-tag--warning { background: var(--s-tag-warning-bg, var(--s-bg-hover)); color: var(--s-tag-warning-text, var(--s-color-warning-strong)); border-color: var(--s-tag-warning-line, transparent); }
+.c-tag--error   { background: var(--s-tag-error-bg, var(--s-bg-hover));   color: var(--s-tag-error-text, var(--s-color-error-strong));     border-color: var(--s-tag-error-line, transparent); }
 
 /* ---------- 12. 浮层：c-modal / c-drawer / c-dropdown / c-toast ---------- */
 .c-modal {
@@ -525,7 +526,7 @@
 /* ---------- 工作台层（后台工作台页：侧栏/页签/KPI/查询/树/表） ---------- */
 .c-workbench { display: flex; min-height: 100vh; background: var(--s-bg-page); }
 .c-workbench__side { width: 232px; flex: 0 0 232px; background: var(--s-bg-sidebar); display: flex; flex-direction: column; }
-.c-workbench__brand { height: var(--c-header-h); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 var(--s-space-4); border-bottom: 1px solid var(--s-on-dark-line); color: var(--s-text-inverse); font-size: var(--s-fs-lead); font-weight: var(--s-weight-semibold); letter-spacing: .02em; }
+.c-workbench__brand { color: var(--s-brand-text, var(--s-text-inverse)); height: var(--c-header-h); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 var(--s-space-4); border-bottom: 1px solid var(--s-on-dark-line); font-size: var(--s-fs-lead); font-weight: var(--s-weight-semibold); letter-spacing: .02em; }
 .c-workbench__brand small { display: block; font-size: var(--s-fs-caption); font-weight: var(--s-weight-normal); color: var(--s-text-on-dark-muted); letter-spacing: 0; }
 .c-workbench__nav { flex: 1; overflow-y: auto; padding: var(--s-space-3) var(--s-space-2) var(--s-space-4); }
 .c-workbench__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -709,8 +710,8 @@
 .c-kv dd { margin: 0; color: var(--s-text-primary); font-size: var(--s-fs-small); word-break: break-word; }
 
 /* ---------- 分段器（视图/状态切换） ---------- */
-.c-segmented { display: inline-flex; padding: var(--s-space-1); background: var(--s-bg-hover); border-radius: var(--s-radius-control); gap: var(--s-space-1); }
-.c-segmented__item { display: inline-flex; align-items: center; gap: var(--s-space-1); height: 28px; padding: 0 var(--s-space-3); border-radius: var(--s-radius-small); border: 0; background: transparent; color: var(--s-text-secondary); font-size: var(--s-fs-small); cursor: pointer; transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out); }
+.c-segmented { display: inline-flex; padding: var(--s-space-1); background: var(--s-segmented-bg, var(--s-bg-hover)); border-radius: var(--s-radius-control); gap: var(--s-space-1); }
+.c-segmented__item { color: var(--s-segmented-text, var(--s-text-secondary)); display: inline-flex; align-items: center; gap: var(--s-space-1); height: 28px; padding: 0 var(--s-space-3); border-radius: var(--s-radius-small); border: 0; background: transparent; font-size: var(--s-fs-small); cursor: pointer; transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out); }
 .c-segmented__item:hover { color: var(--s-text-primary); }
 .c-segmented__item.is-on { background: var(--s-bg-card); color: var(--s-text-primary); font-weight: var(--s-weight-medium); box-shadow: var(--s-shadow-hairline); }
 .c-segmented__count { color: var(--s-text-secondary); font-variant-numeric: tabular-nums; }

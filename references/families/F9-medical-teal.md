@@ -10,14 +10,17 @@
     "--s-bg-page": "#F2F7F6",
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#0F766E",
-    "--g-radius-12": "12px"
+    "--g-radius-12": "12px",
+    "--c-sidebar-w": "256px",
+    "--c-content-max": "1200px"
   },
   "structure": [
     ".c-data-table td, .c-data-table th { padding-top: var(--s-space-3); padding-bottom: var(--s-space-3); }",
     ".c-kpi { border-radius: var(--s-radius-card); }",
     ".c-card { border-radius: var(--s-radius-card); }",
     ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
-    ".c-data-table th { background: var(--s-color-primary-soft); }"
+    ".c-data-table th { background: var(--s-color-primary-soft); }",
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
   ]
 }```
 

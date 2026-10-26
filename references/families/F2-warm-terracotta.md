@@ -9,14 +9,17 @@
     "--s-color-primary": "#B05330",
     "--s-text-primary": "#2D2A26",
     "--g-radius-8": "10px",
-    "--g-radius-12": "14px"
+    "--g-radius-12": "14px",
+    "--c-sidebar-w": "240px",
+    "--c-content-max": "1120px"
   },
   "structure": [
     ".c-workbench__head h1, .l-page-head h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; letter-spacing: 0; }",
     ".c-card { border-radius: var(--s-radius-card); }",
     ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
     ".c-data-table th { background: var(--s-color-primary-soft); }",
-    ".c-kpi { border-radius: var(--s-radius-card); }"
+    ".c-kpi { border-radius: var(--s-radius-card); }",
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
   ]
 }```
 

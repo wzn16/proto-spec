@@ -10,13 +10,16 @@
     "--s-bg-page": "#F4F6F8",
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#1B4B8F",
-    "--g-radius-12": "8px"
+    "--g-radius-12": "8px",
+    "--c-sidebar-w": "268px",
+    "--c-content-max": "1040px"
   },
   "structure": [
     ".c-card { box-shadow: none; border-radius: var(--s-radius-small); }",
     ".c-workbench__head h1 { border-left: var(--s-space-1) solid var(--s-color-primary); padding-left: var(--s-space-2); }",
     ".c-workbench__head { background: var(--s-bg-card); border: 1px solid var(--s-border-strong); border-left: var(--s-space-1) solid var(--s-color-primary); padding: var(--s-space-3) var(--s-space-4); }",
-    ".c-data-table th { background: var(--s-bg-page); text-transform: uppercase; letter-spacing: .04em; }"
+    ".c-data-table th { background: var(--s-bg-page); text-transform: uppercase; letter-spacing: .04em; }",
+    ".c-workbench__content { max-width: var(--c-content-max); margin-inline: auto; width: 100%; }"
   ]
 }```
 
