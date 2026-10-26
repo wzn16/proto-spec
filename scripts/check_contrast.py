@@ -11,12 +11,16 @@
 报告:   <project>/qa/reports/g4.json
 """
 from __future__ import annotations
+import sys
 
 import argparse
 import json
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from gate_config import load as load_cfg, get as cfg_get  # noqa: E402
 
 # 语义角色配对（前景, 背景, 用途, 门槛）
 # 门槛: 4.5 = 正文; 3.0 = 大字/UI 控件
@@ -88,11 +92,18 @@ def contrast(a: str, b: str) -> float:
 def main() -> int:
     ap = argparse.ArgumentParser(description="G4 可访问性对比度门")
     ap.add_argument("--project", required=True)
+    ap.add_argument("--config", default=None)
     ap.add_argument("--pairs-json", default=None,
                     help="覆盖默认配对表（JSON 数组：[[fg,bg,用途,门槛],...]）")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
     project = Path(args.project).resolve()
+    cfg = load_cfg(project, args.config)
+    cfg_pairs = cfg_get(cfg, "contrast.pairs", None)
+    TEXT_T = cfg_get(cfg, "contrast.text_threshold", 4.5)
+    UI_T = cfg_get(cfg, "contrast.ui_threshold", 3.0)
+    pairs = ([(p["fg"], p["bg"], p.get("usage", ""), TEXT_T if p.get("level", "text") == "text" else UI_T)
+              for p in cfg_pairs] if cfg_pairs else DEFAULT_PAIRS)
     tokens = project / "assets" / "tokens.css"
     if not tokens.is_file():
         print("[G4] 找不到 assets/tokens.css", file=sys.stderr)

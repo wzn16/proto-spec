@@ -19,6 +19,7 @@
 - **八道质量门** G1 规范 · G2 截图 · G3 交互 · G4 可访问 · G6 细节 · G7 双评 · G8 像素 + G5 总验收
 - **设计判断层**：参考图→规范、面积配比预算、字体反滥用、数据可视化规则、交互心理、反例图集（10 个真反例）
 - **组件库**：56 个基础类 + 工作台层 / 台账层 / 看板原语，含 `component-map.md` 对照 Element Plus·AntD
+- **可配置**：阈值全在 `config/gates.json`，项目用 `qa/gates.config.json` 覆盖；家族清单靠扫描目录，可自定义
 - **交付物**：SPEC + 页面 + tokens（可导出 json/ts/tailwind）+ qa 报告 + 交付 README
 
 ## 安装

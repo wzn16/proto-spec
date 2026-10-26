@@ -119,6 +119,7 @@ python3 scripts/regress_pixels.py                           # 像素判据回归
 ```
 
 G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价。
+阈值与本项目不同时写 `<项目>/qa/gates.config.json` 覆盖（见 `references/gate-config.md`）——不改脚本。
 
 ## 交付与边界
 
@@ -133,6 +134,7 @@ G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价�
 
 **生成**：`references/color-area-budget.md`（八种配色面积预算）· `references/viz-rules.md`（图表/KPI/数据墨水比）· `references/component-map.md` · `references/templates-catalog.md` · `references/snippets-catalog.md` · `references/patterns-ledger.md` · `references/patterns-form.md` · `references/detail-rules.md` · `references/implementation-map.md`
 
+**门禁配置**：`references/gate-config.md`（阈值三层覆盖、自定义家族、哪些仍固定）
 **评审**：`references/anti-patterns.md`（反例图集）· `references/taste-checklist.md` · `references/visual-refinement.md` · `references/visual-scorecard.md` · `references/visual-review-protocol.md` · `references/tuning-loop.md` · `references/design-knowledge.md` · `references/pixel-rules.md` · `references/qa-gates.md`
 
 ## 自检

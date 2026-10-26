@@ -12,6 +12,8 @@ import argparse, json, subprocess, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from gate_config import load as load_cfg, get as cfg_get  # noqa: E402
 SAMPLES = HERE.parent / "examples" / "family-samples"
 
 
@@ -34,14 +36,17 @@ def main() -> int:
         d = j["details"][0]
         width = d["size"][0]
         # 分档判据：宽屏必须测到锚线；窄屏至少要有 2 档字号且有墨迹
-        if width >= 1000:
+        cfg = load_cfg(None)
+        wide = cfg_get(cfg, "pixels.narrow_width", 1000)
+        if width >= wide:
             ok = len(d["anchors"]) >= args.min_anchors
             why = f"锚线 {len(d['anchors'])} < {args.min_anchors}"
         else:
-            ok = d["font_levels"] >= 2
-            why = f"字号层级 {d['font_levels']} < 2"
+            need = cfg_get(cfg, "regress.narrow_min_font_levels", 2)
+            ok = d["font_levels"] >= need
+            why = f"字号层级 {d['font_levels']} < {need}"
         # 溢出检测：fullPage 截图宽度不得超出断点
-        if width > int(s.name.split("-")[-1].split(".")[0]) + 2:
+        if width > int(s.name.split("-")[-1].split(".")[0]) + cfg_get(cfg, "regress.overflow_tolerance_px", 2):
             ok, why = False, f"横向溢出：实宽 {width}"
         print(f"  {s.parent.parent.name}/{s.name}: {width}px · 锚线 {len(d['anchors'])} · "
               f"字号 {d['font_levels']} 档 · 强调 {d['accent_ratio']*100:.1f}% → {'OK' if ok else 'FAIL'}")

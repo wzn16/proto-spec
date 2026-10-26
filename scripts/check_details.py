@@ -5,10 +5,15 @@
 退出码: 0=通过 1=有违规 2=用法错误
 """
 from __future__ import annotations
+import sys
 import argparse, json, re, sys
 from pathlib import Path
 
-KPI_BAN = ["字段数", "层级数", "模块数", "数据列", "节点数", "数据集", "列数"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from gate_config import load as load_cfg, get as cfg_get  # noqa: E402
+
+CFG: dict = {}
+KPI_BAN = ["字段数", "层级数", "模块数", "数据列", "节点数", "数据集", "列数"]   # 默认值，运行时被配置覆盖
 RE_HREF = re.compile(r'href="([^"#]+\.html[^"]*)"')
 RE_MSG = re.compile(r'data-message="([^"]+)"')
 RE_KPI = re.compile(r'class="c-kpi__label"[^>]*>([^<]+)<')
@@ -58,7 +63,7 @@ def check_page(path: Path, root: Path):
         out.append({"file": name, "kind": "宽表未冻结", "value": ">8 列且无 pin-first", "hint": "列数 >8 时启用 c-data-table--pin-first"})
 
     # emoji 不进图标位/按钮文案
-    ALLOWED_GLYPHS = set("✕×✓✗→↗←↖§※·＋−≤≥")
+    ALLOWED_GLYPHS = set(cfg_get(CFG, "details.allowed_glyphs", "✕×✓✗→↗←↖§※·＋−≤≥"))
     emoji = [c for c in re.findall(r"<button[^>]*>[^<]*?([\U0001F300-\U0001FAFF\u2600-\u27BF])", html)
              if c not in ALLOWED_GLYPHS]
     if emoji:
@@ -82,9 +87,13 @@ def check_page(path: Path, root: Path):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--project", required=True)
+    ap.add_argument("--config", default=None)
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
     root = Path(args.project).resolve()
+    global CFG, KPI_BAN
+    CFG = load_cfg(root, args.config)
+    KPI_BAN = cfg_get(CFG, "details.kpi_banned", KPI_BAN)
     pages = sorted([p for p in root.rglob("*.html")
                     if "qa" not in p.parts and "assets" not in p.parts])
     all_v = []

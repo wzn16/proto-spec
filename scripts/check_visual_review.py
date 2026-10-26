@@ -15,8 +15,12 @@ from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
 
-DIMS = ["层级", "节奏", "焦点", "密度", "一致性", "可信度"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from gate_config import load as load_cfg, get as cfg_get  # noqa: E402
+
+DIMS = ["层级", "节奏", "焦点", "密度", "一致性", "可信度"]   # 默认值，运行时被配置覆盖
 SECTIONS = ["三秒测试", "锚线", "改进项", "保留"]
+MIN_REASON = 20
 SYM = re.compile(r"[|\s*_`\-—:：]")
 
 def clean(t: str) -> str:
@@ -34,8 +38,19 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--project", required=True)
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--config", default=None)
     args = ap.parse_args()
     root = Path(args.project).resolve()
+    cfg = load_cfg(root, args.config)
+    global DIMS, SECTIONS, MIN_REASON
+    DIMS = cfg_get(cfg, "review.dims", DIMS)
+    SECTIONS = cfg_get(cfg, "review.sections", SECTIONS)
+    MIN_BASIS = cfg_get(cfg, "review.min_basis_chars", 6)
+    MIN_REASON = cfg_get(cfg, "review.min_reason_chars", 15)
+    MIN_NO_PEER = cfg_get(cfg, "review.min_no_peer_reason_chars", 20)
+    PASS_SCORE = cfg_get(cfg, "review.pass_score", 4)
+    BLOCK_SCORE = cfg_get(cfg, "review.block_score", 1)
+    GAP = cfg_get(cfg, "review.divergence_gap", 2)
     self_f = root / "qa" / "visual-review.md"
     peer_f = root / "qa" / "visual-review-peer.md"
     problems: list[dict] = []
@@ -59,7 +74,7 @@ def main() -> int:
             # 依据列必须有内容（原「位置 + 现象」要求）
             cells = [c.strip() for c in self_scores[d][1].split("|")]
             basis = cells[0] if cells else ""
-            if len(clean(basis)) < 6:
+            if len(clean(basis)) < MIN_BASIS:
                 problems.append({"file": "qa/visual-review.md", "kind": "缺依据", "value": f"{d}",
                                  "hint": "该维「依据」列必须写位置 + 现象（≥6 个有效字符）"})
 
@@ -68,7 +83,7 @@ def main() -> int:
     if not peer_present:
         m = re.search(r"未独立评审[:：]\s*([^\n]*)", self_text)
         reason = clean(m.group(1)) if m else ""
-        if len(reason) < 20:
+        if len(reason) < MIN_NO_PEER:
             problems.append({"file": "qa/visual-review-peer.md", "kind": "缺独立评审", "value": "未找到",
                              "hint": "派发独立评审并存评分单；确无执行者时在同一行写「未独立评审：<≥20 字理由>」"})
     else:
@@ -96,9 +111,9 @@ def main() -> int:
 
     for d, v in effective.items():
         row = self_scores.get(d, (0, ""))[1]
-        if v >= 4:
+        if v >= PASS_SCORE:
             continue
-        if v == 1:
+        if v == BLOCK_SCORE:
             problems.append({"file": "qa/visual-review.md", "kind": "1 分不得放行", "value": d,
                              "hint": "出现 1 分说明该维不合格：必须重做，不接受任何理由或复评"})
             continue
@@ -119,7 +134,7 @@ def main() -> int:
 
     gaps = {d: abs(self_scores[d][0] - peer_scores[d][0])
             for d in DIMS if d in self_scores and d in peer_scores}
-    big = {d: g for d, g in gaps.items() if g >= 2}
+    big = {d: g for d, g in gaps.items() if g >= GAP}
     if big and "分歧" not in self_text:
         problems.append({"file": "qa/visual-review.md", "kind": "分歧未处理",
                          "value": ", ".join(f"{d}差{g}分" for d, g in big.items()),

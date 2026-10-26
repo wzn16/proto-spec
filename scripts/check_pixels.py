@@ -13,8 +13,12 @@
   fontlevels 字号层级 4–6 档为宜；<3 表示层级不足
 """
 from __future__ import annotations
+import sys
 import argparse, json, sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from gate_config import load as load_cfg, get as cfg_get, band_for_width  # noqa: E402
 
 try:
     from PIL import Image
@@ -24,7 +28,7 @@ except Exception as e:  # pragma: no cover
     sys.exit(0)
 
 INK_LUMA = 120          # 保留：备用亮度判据
-INK_DIST = 150          # 与页面背景色的曼哈顿距离阈值（深/浅底通用）
+INK_DIST = 150          # 默认值，运行时由 config 覆盖
 ACCENT_SAT = 0.45       # 强调色饱和度下限
 ACCENT_VAL = 0.35
 MAX_ANCHORS = 3
@@ -33,6 +37,8 @@ ACCENT_RATIO = 0.10
 MAX_ACCENT_BLOBS = 2
 MIN_FONT_LEVELS = 3
 MIN_RIGHT_MARGIN = 12
+FONT_SHARE = 0.02
+ANCHOR_TOL = 4
 
 
 def load(p: Path):
@@ -76,10 +82,11 @@ def bands(mask: np.ndarray) -> list[tuple[int, int, int]]:
     return out
 
 
-def cluster(values: list[int], tol: int = 4) -> list[tuple[int, int]]:
+def cluster(values: list[int], tol: int | None = None) -> list[tuple[int, int]]:
     """把左缘值聚成锚线，返回 [(中位x, 出现次数)]。"""
     if not values:
         return []
+    tol = ANCHOR_TOL if tol is None else tol
     values = sorted(values)
     groups, cur = [], [values[0]]
     for v in values[1:]:
@@ -122,7 +129,7 @@ def font_levels(mask: np.ndarray) -> int:
         bins[k] = bins.get(k, 0) + 1
     total = sum(bins.values())
     # 只统计占比 ≥2% 的档位，避免噪声
-    return sum(1 for v in bins.values() if v / total >= 0.02)
+    return sum(1 for v in bins.values() if v / total >= FONT_SHARE)
 
 
 def accent_stats(a: np.ndarray):
@@ -226,7 +233,19 @@ def row_pitch(mask: np.ndarray) -> dict:
             "cv": round(sd / med, 3) if med else 0}
 
 
-def check(p: Path) -> dict:
+def check(p: Path, cfg: dict | None = None) -> dict:
+    # 阈值一律从配置取（config/gates.json ← 项目 qa/gates.config.json）
+    global INK_DIST, ACCENT_SAT, ACCENT_VAL, MAX_ANCHORS, MIN_FONT_LEVELS
+    global MIN_RIGHT_MARGIN, FONT_SHARE, ANCHOR_TOL
+    cfg = cfg or {}
+    INK_DIST = cfg_get(cfg, "pixels.ink_dist", INK_DIST)
+    ACCENT_SAT = cfg_get(cfg, "pixels.accent_sat", ACCENT_SAT)
+    ACCENT_VAL = cfg_get(cfg, "pixels.accent_val", ACCENT_VAL)
+    MAX_ANCHORS = cfg_get(cfg, "pixels.max_anchors", MAX_ANCHORS)
+    MIN_FONT_LEVELS = cfg_get(cfg, "pixels.min_font_levels", MIN_FONT_LEVELS)
+    MIN_RIGHT_MARGIN = cfg_get(cfg, "pixels.min_right_margin", MIN_RIGHT_MARGIN)
+    FONT_SHARE = cfg_get(cfg, "pixels.font_level_share", FONT_SHARE)
+    ANCHOR_TOL = cfg_get(cfg, "pixels.anchor_tolerance_px", ANCHOR_TOL)
     a, (W, H) = load(p)
     x0 = 240 if W > 900 else 0
     m = ink_mask(a, x0)
@@ -273,9 +292,8 @@ def check(p: Path) -> dict:
     if levels < MIN_FONT_LEVELS:
         violations.append({"kind": "字号层级不足", "value": f"{levels} 档",
                            "hint": f"至少 {MIN_FONT_LEVELS} 档（标题/正文/辅助）；拉开层级差"})
-    # 面积预算按断点分档：窄屏按钮占屏比自然升高（实测 375 常到 2–3%）
-    lo, hi = (0.002, 0.02) if W >= 1000 else ((0.003, 0.025) if W >= 700 else (0.005, 0.04))
-    band = f"{lo*100:.1f}–{hi*100:.0f}%"
+    # 面积预算按断点分档（阈值来自 config，可在项目 qa/gates.config.json 覆盖）
+    lo, hi, band = band_for_width(cfg or {}, W)
     verdict = "in-band" if lo <= ratio <= hi else ("high" if ratio > hi else "low")
     budget = {"band": band, "verdict": verdict,
               "hint": {"in-band": "符合后台常态（主操作 + 当前选中）",
@@ -293,6 +311,7 @@ def main() -> int:
     ap.add_argument("--project")
     ap.add_argument("--shot")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--config", default=None, help="额外的配置覆盖文件")
     args = ap.parse_args()
     shots = []
     root = None
@@ -305,7 +324,8 @@ def main() -> int:
     if not shots:
         print("[G8] SKIP：没有 1440 宽截图")
         return 0
-    results = [check(p) for p in shots]
+    cfg = load_cfg(root if root else None, args.config)
+    results = [check(p, cfg) for p in shots]
     viol = [v | {"file": r["file"]} for r in results for v in r["violations"]]
     report = {"gate": "G8", "pass": not viol,
               "summary": {"shots": len(results), "violations": len(viol),

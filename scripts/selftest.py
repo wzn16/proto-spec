@@ -177,6 +177,23 @@ def main() -> int:
             checks.append((f"G7 拦截「{label}」", c7 == 1, f"exit={c7}"))
             _sh.rmtree(d, ignore_errors=True)
 
+        # 配置覆盖：项目 qa/gates.config.json 必须能改判据（防阈值写死）
+        import json as _json, shutil as _sh2
+        ov = root / "override"
+        _sh2.copytree(good, ov, dirs_exist_ok=True)
+        (ov / "qa" / "gates.config.json").write_text(_json.dumps({
+            "details": {"kpi_banned": ["订单"]},
+            "review": {"dims": ["层级", "节奏", "焦点", "密度", "一致性", "可信度", "品牌感"]},
+        }, ensure_ascii=False), encoding="utf-8")
+        (ov / "pages" / "kpi-override.html").write_text(
+            '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>k</title></head><body>'
+            '<div class="c-kpi-row"><div class="c-kpi"><span class="c-kpi__label">订单数</span>'
+            '<b class="c-kpi__num">12</b></div></div></body></html>', encoding="utf-8")
+        c6, _ = run("check_details.py", ov)
+        checks.append(("配置覆盖生效（G6 词表）", c6 == 1, f"exit={c6}"))
+        c7, _ = run("check_visual_review.py", ov)
+        checks.append(("配置覆盖生效（G7 维度）", c7 == 1, f"exit={c7}"))
+
         c, r = run("final_gate.py", good)
         skipped = r.get("summary", {}).get("skipped", [])
         checks.append(("合规项目 G5 通过（G2 skipped）",

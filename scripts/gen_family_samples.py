@@ -62,8 +62,23 @@ def main() -> int:
     ap.add_argument("--families", nargs="*", default=None)
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
-    fams = args.families or [f"F{i}" for i in range(10)]
+    if args.families:
+        fams = args.families
+    else:
+        # 扫描 references/families 与项目本地 families，家族数量由目录决定
+        fams = sorted({p.name.split("-")[0] for p in FAM_DIR.glob("F*.md")})
+        local = ROOT / "families"
+        if local.is_dir():
+            fams = sorted(set(fams) | {p.name.split("-")[0] for p in local.glob("*.md")})
+    covered = {}
+    for spec in (ROOT / "examples").glob("*/SPEC.md"):
+        m = re.search(r"\|\s*家族\s*\|\s*(F[0-9])", spec.read_text(encoding="utf-8"))
+        if m:
+            covered[m.group(1)] = spec.parent
     for fam in fams:
+        if fam in covered and not args.families:
+            print(f"[samples] {fam} 已由 {covered[fam].name} 覆盖，跳过")
+            continue
         d = build(fam, args.force)
         print(f"[samples] {fam} → {d.relative_to(ROOT)}")
     return 0
