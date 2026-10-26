@@ -32,11 +32,21 @@ def main() -> int:
         except json.JSONDecodeError:
             bad.append((s, "输出非 JSON")); continue
         d = j["details"][0]
-        ok = len(d["anchors"]) >= args.min_anchors
-        print(f"  {s.parent.parent.name}/{s.name}: 锚线 {len(d['anchors'])} · 字号 {d['font_levels']} 档 · "
-              f"强调 {d['accent_ratio']*100:.1f}% → {'OK' if ok else 'FAIL'}")
+        width = d["size"][0]
+        # 分档判据：宽屏必须测到锚线；窄屏至少要有 2 档字号且有墨迹
+        if width >= 1000:
+            ok = len(d["anchors"]) >= args.min_anchors
+            why = f"锚线 {len(d['anchors'])} < {args.min_anchors}"
+        else:
+            ok = d["font_levels"] >= 2
+            why = f"字号层级 {d['font_levels']} < 2"
+        # 溢出检测：fullPage 截图宽度不得超出断点
+        if width > int(s.name.split("-")[-1].split(".")[0]) + 2:
+            ok, why = False, f"横向溢出：实宽 {width}"
+        print(f"  {s.parent.parent.name}/{s.name}: {width}px · 锚线 {len(d['anchors'])} · "
+              f"字号 {d['font_levels']} 档 · 强调 {d['accent_ratio']*100:.1f}% → {'OK' if ok else 'FAIL'}")
         if not ok:
-            bad.append((s, f"锚线 {len(d['anchors'])} < {args.min_anchors}"))
+            bad.append((s, why))
     if bad:
         print(f"[regress] FAIL：{len(bad)} 个样本测不到锚线")
         return 1

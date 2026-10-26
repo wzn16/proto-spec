@@ -273,8 +273,10 @@ def check(p: Path) -> dict:
     if levels < MIN_FONT_LEVELS:
         violations.append({"kind": "字号层级不足", "value": f"{levels} 档",
                            "hint": f"至少 {MIN_FONT_LEVELS} 档（标题/正文/辅助）；拉开层级差"})
-    band = "0.2–2%"
-    verdict = "in-band" if 0.002 <= ratio <= 0.02 else ("high" if ratio > 0.02 else "low")
+    # 面积预算按断点分档：窄屏按钮占屏比自然升高（实测 375 常到 2–3%）
+    lo, hi = (0.002, 0.02) if W >= 1000 else ((0.003, 0.025) if W >= 700 else (0.005, 0.04))
+    band = f"{lo*100:.1f}–{hi*100:.0f}%"
+    verdict = "in-band" if lo <= ratio <= hi else ("high" if ratio > hi else "low")
     budget = {"band": band, "verdict": verdict,
               "hint": {"in-band": "符合后台常态（主操作 + 当前选中）",
                        "high": "强调色偏多：检查是否给次要按钮/图标上了色",
