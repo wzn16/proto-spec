@@ -10,7 +10,7 @@
 from __future__ import annotations
 
 import argparse
-import json
+import json, re
 import subprocess
 import sys
 from html.parser import HTMLParser
@@ -35,10 +35,10 @@ class RefCollector(HTMLParser):
                 self.refs.append((tag, d[a].strip()))
 
 
-def run_gate(script: str, project: Path):
+def run_gate(script: str, project: Path, extra: list[str] | None = None):
     """子进程重跑子门，返回 (exit_code, 报告dict)。"""
     r = subprocess.run(
-        [sys.executable, str(HERE / script), "--project", str(project), "--json"],
+        [sys.executable, str(HERE / script), "--project", str(project), "--json"] + (extra or []),
         capture_output=True, text=True)
     try:
         report = json.loads(r.stdout)
@@ -111,6 +111,17 @@ def main() -> int:
                          ("g7", "check_visual_review.py")):
         codes[gate], reports[gate] = run_gate(script, project)
 
+    # 家族保真（读 SPEC 的「家族 | F3」行）
+    spec = project / "SPEC.md"
+    fam = None
+    if spec.is_file():
+        m = re.search(r"\|\s*家族\s*\|\s*(F[0-9])", spec.read_text(encoding="utf-8"))
+        fam = m.group(1) if m else None
+    if fam:
+        codes["g1f"], reports["g1f"] = run_gate("check_tokens.py", project, ["--family", fam])
+    else:
+        reports["g1f"] = {"pass": "skipped", "summary": {"reason": "SPEC 未声明家族"}}
+
     shots = project / "qa" / "screenshots"
     g8_state = "skipped"
     if shots.is_dir() and any(shots.iterdir()):
@@ -139,7 +150,7 @@ def main() -> int:
     g7_min = g7s.get("effective_min")
     if g7_min is not None and g7_min < 3:
         codes["g7"] = 1
-    sub_ok = (codes.get("g1") == 0 and codes.get("g3") == 0
+    sub_ok = (codes.get("g1f", 0) == 0 and codes.get("g1") == 0 and codes.get("g3") == 0
               and codes.get("g4") == 0 and codes.get("g6") == 0 and codes.get("g7") == 0 and codes.get("g8", 0) == 0 and g2_state != "fail")
     ok = sub_ok and not deliverables
 
@@ -170,6 +181,10 @@ def main() -> int:
     g3s = reports["g3"].get("summary", {})
     lines.append(f"  G1 规范符合性 : {'PASS' if summary['g1'] else 'FAIL'}"
                  f"（violations={g1s.get('violations', '?')}）")
+    if "g1f" in reports:
+        st = reports["g1f"].get("pass")
+        label = "PASS" if st is True else ("SKIPPED" if st == "skipped" else "FAIL")
+        lines.append(f"  G1f 家族保真  : {label}（{fam or reports['g1f'].get('summary', {}).get('reason', '')}）")
     lines.append(f"  G3 交互完整性 : {'PASS' if summary['g3'] else 'FAIL'}"
                  f"（violations={g3s.get('violations', '?')}）")
     g4s = reports.get("g4", {}).get("summary", {})

@@ -1,0 +1,10 @@
+/* family.css — 所选美学家族的实现参数面（形态开关层），在 components.css 之后引入。
+   基准家族 F0 冷静企业·蓝：components.css 默认形态即家族形态，本文件为空（占位）。
+   换家族时按 references/family-library.md 四条纪律整体替换，≤80 行。 */
+/* F0 v0.1：无家族级覆盖声明 */
+
+/* 深色家族：状态与导航（吸收自 G4 回归） */
+.c-tag--success { color: var(--s-tag-success-text); background: var(--s-tag-success-bg); border-color: var(--s-tag-success-line); }
+.c-tag--error { color: var(--s-tag-error-text); background: var(--s-tag-error-bg); border-color: var(--s-tag-error-line); }
+.c-tag--warning { color: var(--s-tag-warning-text); background: var(--s-tag-warning-bg); border-color: var(--s-tag-warning-line); }
+.c-nav__item.is-active, .c-nav__item--active { background: var(--s-on-dark-active); color: var(--s-text-primary); }

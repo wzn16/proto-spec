@@ -48,12 +48,21 @@ metadata:
 
 给了参考图先走 `references/reference-to-spec.md`（取色/量距/字阶 → SPEC 片段）；配色先定面积预算 `references/color-area-budget.md`；
 字体与构图先过 `references/typography-and-composition.md`（反滥用字体清单、字重/字距/数字排版、三种 B 端构图）。
-读 `references/design-knobs.md`：对比强度 / 信息密度 / 圆角柔软度 / 色温与强调面积 / 动效幅度，各给一句取值与理由，写进 SPEC §2。禁止跳过直接套家族——家族定方向，旋钮定强度。
+读 `references/design-knobs.md`：对比强度 / 信息密度 / 圆角柔软度 / 色温与强调面积 / 动效幅度，各给一句取值与理由，写进 SPEC §2.1（设计旋钮表）。禁止跳过直接套家族——家族定方向，旋钮定强度。
 
-## 步骤 2.6 — 出方向（用户未指定时）
+## 步骤 2.6 — 出方向（无参考图时）
+
+**触发条件**：用户没给参考图/竞品/品牌 VI，或 Q0-3 答「不知道 / 你定」时执行。
+**跳过条件**：有参考截图 → 走 `references/reference-to-spec.md` 直接落 SPEC，跳过 2.6（不要既提取又发散）。
+Q0-3 的家族映射是**建议值**，不是"已指定"——只要用户没说"就用这个"，2.6 就要出方向。
 
 读 `references/design-direction.md` 出 2–3 个方向：认品类拆标杆 → 五刻度调性 → 把模糊词翻译成可观察决定 → 每方向选一个生成引擎 → 各定色相家族 → 选工作区骨架 → 写方向卡。
 用 `references/direction-explorer.md` 做成对比页给用户选。同一轮方向之间骨架/色相/控件语法必须不同；只换颜色不算方向。
+
+## 步骤 2.7 — 元素对账单（仅当有参照截图/竞品截图）
+
+把参照图里的元素逐项列出（名称 / 位置 / 交互 / 是否保留），请用户**逐项确认**，确认结果写进 SPEC 附录 C。
+未确认（含「先这样」「差不多」）则不得进入步骤 4 生成——这是本项目唯一的"未确认即阻断"规则，因为它决定后续所有页面的骨架。
 
 ## 步骤 3 — 冻结 SPEC
 
@@ -106,6 +115,7 @@ python3 scripts/check_screens.py  --project <目录>   # G2
 python3 scripts/final_gate.py --project <目录>              # G5 重跑全部子门
 python3 scripts/check_tokens.py --project <目录> --family F3  # 家族保真
 python3 scripts/gen_delivery_readme.py --project <目录>      # 交付 README
+python3 scripts/regress_pixels.py                           # 像素判据回归（改阈值后必跑）
 ```
 
 G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价。

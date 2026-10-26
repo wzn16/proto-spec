@@ -13,9 +13,10 @@
 | G6 细节规则 | check_details.py | detail-rules.md | 是 | 无 |
 | G7 评审完整性 | check_visual_review.py | visual-scorecard.md / visual-review-protocol.md | 是 | 无 |
 | G8 像素指标 | check_pixels.py | pixel-rules.md | 是 | 无 1440 截图（记入 skipped） |
+| G1f 家族保真 | check_tokens.py --family | family-library.md 身份特征 | 是 | SPEC 未声明家族 |
 | G5 总验收 | final_gate.py | 本文件 §G5 | 是 | 编排器，不新增判据 |
 
-家族保真（--family）尚未并入 G5，步骤 6 需单独执行。
+家族保真（G1f）已并入 G5：读 SPEC 的「家族 | Fx」行自动执行。
 
 ## 目录导航
 
@@ -117,7 +118,7 @@ PASS：全部配对达标或未定义（未定义记 FAIL 并在 hint 指出）�
 ## 执行流水线
 
 1. 冻结完成时：`SPEC.md` + `assets/tokens.css` + `pages-manifest.json` 就位，缺任一禁止生成；
-   **有参照截图时，元素对账单必须已经用户逐项确认（留痕于 SPEC 附录 C），否则禁止生成。**
+   **有参照截图时，元素对账单必须已用户逐项确认（见 SKILL 步骤 2.7，留痕 SPEC 附录 C），否则禁止生成。**
 2. 每页生成完：G1 单页检，exit 0 才算该页完成。
 3. 全部页面完成：G1 全量复检 → G3。
 4. 有截图能力：按断点截图入 `qa/screenshots/` → G2。

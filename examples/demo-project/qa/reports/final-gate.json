@@ -65,6 +65,11 @@
       "effective_min": 4,
       "violations": 0
     },
+    "g1f": {
+      "family": "F0",
+      "slots": 6,
+      "violations": 0
+    },
     "g8": {
       "shots": 3,
       "violations": 0,

@@ -8,10 +8,16 @@
     "--s-bg-card": "#161A23",
     "--s-color-primary": "#4C8DFF",
     "--s-text-inverse": "#0F1117",
-    "--c-table-row-h": "40px"
+    "--c-row-h": "40px",
+    "--s-text-primary": "#E5E7EB",
+    "--s-text-secondary": "#9CA3AF",
+    "--s-border": "#2A2F3A",
+    "--s-bg-sidebar": "#0B0D12",
+    "--s-on-dark-text": "#E5E7EB",
+    "--s-color-error-strong": "#F87171",
+    "--s-color-success-strong": "#4ADE80"
   }
-}
-```
+}```
 
 
 > 家族 id：F3 · 版本：v0.1（草案建档） · 上级：[美学家族库](../family-library.md)
@@ -55,6 +61,10 @@
 - 侧栏导航：◆深底侧栏（非白！与页底同层，右缘 1px 分隔）；选中 = soft 蓝底 + 亮蓝字。
 - 图表区：分类色只用 --g-chart-1..6，禁现场吸色；单图系列 ≤6。
 - 动效：数字滚动、行 hover 十字定位属精修层职责；过渡 150–250ms。
+
+
+- 状态标签：深底上用「低透明同色底 + 亮同色字」（如 success：底 `rgba(74,222,128,.14)`、字 `#86EFAC`），不要用亮底白字。
+- 导航激活项：用 `--s-on-dark-active` 底 + 主色字，或主色 8% 透明底；不要用亮色实底配浅字。
 
 ## ④ 适用 / 不适用场景
 

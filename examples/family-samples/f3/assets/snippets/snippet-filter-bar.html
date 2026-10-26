@@ -1,0 +1,18 @@
+<!--
+  【片段】snippet-filter-bar · 筛选栏（c-filterbar）
+  【用途】列表页顶部的筛选区：搜索框 + 下拉筛选 + 查询/重置按钮。
+  【变体】c-filterbar 筛选栏容器；内部复用 c-input / c-select / c-btn（查询为主按钮，重置为 c-btn--secondary）。
+  【子元素】必选：至少一个筛选控件（c-input 或 c-select）+ 查询按钮；可选：重置按钮、更多筛选控件。
+  【可改范围】改筛选项文案与选项；可增删控件；禁改类名与结构，禁加内联样式。
+-->
+<div class="c-filterbar">
+  <input class="c-input" type="search" placeholder="搜索订单号 / 客户名称" aria-label="搜索订单">
+  <select class="c-select" aria-label="订单状态筛选">
+    <option value="">全部状态</option>
+    <option value="pending">待审核</option>
+    <option value="done">已完成</option>
+    <option value="canceled">已取消</option>
+  </select>
+  <button class="c-btn" type="button">查询</button>
+  <button class="c-btn c-btn--secondary" type="button">重置</button>
+</div>

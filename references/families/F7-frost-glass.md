@@ -11,10 +11,17 @@
     "--s-bg-card": "#11131A",
     "--s-color-primary": "#A5B4FC",
     "--s-color-accent": "#38BDF8",
-    "--g-radius-12": "20px"
+    "--g-radius-12": "20px",
+    "--s-text-primary": "#E6E8F0",
+    "--s-text-secondary": "#A3A9C2",
+    "--s-border": "#232838",
+    "--s-bg-sidebar": "#08090D",
+    "--s-on-dark-text": "#E6E8F0",
+    "--s-text-inverse": "#0B0D12",
+    "--s-color-error-strong": "#FCA5A5",
+    "--s-color-success-strong": "#86EFAC"
   }
-}
-```
+}```
 
 ## ① 调性
 
@@ -51,6 +58,10 @@
 - 表格：行 hover #171A24；表头 12px 次级灰；数字等宽。
 - 链接与选中：霜蓝 `--s-color-accent`；focus 环 2px 霜蓝。
 - 动效：200–280ms，柔缓 ease-out。
+
+
+- 状态标签：深底上用「低透明同色底 + 亮同色字」（如 success：底 `rgba(74,222,128,.14)`、字 `#86EFAC`），不要用亮底白字。
+- 导航激活项：用 `--s-on-dark-active` 底 + 主色字，或主色 8% 透明底；不要用亮色实底配浅字。
 
 ## ④ 场景边界
 

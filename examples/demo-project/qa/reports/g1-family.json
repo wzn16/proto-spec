@@ -1,0 +1,10 @@
+{
+  "gate": "G1-family",
+  "pass": true,
+  "summary": {
+    "family": "F0",
+    "slots": 6,
+    "violations": 0
+  },
+  "violations": []
+}

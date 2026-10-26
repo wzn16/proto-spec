@@ -7,9 +7,9 @@
     "--s-bg-page": "#F5F7FA",
     "--s-bg-card": "#FFFFFF",
     "--s-color-primary": "#2563EB",
-    "--s-radius-6": "6px",
-    "--s-radius-8": "8px",
-    "--s-radius-12": "12px"
+    "--g-radius-6": "6px",
+    "--g-radius-8": "8px",
+    "--g-radius-12": "12px"
   }
 }
 ```
