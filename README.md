@@ -13,6 +13,14 @@
 在 starter 上直接跑 `python3 scripts/final_gate.py --project starter` 会是 FAIL：`pages/` 尚未生成、`qa/visual-review.md` 未写。
 这不是缺陷，是门禁在要求「先有项目再生效」。正式项目在步骤 3–5 产出 SPEC/页面/评分单后再跑。
 
+## 能力一览
+
+- **十美学家族** F0–F9（企业蓝 / 墨纸 / 暖陶 / 驾驶舱暗 / 终端 / 清新 / 暖砂 / 玻璃暗 / 政务 / 医疗）
+- **八道质量门** G1 规范 · G2 截图 · G3 交互 · G4 可访问 · G6 细节 · G7 双评 · G8 像素 + G5 总验收
+- **设计判断层**：参考图→规范、面积配比预算、字体反滥用、数据可视化规则、交互心理、反例图集（10 个真反例）
+- **组件库**：56 个基础类 + 工作台层 / 台账层 / 看板原语，含 `component-map.md` 对照 Element Plus·AntD
+- **交付物**：SPEC + 页面 + tokens（可导出 json/ts/tailwind）+ qa 报告 + 交付 README
+
 ## 安装
 
 三种方式任选其一：

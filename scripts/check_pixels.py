@@ -267,7 +267,14 @@ def check(p: Path) -> dict:
     if levels < MIN_FONT_LEVELS:
         violations.append({"kind": "字号层级不足", "value": f"{levels} 档",
                            "hint": f"至少 {MIN_FONT_LEVELS} 档（标题/正文/辅助）；拉开层级差"})
+    band = "0.2–2%"
+    verdict = "in-band" if 0.002 <= ratio <= 0.02 else ("high" if ratio > 0.02 else "low")
+    budget = {"band": band, "verdict": verdict,
+              "hint": {"in-band": "符合后台常态（主操作 + 当前选中）",
+                       "high": "强调色偏多：检查是否给次要按钮/图标上了色",
+                       "low": "强调色偏少：确认主操作有视觉落点"}[verdict]}
     return {"file": p.name, "size": [W, H], "anchors": strong, "accent_ratio": round(ratio, 4),
+            "accent_budget": budget,
             "right_margins": margins, "row_pitch": pitch,
             "accent_blobs": blobs, "font_levels": levels, "card_edges": [e["x"] for e in edges[-6:]],
             "violations": violations}
@@ -310,7 +317,8 @@ def main() -> int:
     else:
         print(f"[G8] 通过：{len(results)} 张，锚线/贴边/强调面积/字号层级均达标")
         for r in results:
-            print(f"  {r['file']}: 锚线 {len(r['anchors'])} 条 {r['anchors']} · 强调 {r['accent_ratio']*100:.1f}% · 块 {r['accent_blobs']} · 字号 {r['font_levels']} 档")
+            ab = r.get("accent_budget", {})
+            print(f"  {r['file']}: 锚线 {len(r['anchors'])} 条 {r['anchors']} · 强调 {r['accent_ratio']*100:.1f}%（{ab.get('verdict','-')}，常态 {ab.get('band','')}） · 块 {r['accent_blobs']} · 字号 {r['font_levels']} 档")
     return 0 if not viol else 1
 
 

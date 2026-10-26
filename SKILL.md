@@ -72,7 +72,7 @@ metadata:
 
 ## 步骤 5 — 自检
 
-`references/taste-checklist.md` 反模板感 17 条 + `references/visual-refinement.md` 精修清单，逐条过。
+`references/anti-patterns.md` 反例图集先扫一遍，再按 `references/taste-checklist.md` 反模板感 17 条 + `references/visual-refinement.md` 精修清单，逐条过。
 
 ## 步骤 5.5 — 双评（强制）
 
@@ -118,7 +118,7 @@ G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价�
 
 **生成**：`references/color-area-budget.md`（八种配色面积预算）· `references/viz-rules.md`（图表/KPI/数据墨水比）· `references/component-map.md` · `references/templates-catalog.md` · `references/snippets-catalog.md` · `references/patterns-ledger.md` · `references/patterns-form.md` · `references/detail-rules.md` · `references/implementation-map.md`
 
-**评审**：`references/taste-checklist.md` · `references/visual-refinement.md` · `references/visual-scorecard.md` · `references/visual-review-protocol.md` · `references/tuning-loop.md` · `references/design-knowledge.md` · `references/pixel-rules.md` · `references/qa-gates.md`
+**评审**：`references/anti-patterns.md`（反例图集）· `references/taste-checklist.md` · `references/visual-refinement.md` · `references/visual-scorecard.md` · `references/visual-review-protocol.md` · `references/tuning-loop.md` · `references/design-knowledge.md` · `references/pixel-rules.md` · `references/qa-gates.md`
 
 ## 自检
 

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "page.png",
+    "state": null,
+    "size": "1440x900",
+    "zoom": 1,
+    "animationWaitMs": 0,
+    "issues": [],
+    "lint": [
+      {
+        "rule": "nestedCards",
+        "label": "卡片里套卡片",
+        "count": 11,
+        "examples": [
+          "div.card「编码 名称 规格 状态 M-4LZ8G-01 割」（外层 div.item）",
+          "div.card「编码 名称 M-001 安全标识」（外层 div.item）",
+          "div.card「订单列表 ＋ 新增 共 12 条 ＋ 新增 暂无」（外层 div.item）"
+        ]
+      },
+      {
+        "rule": "contrastLow",
+        "label": "文字对比度不达标（正文低于 4.5:1，大字低于 3:1）",
+        "count": 5,
+        "examples": [
+          "div「（空）」（1.92:1）",
+          "span.pill.green「总装」（3.30:1）",
+          "span.pill.orange「整改中」（2.80:1）"
+        ]
+      }
+    ]
+  }
+]
