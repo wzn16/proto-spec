@@ -44,9 +44,9 @@ GOOD_PAGE_B = """<!DOCTYPE html>
 BAD_PAGE_PATCH = '<style>.x{color:#FF0000;padding:17px;font-size:15px}</style><a href="#">占位</a><img src="https://example.com/x.png" alt="">'
 
 
-def run(script: str, project: Path):
+def run(script: str, project: Path, extra: list[str] | None = None):
     r = subprocess.run(
-        [sys.executable, str(HERE / script), "--project", str(project), "--json"],
+        [sys.executable, str(HERE / script), "--project", str(project), "--json"] + (extra or []),
         capture_output=True, text=True)
     try:
         return r.returncode, json.loads(r.stdout)
@@ -212,6 +212,14 @@ def main() -> int:
         checks.append(("导出器 tokens.js 可 require", node_probe.returncode == 0,
                        f"exit={node_probe.returncode}"))
         _sh3.rmtree(exp, ignore_errors=True)
+
+        # G1f 结构层负例：删掉 family.css 里的声明必须被拦
+        fam_proj = root / "fam-neg"
+        import shutil as _sh4
+        _sh4.copytree(good, fam_proj, dirs_exist_ok=True)
+        (fam_proj / "assets" / "family.css").write_text(".c-card { border-radius: 0; }\n", encoding="utf-8")
+        c_f, _ = run("check_tokens.py", fam_proj, ["--family", "F1"])
+        checks.append(("G1f 拦截结构层缺失", c_f == 1, f"exit={c_f}"))
 
         c, r = run("final_gate.py", good)
         skipped = r.get("summary", {}).get("skipped", [])

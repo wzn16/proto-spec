@@ -301,6 +301,20 @@ def family_fidelity(project: Path, family_id: str, defs: dict):
         return resolve_slot(m2.group(1), d, depth + 1) if m2 else v.strip()
 
     violations = []
+    # ② 结构层/skeleton 声明必须真的落在 family.css（删了要能查出来）
+    decls = list(manifest.get("structure", []))
+    fam_css = project / "assets" / "family.css"
+    css_text = re.sub(r"/\*.*?\*/", "", fam_css.read_text(encoding="utf-8")) if fam_css.is_file() else ""
+    norm_css = lambda s: re.sub(r"\s+", " ", s.strip().lower())
+    css_flat = norm_css(css_text)
+    checked_decls = 0
+    for decl in decls:
+        checked_decls += 1
+        if norm_css(decl) not in css_flat:
+            violations.append({"file": f"family:{family_id}", "line": 0, "kind": "结构层声明缺失",
+                               "value": decl[:60],
+                               "hint": "该声明在 assets/family.css 找不到——家族形态不得丢失"})
+
     for slot, registered in manifest.get("identity", {}).items():
         actual = resolve_slot(slot, defs)
         if actual is None:
@@ -308,11 +322,16 @@ def family_fidelity(project: Path, family_id: str, defs: dict):
                                "value": slot, "hint": f"登记值 {registered}，项目 tokens 未定义"})
             continue
         norm = lambda s: re.sub(r"\s+", " ", s.strip().lower())
-        if norm(actual) != norm(registered):
+        # 登记值本身也可能是 var()，先解析再比
+        reg_val = registered
+        m3 = re.fullmatch(r"var\(\s*(--[\w-]+)\s*\)", str(registered).strip())
+        if m3:
+            reg_val = resolve_slot(m3.group(1), defs) or registered
+        if norm(actual) != norm(reg_val):
             violations.append({"file": f"family:{family_id}", "line": 0, "kind": "身份漂移",
                                "value": f"{slot}: {actual}",
                                "hint": f"登记值 {registered}——身份特征不得被项目覆盖，冲突请改选家族"})
-    return violations, len(manifest.get("identity", {}))
+    return violations, len(manifest.get("identity", {})) + checked_decls
 
 
 def dangling_refs(project: Path) -> list[dict]:

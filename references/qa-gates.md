@@ -14,7 +14,7 @@
 | G6 细节规则 | check_details.py | detail-rules.md | 是 | 无 |
 | G7 评审完整性 | check_visual_review.py | visual-scorecard.md / visual-review-protocol.md | 是 | 无 |
 | G8 像素指标 | check_pixels.py | pixel-rules.md | 是 | 无 1440 截图（记入 skipped） |
-| G1f 家族保真 | check_tokens.py --family | family-library.md 身份特征 | 是 | SPEC 未声明家族 |
+| G1f 家族保真 | check_tokens.py --family | family-library.md 身份特征 + 结构层声明 | 是 | SPEC 未声明家族 |
 | G5 总验收 | final_gate.py | 本文件 §G5 | 是 | 编排器，不新增判据 |
 
 家族保真（G1f）已并入 G5：读 SPEC 的「家族 | Fx」行自动执行。
