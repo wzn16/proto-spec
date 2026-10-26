@@ -82,6 +82,13 @@ Q0-3 的家族映射是**建议值**，不是"已指定"——只要用户没说
 ## 步骤 4.9 — 截图取证
 
 三档断点（1440/768/375）截图入 `qa/screenshots/`，命名 `<page>-<width>.png`；G2 与 G8 都依赖它。
+**本 skill 自带截图器**（不依赖外部工具）：
+
+```bash
+python3 scripts/shoot.py --project <目录> --pages pages/list.html,pages/form.html --sizes 1440x900,768x1024,375x812
+```
+
+它起本地 http 服务 + 调本机浏览器（Edge/Chrome/Chromium/Brave）headless 截图，并用尺寸校验兜住横向溢出；无浏览器时 exit 3 记 skipped。
 **能力降级链**：宿主无截图能力时 → G2/G8 记 skipped 并写进 `final-gate.json` 的 `skipped` 与交付 README 的已知限制；
 5.5 降为自评（`qa/visual-review.md` 必须写「未独立评审：<20 字理由>」），不得静默跳过。
 

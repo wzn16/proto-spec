@@ -115,6 +115,9 @@ def main() -> int:
                          ("g7", "check_visual_review.py")):
         codes[gate], reports[gate] = run_gate(script, project)
 
+    # G0 SPEC 门（状态/章节/对账单/占位符）
+    codes["g0"], reports["g0"] = run_gate("check_spec.py", project, None, args.config)
+
     # 家族保真（读 SPEC 的「家族 | F3」行）
     spec = project / "SPEC.md"
     fam = None
@@ -154,7 +157,7 @@ def main() -> int:
     g7_min = g7s.get("effective_min")
     if g7_min is not None and g7_min < 3:
         codes["g7"] = 1
-    sub_ok = (codes.get("g1f", 0) == 0 and codes.get("g1") == 0 and codes.get("g3") == 0
+    sub_ok = (codes.get("g0", 0) in (0, 3) and codes.get("g1f", 0) == 0 and codes.get("g1") == 0 and codes.get("g3") == 0
               and codes.get("g4") == 0 and codes.get("g6") == 0 and codes.get("g7") == 0 and codes.get("g8", 0) == 0 and g2_state != "fail")
     ok = sub_ok and not deliverables
 
@@ -183,6 +186,10 @@ def main() -> int:
     lines = ["[G5] 验收单"]
     g1s = reports["g1"].get("summary", {})
     g3s = reports["g3"].get("summary", {})
+    g0s = reports.get("g0", {})
+    g0st = g0s.get("pass")
+    lines.append(f"  G0 SPEC 门    : {'PASS' if g0st is True else ('SKIPPED' if g0st == 'skipped' else 'FAIL')}"
+                 f"（状态 {g0s.get('summary', {}).get('status', '?')}）")
     lines.append(f"  G1 规范符合性 : {'PASS' if summary['g1'] else 'FAIL'}"
                  f"（violations={g1s.get('violations', '?')}）")
     if "g1f" in reports:

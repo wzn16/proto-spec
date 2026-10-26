@@ -15,7 +15,10 @@
   },
   "structure": [
     ".c-card { box-shadow: var(--s-shadow-elevated); border-color: transparent; }",
-    ".c-btn { border-radius: var(--s-radius-full); }"
+    ".c-btn { border-radius: var(--s-radius-full); }",
+    ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
+    ".c-kpi { border: 1px solid var(--s-color-primary-soft); }",
+    ".c-data-table th { background: transparent; text-transform: none; }"
   ]
 }```
 

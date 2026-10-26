@@ -1,72 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><title>反例图集 · detail-rules</title>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>反例图集 · 按维度归档</title>
 <link rel="stylesheet" href="../../starter/assets/tokens.css"><link rel="stylesheet" href="../../starter/assets/base.css">
 <style>
-body { background:#F1F3F6; font-family:-apple-system,"PingFang SC",sans-serif; margin:0; padding:28px; }
-h1 { font-size:20px; margin:0 0 4px; }
-.sub { color:#4B5563; font-size:12px; margin-bottom:24px; }
-.grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; }
-.item { background:#fff; border:1px solid #DDE2E8; border-radius:8px; padding:16px; }
-.tag { display:inline-block; font-size:11px; color:#9F1239; border:1px solid #9F1239; border-radius:3px; padding:1px 6px; margin-bottom:8px; }
-.title { font-size:13px; font-weight:600; margin-bottom:2px; }
-.why { font-size:12px; color:#4B5563; margin-bottom:10px; }
-.fix { font-size:12px; color:#15803D; border-top:1px dashed #DDE2E8; padding-top:8px; margin-top:10px; }
-.card { border:1px solid #DDE2E8; border-radius:6px; padding:12px; overflow:hidden; }
-.row { display:flex; align-items:center; gap:8px; font-size:13px; }
-.row2 { display:flex; align-items:center; gap:8px; font-size:13px; padding:4px 0; }
-.spacer { flex:1 }
-.bad-table { border-collapse:collapse; font-size:12px; }
-.bad-table th, .bad-table td { border:1px solid #DDE2E8; padding:6px 8px; text-align:left; white-space:nowrap; }
-.bad-table.zebra tbody tr:nth-child(even) { background:#EEF2F7; }
-.bad-btn { border:1px solid #9F1239; color:#9F1239; background:#fff; border-radius:4px; padding:3px 10px; font-size:12px; }
-.kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-.bad-kpi { border:1px solid #DDE2E8; border-radius:6px; padding:10px; }
-.bad-kpi span { display:block; font-size:11px; color:#6B7280; } .bad-kpi b { font-size:22px; }
-.bad-note { color:#9F1239; font-size:12px; border:1px dashed #9F1239; padding:6px 8px; border-radius:4px; margin-bottom:6px; }
-.bad-table-head { display:grid; grid-template-columns:1fr 1fr 1fr; font-size:12px; color:#6B7280; border-bottom:1px solid #DDE2E8; padding-bottom:6px; }
-.bad-link { color:#1D4ED8; text-decoration:underline; font-size:12px; }
-.pill { display:inline-block; color:#fff; font-size:11px; border-radius:999px; padding:1px 8px; margin-right:4px; }
+body{background:#F1F3F6;font-family:-apple-system,"PingFang SC",sans-serif;margin:0;padding:28px}
+h1{font-size:20px;margin:0 0 4px}.sub{color:#4B5563;font-size:12px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.item{background:#fff;border:1px solid #DDE2E8;border-radius:8px;padding:14px}
+.head{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.tag{font-size:11px;color:#9F1239;border:1px solid #9F1239;border-radius:3px;padding:1px 6px}
+.dim{font-size:11px;color:#1E4E8C;border:1px solid #1E4E8C;border-radius:3px;padding:1px 6px}
+.cap{font-size:11px;color:#B45309;border:1px solid #B45309;border-radius:3px;padding:1px 6px}
+.why{font-size:12px;color:#4B5563;margin:4px 0 10px}
+.fix{font-size:12px;color:#15803D;border-top:1px dashed #DDE2E8;padding-top:8px;margin-top:10px}
+.card{border:1px solid #DDE2E8;border-radius:6px;padding:12px;overflow:hidden}
+.row{display:flex;align-items:center;gap:8px;font-size:13px}.row2{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+.spacer{flex:1}.bad-table{border-collapse:collapse;font-size:12px}
+.bad-table th,.bad-table td{border:1px solid #DDE2E8;padding:6px 8px;text-align:left;white-space:nowrap}
+.bad-table.zebra tbody tr:nth-child(even){background:#EEF2F7}
+.bad-btn{border:1px solid #9F1239;color:#9F1239;background:#fff;border-radius:4px;padding:3px 10px;font-size:12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bad-kpi{border:1px solid #DDE2E8;border-radius:6px;padding:10px}
+.bad-kpi span{display:block;font-size:11px;color:#6B7280}.bad-kpi b{font-size:22px}
+.bad-note{color:#9F1239;font-size:12px;border:1px dashed #9F1239;padding:6px 8px;border-radius:4px;margin-bottom:6px}
+.bad-table-head{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:12px;color:#6B7280;border-bottom:1px solid #DDE2E8;padding-bottom:6px}
+.bad-link{color:#1D4ED8;text-decoration:underline;font-size:12px}
+.pill{display:inline-block;color:#fff;font-size:11px;border-radius:999px;padding:1px 8px;margin-right:4px}
 .pill.red{background:#DC2626}.pill.blue{background:#2563EB}.pill.green{background:#16A34A}
 .pill.orange{background:#F97316}.pill.purple{background:#7C3AED}.pill.teal{background:#0D9488}
-.pill.pink{background:#DB2777}.pill.yellow{background:#CA8A04}.pill.navy{background:#1E3A8A}
 </style></head><body>
-<h1>反例图集 · 常见细节违规</h1>
-<div class="sub">每条对应 references/detail-rules.md 的编号；右侧绿字是正确的做法。图仅用于评审对照，不进入任何项目。</div>
+<h1>反例图集 · 按维度归档</h1>
+<div class="sub">每块标注：所属维度 · 为什么错 · 命中后该维封顶分。评审时先认维度，再谈分数，分歧会小很多。</div>
 <div class="grid">
-<div class="item"><span class="tag">#2 表格溢出卡片</span><div class="title">为什么错</div><div class="why">表格宽度超过卡片，右侧被裁或压边框</div>
-<div class="card" style="width:520px">
-  <table class="bad-table" style="width:760px"><thead><tr><th>编码</th><th>名称</th><th>规格</th><th>状态</th></tr></thead>
-  <tbody><tr><td>M-4LZ8G-01</td><td>割台总成（含护罩与传动）</td><td>1260×840</td><td>在用</td></tr></tbody></table>
-</div><div class="fix">正确做法：表格满宽 + 名称列换行 + 编码列 ellipsis</div></div>
-<div class="item"><span class="tag">#3 max-width 给表格限宽</span><div class="title">为什么错</div><div class="why">表格缩在左边，右侧大片空白，锚线断裂</div>
-<div class="card">
-  <table class="bad-table" style="max-width:420px"><thead><tr><th>编码</th><th>名称</th></tr></thead><tbody><tr><td>M-001</td><td>安全标识</td></tr></tbody></table>
-</div><div class="fix">正确做法：列宽受控或满宽，不设 max-width</div></div>
-<div class="item"><span class="tag">#10 同一动作重复出现</span><div class="title">为什么错</div><div class="why">页头、卡片头、空态各有一个“新增”</div>
-<div class="card"><div class="row"><b>订单列表</b><span class="spacer"></span><button class="bad-btn">＋ 新增</button></div>
- <div class="row2"><span>共 12 条</span><button class="bad-btn">＋ 新增</button></div>
- <div class="empty"><span>暂无数据</span><button class="bad-btn">＋ 新增</button></div></div><div class="fix">正确做法：一屏只出现一次主操作</div></div>
-<div class="item"><span class="tag">#14 / #15 KPI 是元信息且无基准</span><div class="title">为什么错</div><div class="why">字段数、层级数、数据集，且只有数字没有对比</div>
-<div class="kpis">
- <div class="bad-kpi"><span>字段数</span><b>9</b></div><div class="bad-kpi"><span>层级数</span><b>7</b></div>
- <div class="bad-kpi"><span>模块数</span><b>13</b></div><div class="bad-kpi"><span>数据集</span><b>11</b></div></div><div class="fix">正确做法：可决策指标 + 环比/目标</div></div>
-<div class="item"><span class="tag">#17 数字口径不一致</span><div class="title">为什么错</div><div class="why">同一数值三种写法</div>
-<div class="card"><div class="row2"><span>记录总数</span><b>1,786</b></div>
-<div class="row2"><span>末级项</span><b>1786</b></div>
-<div class="row2"><span>节点</span><b>2323</b></div></div><div class="fix">正确做法：≥1000 一律千分位，全站一致</div></div>
-<div class="item"><span class="tag">#19 按钮文案是空词</span><div class="title">为什么错</div><div class="why">确定 / 提交 / Do，看不出会发生什么</div>
-<div class="row2"><button class="bad-btn">确定</button><button class="bad-btn">提交</button><button class="bad-btn">取消</button></div><div class="fix">正确做法：保存草稿 / 提交审核 / 发送周报</div></div>
-<div class="item"><span class="tag">#20 填充文字上界面</span><div class="title">为什么错</div><div class="why">示例 / 待核实 / 仅供演示</div>
-<div class="card"><div class="bad-note">示例数据，待核实（仅供演示）</div><div class="row2">设备名称：示例设备</div></div><div class="fix">正确做法：删掉，或用真实业务内容替代</div></div>
-<div class="item"><span class="tag">#25 缺空态</span><div class="title">为什么错</div><div class="why">表格无数据时只剩一片空白</div>
-<div class="card"><div class="bad-table-head"><span>编码</span><span>名称</span><span>状态</span></div>
-<div style="height:120px;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#bbb">（空）</div></div><div class="fix">正确做法：三态：无数据给主操作 / 无结果给清空筛选 / 加载骨架</div></div>
-<div class="item"><span class="tag">#13 行内动作 >3</span><div class="title">为什么错</div><div class="why">每行五个文字按钮，扫读时全是链接色</div>
-<div class="row2"><a class="bad-link">查看</a><a class="bad-link">编辑</a><a class="bad-link">复制</a><a class="bad-link">停用</a><a class="bad-link">删除</a></div><div class="fix">正确做法：≤3 个，其余进「更多」</div></div>
-<div class="item"><span class="tag">#26 斑马纹 + 满屏彩色胶囊</span><div class="title">为什么错</div><div class="why">视觉噪音盖过数据</div>
-<div class="card"><table class="bad-table zebra"><thead><tr><th>编号</th><th>状态</th></tr></thead><tbody>
-<tr><td>QX-001</td><td><span class="pill red">待整改</span><span class="pill blue">A 类</span><span class="pill green">总装</span></td></tr>
-<tr><td>QX-002</td><td><span class="pill orange">整改中</span><span class="pill purple">B 类</span><span class="pill teal">焊装</span></td></tr>
-<tr><td>QX-003</td><td><span class="pill pink">已关闭</span><span class="pill yellow">C 类</span><span class="pill navy">质检</span></td></tr>
-</tbody></table></div><div class="fix">正确做法：hover + 行线；状态用圆点+文字</div></div>
+<div class="item"><div class="head"><span class="tag">#2 表格溢出卡片</span><span class="dim">层级</span><span class="cap">该维封顶 3</span></div><div class="why">表格宽于卡片右缘</div><div class="card" style="width:520px"><table class="bad-table" style="width:760px"><thead><tr><th>编码</th><th>名称</th><th>规格</th></tr></thead><tbody><tr><td>M-4LZ8G-01</td><td>割台总成（含护罩与传动）</td><td>1260×840</td></tr></tbody></table></div><div class="fix">正确做法：表格满宽 + 名称列换行 + 编码列 ellipsis</div></div>
+<div class="item"><div class="head"><span class="tag">#3 max-width 限宽</span><span class="dim">一致性</span><span class="cap">该维封顶 4</span></div><div class="why">表格缩左、右侧空白、锚线断</div><div class="card"><table class="bad-table" style="max-width:420px"><thead><tr><th>编码</th><th>名称</th></tr></thead><tbody><tr><td>M-001</td><td>安全标识</td></tr></tbody></table></div><div class="fix">正确做法：用列宽档位，不设 max-width</div></div>
+<div class="item"><div class="head"><span class="tag">#10 同一动作重复</span><span class="dim">层级</span><span class="cap">该维封顶 3</span></div><div class="why">页头/卡片头/空态各一个「新增」</div><div class="card"><div class="row"><b>订单列表</b><span class="spacer"></span><button class="bad-btn">＋ 新增</button></div><div class="row2"><span>共 12 条</span><button class="bad-btn">＋ 新增</button></div><div class="empty"><span>暂无数据</span><button class="bad-btn">＋ 新增</button></div></div><div class="fix">正确做法：一屏只出现一次主操作</div></div>
+<div class="item"><div class="head"><span class="tag">#14 #15 KPI 是元信息</span><span class="dim">可信度</span><span class="cap">该维封顶 3</span></div><div class="why">字段数/层级数，且无对比基准</div><div class="kpis"><div class="bad-kpi"><span>字段数</span><b>9</b></div><div class="bad-kpi"><span>层级数</span><b>7</b></div><div class="bad-kpi"><span>模块数</span><b>13</b></div><div class="bad-kpi"><span>数据集</span><b>11</b></div></div><div class="fix">正确做法：可决策指标 + 环比/目标</div></div>
+<div class="item"><div class="head"><span class="tag">#17 数字口径不一致</span><span class="dim">一致性</span><span class="cap">该维封顶 4</span></div><div class="why">1,786 / 1786 / 2323 混写</div><div class="card"><div class="row2"><span>记录总数</span><b>1,786</b></div><div class="row2"><span>末级项</span><b>1786</b></div><div class="row2"><span>节点</span><b>2323</b></div></div><div class="fix">正确做法：≥1000 千分位，全站一致（见 typography-and-composition）</div></div>
+<div class="item"><div class="head"><span class="tag">#19 按钮文案是空词</span><span class="dim">可信度</span><span class="cap">该维封顶 4</span></div><div class="why">确定 / 提交 / Do</div><div class="row2"><button class="bad-btn">确定</button><button class="bad-btn">提交</button><button class="bad-btn">取消</button></div><div class="fix">正确做法：保存草稿 / 提交审核 / 发送周报</div></div>
+<div class="item"><div class="head"><span class="tag">#20 填充文字上界面</span><span class="dim">可信度</span><span class="cap">该维封顶 3</span></div><div class="why">示例 / 待核实 / 仅供演示</div><div class="card"><div class="bad-note">示例数据，待核实（仅供演示）</div><div class="row2">设备名称：示例设备</div></div><div class="fix">正确做法：删掉或换真实业务内容</div></div>
+<div class="item"><div class="head"><span class="tag">#25 缺空态</span><span class="dim">可信度</span><span class="cap">该维封顶 3</span></div><div class="why">表格无数据只剩空白</div><div class="card"><div class="bad-table-head"><span>编码</span><span>名称</span><span>状态</span></div><div style="height:100px;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#bbb">（空）</div></div><div class="fix">正确做法：三态：无数据给主操作 / 无结果给清空 / 加载骨架</div></div>
+<div class="item"><div class="head"><span class="tag">#12 行内动作 >3</span><span class="dim">密度</span><span class="cap">该维封顶 4</span></div><div class="why">每行五个文字按钮</div><div class="row2"><a class="bad-link">查看</a><a class="bad-link">编辑</a><a class="bad-link">复制</a><a class="bad-link">停用</a><a class="bad-link">删除</a></div><div class="fix">正确做法：≤3 个，其余进「更多」</div></div>
+<div class="item"><div class="head"><span class="tag">#26 斑马纹 + 满屏胶囊</span><span class="dim">密度</span><span class="cap">该维封顶 4</span></div><div class="why">视觉噪音盖过数据</div><div class="card"><table class="bad-table zebra"><thead><tr><th>编号</th><th>状态</th></tr></thead><tbody><tr><td>QX-001</td><td><span class="pill red">待整改</span><span class="pill blue">A 类</span><span class="pill green">总装</span></td></tr><tr><td>QX-002</td><td><span class="pill orange">整改中</span><span class="pill purple">B 类</span><span class="pill teal">焊装</span></td></tr></tbody></table></div><div class="fix">正确做法：hover + 行线；状态用圆点+文字（>10 列无分组才可开斑马）</div></div>
+<div class="item"><div class="head"><span class="tag">新·跨页一致性</span><span class="dim">一致性</span><span class="cap">该维封顶 3</span></div><div class="why">同一对象三页三个名（订单/工单/单据）</div><div class="card"><div class="row2">列表页：<b>订单</b> #A-1024</div><div class="row2">详情页：<b>工单</b> #A-1024</div><div class="row2">看板页：<b>单据</b> #A-1024</div></div><div class="fix">正确做法：术语表统一，跨页同名同义</div></div>
+<div class="item"><div class="head"><span class="tag">新·层级：页头三层标题</span><span class="dim">层级</span><span class="cap">该维封顶 3</span></div><div class="why">页标题 + 卡片标题 + 区块标题都在抢戏</div><div class="card"><div style="font-size:18px;font-weight:700">设备管理</div><div style="font-size:16px;font-weight:600;margin-top:6px">设备列表</div><div style="font-size:15px;font-weight:600;margin-top:6px">全部设备</div></div><div class="fix">正确做法：一屏只有一层主标题，其余降级</div></div>
+<div class="item"><div class="head"><span class="tag">新·节奏：所有区块等距</span><span class="dim">节奏</span><span class="cap">该维封顶 4</span></div><div class="why">每块间距都是 24，读不出分组</div><div class="card"><div style="display:flex;flex-direction:column;gap:24px"><div class="row2">区块 A</div><div class="row2">区块 B</div><div class="row2">区块 C</div></div></div><div class="fix">正确做法：组间 24 / 组内 8，靠间距分组</div></div>
 </div></body></html>

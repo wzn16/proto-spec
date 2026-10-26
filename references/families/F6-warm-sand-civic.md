@@ -13,7 +13,9 @@
   },
   "structure": [
     ".c-workbench__head h1, .l-page-head h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; }",
-    ".c-card { border-radius: var(--s-radius-card); }"
+    ".c-card { border-radius: var(--s-radius-card); }",
+    ".c-workbench__head { background: var(--s-color-primary-soft); border-radius: var(--s-radius-card); padding: var(--s-space-4); }",
+    ".c-data-table th { background: var(--s-bg-hover); }"
   ]
 }```
 

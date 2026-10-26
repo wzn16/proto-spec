@@ -95,10 +95,11 @@ def main() -> int:
             ""]
     (out / "tokens.d.ts").write_text("\n".join(dts), encoding="utf-8")
 
+    module = {"tokens": groups, "resolved": resolved}
     (out / "tokens.js").write_text(
-        "// 由 proto-spec/scripts/export_tokens.py 生成（resolved：var() 已解析）\n"
-        "module.exports = " + json.dumps(resolved, ensure_ascii=False, indent=2) + ";\n",
-        encoding="utf-8")
+        "// 由 proto-spec/scripts/export_tokens.py 生成（tokens=原始值，resolved=var() 解析后）\n"
+        "module.exports = " + json.dumps(module, ensure_ascii=False, indent=2) + ";\n"
+        "module.exports.default = module.exports;\n", encoding="utf-8")
 
     def pick(prefix: str, *, keep=lambda n: True):
         return {n.replace(prefix, ""): f"var({n})"

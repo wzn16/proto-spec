@@ -32,11 +32,15 @@
     "--s-tag-error-text": "#FCA5A5",
     "--s-tag-error-line": "rgba(248, 113, 113, .24)",
     "--s-glass-bg": "rgba(255, 255, 255, .06)",
-    "--s-glass-line": "rgba(255, 255, 255, .12)"
+    "--s-glass-line": "rgba(255, 255, 255, .12)",
+    "--s-brand-text": "#E5E7EB",
+    "--s-segmented-text": "#C7CBD3"
   },
   "structure": [
     ".c-card { background: var(--s-glass-bg); backdrop-filter: blur(14px); border-color: var(--s-glass-line); }",
-    ".c-workbench__side { backdrop-filter: blur(18px); }"
+    ".c-workbench__side { backdrop-filter: blur(18px); }",
+    ".c-workbench__head h1 { letter-spacing: .02em; }",
+    ".c-data-table th { background: var(--s-glass-bg); }"
   ]
 }```
 

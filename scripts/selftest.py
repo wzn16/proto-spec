@@ -62,7 +62,12 @@ def build_fixture(root: Path, bad: bool) -> Path:
     a = GOOD_PAGE_A + (BAD_PAGE_PATCH if bad else "")
     (pages / "a.html").write_text(a, encoding="utf-8")
     (pages / "b.html").write_text(GOOD_PAGE_B, encoding="utf-8")
-    (proj / "SPEC.md").write_text("# SPEC — 自测项目\n状态：frozen\n", encoding="utf-8")
+    (proj / "SPEC.md").write_text(
+        "# SPEC — 自测项目\n\n| 项 | 值 |\n| --- | --- |\n| 状态 | frozen |\n| 家族 | F0 |\n\n"
+        "## §1 语境\n- 给谁用：自测\n- 非目标：无\n\n"
+        "## §2 规范\n| 旋钮 | 取值 |\n| --- | --- |\n| 密度 | 中 |\n\n"
+        "## §3 页面清单\n| 页面 | 文件 |\n| --- | --- |\n| 订单列表 | pages/list.html |\n\n"
+        "## §4 已知限制\n1. 自测项目\n", encoding="utf-8")
     (proj / "index.html").write_text(
         '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">'
         "<title>站点地图 - 自测项目</title></head><body>"
@@ -193,6 +198,20 @@ def main() -> int:
         checks.append(("配置覆盖生效（G6 词表）", c6 == 1, f"exit={c6}"))
         c7, _ = run("check_visual_review.py", ov)
         checks.append(("配置覆盖生效（G7 维度）", c7 == 1, f"exit={c7}"))
+
+        # 导出器契约：tsc 过 + node 可 require 且 tokens/resolved 都在
+        import subprocess as _sp, tempfile as _tf2, shutil as _sh3
+        exp = Path(_tf2.mkdtemp())
+        _sp.run([sys.executable, str(HERE / "export_tokens.py"), "--tokens",
+                 str(good / "assets" / "tokens.css"), "--out", str(exp)], capture_output=True, text=True)
+        node_probe = _sp.run(["node", "-e",
+                              "const m=require('" + str(exp / "tokens.js") + "');"
+                              "if(!m.tokens||!m.resolved)process.exit(9);"
+                              "if(Object.keys(m.resolved).length<3)process.exit(8);"],
+                             capture_output=True, text=True)
+        checks.append(("导出器 tokens.js 可 require", node_probe.returncode == 0,
+                       f"exit={node_probe.returncode}"))
+        _sh3.rmtree(exp, ignore_errors=True)
 
         c, r = run("final_gate.py", good)
         skipped = r.get("summary", {}).get("skipped", [])

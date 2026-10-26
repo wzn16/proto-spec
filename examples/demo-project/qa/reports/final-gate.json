@@ -67,6 +67,12 @@
       "pass_score": 4,
       "violations": 0
     },
+    "g0": {
+      "status": "frozen",
+      "family": "F0",
+      "sections": 0,
+      "violations": 0
+    },
     "g1f": {
       "family": "F0",
       "slots": 6,
@@ -78,7 +84,7 @@
       "anchors": {
         "form-1440.png": 2,
         "list-1440.png": 1,
-        "single-1440.png": 1
+        "single-1440.png": 2
       },
       "accent": {
         "form-1440.png": 0.0029,

@@ -1,31 +1,4 @@
 <!DOCTYPE html>
-<!--
-  ============================================================
-  模板：tpl-list.html —— 业务对象列表页
-  ------------------------------------------------------------
-  用法：复制本文件到 pages/ 改名（如 order-list.html），再替换插槽内容。
-  模板内相对链接已按 pages/ 位置书写：资源 ../assets/…，
-  页面互链与正式页同级，../index.html 为站点地图。
-
-  区域结构：
-  ┌───────────┬────────────────────────────────────────┐
-  │           │ l-header（面包屑 / 管理员）             │
-  │ l-sidebar ├────────────────────────────────────────┤
-  │ SLOT-0    │ l-page                                 │
-  │ 侧边导航   │   ├ SLOT-1 页头与筛选栏                │
-  │           │   ├ SLOT-2 表格列与数据                │
-  │           │   └ SLOT-3 分页                        │
-  └───────────┴────────────────────────────────────────┘
-
-  插槽清单：
-    SLOT-0 侧边导航：改模块名、菜单项与 active 项（片段 snippet-sidebar-nav）
-    SLOT-1 页头与筛选栏：改标题与主按钮；筛选项可增删（片段 snippet-filter-bar）
-    SLOT-2 表格列与数据：改列头与 tbody 行，可增删行（片段 snippet-data-table）
-    SLOT-3 分页：改页码数量与上下页链接（片段 snippet-page-nav）
-
-  假数据要求：订单号 / 客户 / 金额 / 时间用真实格式，状态混排，禁 lorem。
-  ============================================================
--->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -39,141 +12,86 @@
   <script defer src="../assets/app.js"></script>
 </head>
 <body>
-<div class="l-app">
-
-  <!-- SLOT-0: 侧边导航（列表页：订单列表为 active 项） -->
-  <nav class="l-sidebar">
-    <nav class="c-nav">
-      <div class="c-nav__group">订单管理</div>
-      <a class="c-nav__item c-nav__item--active" href="order-list.html">订单列表</a>
-      <a class="c-nav__item" href="order-form.html">新建订单</a>
-      <a class="c-nav__item" href="order-detail.html">订单详情</a>
-    </nav>
-  </nav>
-  <!-- /SLOT-0 -->
-
-  <header class="l-header">
-    <nav class="c-breadcrumb" aria-label="面包屑">
-      <a class="c-breadcrumb__item" href="../index.html">首页</a>
-      <span class="c-breadcrumb__sep">/</span>
-      <span class="c-breadcrumb__item">订单管理</span>
-      <span class="c-breadcrumb__sep">/</span>
-      <span class="c-breadcrumb__item" aria-current="page">订单列表</span>
-    </nav>
-    <button class="c-btn c-btn--sm" type="button">管理员</button>
-  </header>
-
-  <main class="l-page">
-
-    <!-- SLOT-1: 页头与筛选栏（片段 snippet-filter-bar） -->
-    <div class="l-page-head">
-      <h1 class="u-text-title">订单列表</h1>
-      <a class="c-btn" href="order-form.html">新建订单</a>
+<div class="c-workbench">
+  <aside class="c-workbench__side">
+    <div class="c-workbench__brand">DEMO<small>业务系统</small></div>
+    <div class="c-workbench__nav">
+      <div class="c-side-menu__group">业务</div>
+      <a class="c-side-menu__item" href="../index.html"><span class="c-side-menu__dot"></span>返回站点地图</a>
     </div>
+  </aside>
+  <div class="c-workbench__main">
+    <header class="l-header">
+      <div class="u-flex u-gap-md">
+        <span class="p-module">业务</span>
+        <nav class="c-breadcrumb"><span class="c-breadcrumb__item">采购</span><span class="c-breadcrumb__sep">/</span><span class="c-breadcrumb__item" aria-current="page">订单详情</span></nav>
+      </div>
+      <div class="u-flex u-gap-sm"><button class="c-btn c-btn--sm c-btn--secondary" type="button">root账号</button></div>
+    </header>
+    <main class="c-workbench__content">
+      <div class="c-workbench__head">
+        <div class="u-flex u-gap-md" style="align-items:baseline">
+          <h1>PO202610240018</h1>
+          <span class="c-tag c-tag--dot c-tag--warning">待审核</span>
+        </div>
+        <span class="u-flex u-gap-sm">
+          <button class="c-btn c-btn--sm c-btn--secondary" type="button" data-action="show-toast" data-message="演示：打印">打印</button>
+          <button class="c-btn c-btn--sm" type="button" data-action="show-toast" data-message="演示：提交审核">提交审核</button>
+        </span>
+      </div>
 
-    <div class="c-filterbar">
-      <input class="c-input" type="text" placeholder="搜索订单号" aria-label="搜索订单号">
-      <select class="c-select" aria-label="订单状态">
-        <option value="">全部</option>
-        <option value="done">已完成</option>
-        <option value="review">待审核</option>
-        <option value="canceled">已取消</option>
-      </select>
-      <button class="c-btn c-btn--secondary" type="button">重置</button>
-      <button class="c-btn" type="button">查询</button>
-    </div>
-    <!-- /SLOT-1 -->
+      <section class="c-card">
+        <div class="c-card__body">
+          <div class="c-kv">
+            <dt>供应商</dt><dd>杭州恒晟机械有限公司</dd>
+            <dt>采购类型</dt><dd>标准采购</dd>
+            <dt>下单人</dt><dd>王建国 · 采购部</dd>
+            <dt>下单时间</dt><dd class="u-num">2026-10-24 09:12</dd>
+            <dt>订单金额</dt><dd class="u-num">¥128,600.00</dd>
+            <dt>期望到货</dt><dd class="u-num">2026-10-30</dd>
+          </div>
+        </div>
+      </section>
 
-    <!-- SLOT-2: 表格列与数据（片段 snippet-data-table） -->
-    <div class="c-table-scroll"><table class="c-table">
-      <thead>
-        <tr>
-          <th class="c-table__th">订单号</th>
-          <th class="c-table__th">客户</th>
-          <th class="c-table__th">金额</th>
-          <th class="c-table__th">状态</th>
-          <th class="c-table__th">下单时间</th>
-          <th class="c-table__th">操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>SO20261022001</td>
-          <td>杭州恒晟机械</td>
-          <td class="c-table__num u-num">¥12,800.00</td>
-          <td><span class="c-tag c-tag--success">已完成</span></td>
-          <td>2026-10-22 09:12</td>
-          <td>
-            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
-            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
-          </td>
-        </tr>
-        <tr>
-          <td>SO20261022002</td>
-          <td>苏州凌云自动化</td>
-          <td class="c-table__num u-num">¥45,600.00</td>
-          <td><span class="c-tag c-tag--warning">待审核</span></td>
-          <td>2026-10-22 08:47</td>
-          <td>
-            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
-            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
-          </td>
-        </tr>
-        <tr>
-          <td>SO20261022003</td>
-          <td>宁波海通轴承</td>
-          <td class="c-table__num u-num">¥8,950.00</td>
-          <td><span class="c-tag c-tag--success">已完成</span></td>
-          <td>2026-10-21 17:30</td>
-          <td>
-            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
-            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
-          </td>
-        </tr>
-        <tr>
-          <td>SO20261022004</td>
-          <td>上海磐石重工</td>
-          <td class="c-table__num u-num">¥23,400.00</td>
-          <td><span class="c-tag c-tag--error">已取消</span></td>
-          <td>2026-10-21 14:05</td>
-          <td>
-            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
-            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
-          </td>
-        </tr>
-        <tr>
-          <td>SO20261022005</td>
-          <td>无锡锐驰精密</td>
-          <td class="c-table__num u-num">¥67,200.00</td>
-          <td><span class="c-tag c-tag--warning">待审核</span></td>
-          <td>2026-10-21 10:22</td>
-          <td>
-            <a class="c-btn c-btn--text" href="order-detail.html">查看</a>
-            <a class="c-btn c-btn--text" href="order-form.html">编辑</a>
-          </td>
-        </tr>
-      </tbody>
-    </table></div>
-    <!-- /SLOT-2 -->
+      <div class="c-segmented" role="tablist">
+        <button class="c-segmented__item is-on" role="tab" type="button">采购明细<span class="c-segmented__count">3</span></button>
+        <button class="c-segmented__item" role="tab" type="button">审批记录<span class="c-segmented__count">4</span></button>
+        <button class="c-segmented__item" role="tab" type="button">附件<span class="c-segmented__count">2</span></button>
+      </div>
 
-    <!-- SLOT-3: 分页（片段 snippet-page-nav） -->
-    <nav class="c-pagination" aria-label="分页">
-      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">上一页</a>
-      <a class="c-btn c-btn--sm" href="order-list.html" aria-current="page">1</a>
-      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">2</a>
-      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">3</a>
-      <a class="c-btn c-btn--sm c-btn--secondary" href="order-list.html">下一页</a>
-    </nav>
-    <!-- /SLOT-3 -->
+      <section class="c-card c-card--flush">
+        <div class="c-card__head"><span class="c-card__head-title">采购明细</span><span class="c-card__head-meta">按物料逐行</span></div>
+        <div class="c-card__body">
+          <div class="c-table-scroll"><table class="c-data-table c-data-table--dense">
+            <thead><tr><th class="c-col-idx">序号</th><th>物料编码</th><th class="c-col-name">物料名称</th><th style="text-align:right">数量</th><th style="text-align:right">单价</th><th style="text-align:right">金额</th></tr></thead>
+            <tbody>
+              <tr><td class="c-data-table__idx">1</td><td class="c-data-table__code">M-4LZ8G-01</td><td>割台总成</td><td class="u-num" style="text-align:right">12</td><td class="u-num" style="text-align:right">¥8,600</td><td class="u-num" style="text-align:right">¥103,200</td></tr>
+              <tr><td class="c-data-table__idx">2</td><td class="c-data-table__code">M-4LZ8G-02</td><td>滚筒总成</td><td class="u-num" style="text-align:right">4</td><td class="u-num" style="text-align:right">¥5,200</td><td class="u-num" style="text-align:right">¥20,800</td></tr>
+              <tr><td class="c-data-table__idx">3</td><td class="c-data-table__code">M-4LZ8G-03</td><td>履带总成</td><td class="u-num" style="text-align:right">2</td><td class="u-num" style="text-align:right">¥2,300</td><td class="u-num" style="text-align:right">¥4,600</td></tr>
+            </tbody>
+          </table></div>
+          <!-- 子表为空时启用下面这块，替换上面的 table -->
+          <div class="c-empty c-empty--compact" hidden>
+            <div class="c-empty__title">暂无采购明细</div>
+            <div class="c-empty__desc">添加物料后自动计算金额与税额</div>
+            <div class="c-empty__action"><button class="c-btn c-btn--sm" type="button">＋ 添加物料</button></div>
+          </div>
+        </div>
+      </section>
 
-  </main>
-
-  <!-- 原型工具条（非业务 UI，正式交付时可整块删除） -->
-  <div class="proto-bar">
-    <a href="../index.html">返回站点地图</a>
-    <span>templates/tpl-list.html</span>
+      <section class="c-card">
+        <div class="c-card__head"><span class="c-card__head-title">审批记录</span></div>
+        <div class="c-card__body">
+          <ol class="c-timeline">
+            <li class="c-timeline__item"><div class="c-timeline__time">2026-10-24 09:12</div><div class="c-timeline__text">王建国 创建订单</div></li>
+            <li class="c-timeline__item"><div class="c-timeline__time">2026-10-24 09:30</div><div class="c-timeline__text">李主管 审核通过</div></li>
+            <li class="c-timeline__item"><div class="c-timeline__time">2026-10-24 10:05</div><div class="c-timeline__text">赵经理 待审核（超 2 小时未处理）</div></li>
+          </ol>
+        </div>
+      </section>
+    </main>
   </div>
-
 </div>
+<div class="proto-bar"><a href="../index.html">返回站点地图</a><span>templates/tpl-detail.html</span></div>
 </body>
 </html>

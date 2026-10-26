@@ -1,0 +1,32 @@
+{
+  "gate": "G0",
+  "pass": false,
+  "summary": {
+    "status": "draft",
+    "family": "F0",
+    "sections": 1,
+    "violations": 4
+  },
+  "violations": [
+    {
+      "kind": "未冻结",
+      "value": "draft",
+      "hint": "SPEC 状态须为 frozen 才允许交付"
+    },
+    {
+      "kind": "缺章节",
+      "value": "已知限制",
+      "hint": "SPEC 缺「已知限制」章节"
+    },
+    {
+      "kind": "对账单未确认",
+      "value": "4 行",
+      "hint": "附录 C 每行需写「已确认 + 日期」"
+    },
+    {
+      "kind": "占位符残留",
+      "value": "<填写>, <项目名>",
+      "hint": "替换 <项目名> 这类占位符"
+    }
+  ]
+}

@@ -29,12 +29,18 @@
     "--s-tag-warning-line": "rgba(251, 191, 36, .24)",
     "--s-tag-error-bg": "rgba(248, 113, 113, .14)",
     "--s-tag-error-text": "#FCA5A5",
-    "--s-tag-error-line": "rgba(248, 113, 113, .24)"
+    "--s-tag-error-line": "rgba(248, 113, 113, .24)",
+    "--s-radius-square": "2px",
+    "--s-brand-text": "#E5E7EB",
+    "--s-segmented-text": "#C7CBD3"
   },
   "structure": [
     ".c-data-table td, .c-data-table th { font-family: var(--s-font-mono); font-size: var(--s-fs-small); }",
     ".c-kpi__num { font-family: var(--s-font-mono); letter-spacing: -0.02em; }",
-    ".c-card { box-shadow: none; border-color: var(--s-border); }"
+    ".c-card { box-shadow: none; border-color: var(--s-border); }",
+    ".c-workbench__head h1 { font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: .04em; }",
+    ".c-data-table th { text-transform: uppercase; letter-spacing: .08em; }",
+    ".c-card { border-radius: var(--s-radius-square); }"
   ]
 }```
 

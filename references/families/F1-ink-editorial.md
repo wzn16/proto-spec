@@ -10,12 +10,16 @@
     "--s-shadow-card": "none",
     "--g-radius-6": "2px",
     "--g-radius-8": "4px",
-    "--g-radius-12": "6px"
+    "--g-radius-12": "6px",
+    "--s-radius-square": "2px"
   },
   "structure": [
     ".c-card, .c-data-table { box-shadow: none; }",
     ".c-card { border-color: var(--s-border-strong); }",
-    ".c-btn { border-radius: var(--s-radius-small); }"
+    ".c-btn { border-radius: var(--s-radius-small); }",
+    ".c-workbench__head { border-bottom: 2px solid var(--s-text-primary); padding-bottom: var(--s-space-3); }",
+    ".c-data-table th { text-transform: uppercase; letter-spacing: .08em; font-size: var(--s-fs-caption); background: transparent; }",
+    ".c-card { border-radius: var(--s-radius-square); }"
   ]
 }```
 

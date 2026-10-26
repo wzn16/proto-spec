@@ -14,7 +14,9 @@
   },
   "structure": [
     ".c-card { box-shadow: none; border-radius: var(--s-radius-small); }",
-    ".c-workbench__head h1 { border-left: var(--s-space-1) solid var(--s-color-primary); padding-left: var(--s-space-2); }"
+    ".c-workbench__head h1 { border-left: var(--s-space-1) solid var(--s-color-primary); padding-left: var(--s-space-2); }",
+    ".c-workbench__head { background: var(--s-bg-card); border: 1px solid var(--s-border-strong); border-left: var(--s-space-1) solid var(--s-color-primary); padding: var(--s-space-3) var(--s-space-4); }",
+    ".c-data-table th { background: var(--s-bg-page); text-transform: uppercase; letter-spacing: .04em; }"
   ]
 }```
 

@@ -252,8 +252,10 @@ def check(p: Path, cfg: dict | None = None) -> dict:
     x0 = 240 if W > 900 else 0
     m = ink_mask(a, x0)
     bs = bands(m)
-    anchors = cluster([b[2] for b in bs])
-    strong = [x for x, n in anchors if n >= 3]
+    anchors_all = cluster([b[2] for b in bs])
+    strong = [x for x, n in anchors_all if n >= 3]
+    # 报告用：至少 2 条文本共享的锚线；判据另用 strong（≥3）
+    anchors_report = [x for x, n in anchors_all if n >= 2] or [x for x, _ in anchors_all[:3]]
     ratio, blobs = accent_stats(a)
     levels = font_levels(m)
     edges = card_right_edges(a, x0)
@@ -301,7 +303,7 @@ def check(p: Path, cfg: dict | None = None) -> dict:
               "hint": {"in-band": "符合后台常态（主操作 + 当前选中）",
                        "high": "强调色偏多：检查是否给次要按钮/图标上了色",
                        "low": "强调色偏少：确认主操作有视觉落点"}[verdict]}
-    return {"file": p.name, "size": [W, H], "anchors": strong, "accent_ratio": round(ratio, 4),
+    return {"file": p.name, "size": [W, H], "anchors": anchors_report, "anchors_strong": strong, "accent_ratio": round(ratio, 4),
             "accent_budget": budget,
             "right_margins": margins, "row_pitch": pitch,
             "accent_blobs": blobs, "font_levels": levels, "card_edges": [e["x"] for e in edges[-6:]],

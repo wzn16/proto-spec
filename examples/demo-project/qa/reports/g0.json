@@ -1,0 +1,11 @@
+{
+  "gate": "G0",
+  "pass": true,
+  "summary": {
+    "status": "frozen",
+    "family": "F0",
+    "sections": 0,
+    "violations": 0
+  },
+  "violations": []
+}

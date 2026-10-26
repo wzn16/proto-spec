@@ -1,3 +1,5 @@
 /* F7 frost-glass · 结构层（由 family-manifest.structure 生成） */
 .c-card { background: var(--s-glass-bg); backdrop-filter: blur(14px); border-color: var(--s-glass-line); }
 .c-workbench__side { backdrop-filter: blur(18px); }
+.c-workbench__head h1 { letter-spacing: .02em; }
+.c-data-table th { background: var(--s-glass-bg); }

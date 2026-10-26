@@ -2,3 +2,6 @@
 .c-data-table td, .c-data-table th { font-family: var(--s-font-mono); font-size: var(--s-fs-small); }
 .c-kpi__num { font-family: var(--s-font-mono); letter-spacing: -0.02em; }
 .c-card { box-shadow: none; border-color: var(--s-border); }
+.c-workbench__head h1 { font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: .04em; }
+.c-data-table th { text-transform: uppercase; letter-spacing: .08em; }
+.c-card { border-radius: var(--s-radius-square); }

@@ -6,8 +6,9 @@
 
 | 门 | 脚本 | 判据文件 | 阻断 | 跳过条件 |
 | --- | --- | --- | --- | --- |
+| G0 SPEC 门 | check_spec.py | 本文件 §G0 | 是 | 无 SPEC.md |
 | G1 规范符合性 | check_tokens.py | 本文件 §G1 | 是 | 无 |
-| G2 截图矩阵 | check_screens.py | 本文件 §G2 | 是 | screenshots 为空（记入 skipped） |
+| G2 截图矩阵 | shoot.py → check_screens.py | 本文件 §G2 | 是 | screenshots 为空（记入 skipped） |
 | G3 交互完整性 | check_links.py | 本文件 §G3 | 是 | 无 |
 | G4 可访问性 | check_contrast.py | 本文件 §G4 | 是 | 无 |
 | G6 细节规则 | check_details.py | detail-rules.md | 是 | 无 |
