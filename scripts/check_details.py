@@ -57,6 +57,21 @@ def check_page(path: Path, root: Path):
     if re.search(r"<th[^>]*>[^<]*编码", html) and len(re.findall(r"<th", html)) > 8 and "pin-first" not in html:
         out.append({"file": name, "kind": "宽表未冻结", "value": ">8 列且无 pin-first", "hint": "列数 >8 时启用 c-data-table--pin-first"})
 
+    # emoji 不进图标位/按钮文案
+    ALLOWED_GLYPHS = set("✕×✓✗→↗←↖§※·＋−≤≥")
+    emoji = [c for c in re.findall(r"<button[^>]*>[^<]*?([\U0001F300-\U0001FAFF\u2600-\u27BF])", html)
+             if c not in ALLOWED_GLYPHS]
+    if emoji:
+        out.append({"file": name, "kind": "emoji 图标", "value": "".join(sorted(set(emoji)))[:6],
+                    "hint": "图标位与按钮文案禁用 emoji，改用 SVG 或字符"})
+
+    # outline:none 必须配 :focus-visible 替代
+    for style_block in re.findall(r"<style[^>]*>([\s\S]*?)</style>", html):
+        if re.search(r"outline\s*:\s*(none|0)", style_block) and "focus-visible" not in style_block:
+            out.append({"file": name, "kind": "焦点不可见", "value": "outline: none 无替代",
+                        "hint": "去掉默认 outline 必须补 :focus-visible 描边或 ring"})
+            break
+
     for m in RE_KPI.finditer(html):
         label = m.group(1).strip()
         if any(b in label for b in KPI_BAN):

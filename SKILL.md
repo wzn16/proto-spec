@@ -41,6 +41,8 @@ metadata:
 
 ## 步骤 2.5 — 定旋钮
 
+给了参考图先走 `references/reference-to-spec.md`（取色/量距/字阶 → SPEC 片段）；配色先定面积预算 `references/color-area-budget.md`；
+字体与构图先过 `references/typography-and-composition.md`（反滥用字体清单、字重/字距/数字排版、三种 B 端构图）。
 读 `references/design-knobs.md`：对比强度 / 信息密度 / 圆角柔软度 / 色温与强调面积 / 动效幅度，各给一句取值与理由，写进 SPEC §2。禁止跳过直接套家族——家族定方向，旋钮定强度。
 
 ## 步骤 2.6 — 出方向（用户未指定时）
@@ -58,6 +60,7 @@ metadata:
 
 **4.2 细节默认值**：读 `references/detail-rules.md`（27 条，含防溢出、列宽档位、动作不重复、KPI 语义、数字口径、抽屉浮动、三态）。
 **4.3 设计→实现映射**：读 `references/implementation-map.md`，逐区块写「组件 / token / 是否新增原语 / 成本（低中高）」；高成本手段默认不做。
+**4.4 含图表/概览页**：先读 `references/viz-rules.md`（决策故事、图表选择、数据墨水比、配色 ≤2 系列）。
 **4.4 台账与表单基线**：`references/patterns-ledger.md` 给台账形态菜单与可调维度，`references/patterns-form.md` 给容器判据与字段规格；可偏离，需写理由。
 **4.5 工具页例外**：交互密集单页允许 `p-` 级脚本（≤120 行、零依赖、只读 DOM）；超出则下沉为组件行为。
 
@@ -109,11 +112,11 @@ G5 全绿才算完成；不合格项按脚本 hint 逐条改，不讨价还价�
 
 ## 参考资料
 
-**探索**：`references/design-from-brief.md` · `references/layout-patterns.md` · `references/design-direction.md` · `references/direction-explorer.md` · `references/design-knobs.md`
+**探索**：`references/reference-to-spec.md`（参考图→规范）· `references/external-refs.md`（外部标杆索引）· `references/typography-and-composition.md`（字体/构图/动效编排）· `references/design-from-brief.md` · `references/layout-patterns.md` · `references/design-direction.md` · `references/direction-explorer.md` · `references/design-knobs.md`
 
 **规范**：`references/interview-bank.md` · `references/family-library.md`（F0–F9）· `references/spec-template.md` · `references/tokens-reference.md`
 
-**生成**：`references/component-map.md` · `references/templates-catalog.md` · `references/snippets-catalog.md` · `references/patterns-ledger.md` · `references/patterns-form.md` · `references/detail-rules.md` · `references/implementation-map.md`
+**生成**：`references/color-area-budget.md`（八种配色面积预算）· `references/viz-rules.md`（图表/KPI/数据墨水比）· `references/component-map.md` · `references/templates-catalog.md` · `references/snippets-catalog.md` · `references/patterns-ledger.md` · `references/patterns-form.md` · `references/detail-rules.md` · `references/implementation-map.md`
 
 **评审**：`references/taste-checklist.md` · `references/visual-refinement.md` · `references/visual-scorecard.md` · `references/visual-review-protocol.md` · `references/tuning-loop.md` · `references/design-knowledge.md` · `references/pixel-rules.md` · `references/qa-gates.md`
 
