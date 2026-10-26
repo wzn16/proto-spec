@@ -22,6 +22,8 @@
 - **可配置**：阈值全在 `config/gates.json`，项目用 `qa/gates.config.json` 覆盖；家族清单靠扫描目录，可自定义
 - **交付物**：SPEC + 页面 + tokens（可导出 json/ts/tailwind）+ qa 报告 + 交付 README
 
+第一次用请读 `references/quickstart.md`（30 分钟出第一版）。
+
 ## 安装
 
 三种方式任选其一：
